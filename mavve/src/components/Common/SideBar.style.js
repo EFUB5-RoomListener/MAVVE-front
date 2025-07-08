@@ -81,7 +81,6 @@ export const Info = styled.div`
 `;
 
 export const InfoTitle = styled.div`
-    font-family: 'SUIT';
     font-size: 1rem;
     font-weight: 600;
     line-height: 1.5rem;
@@ -89,7 +88,6 @@ export const InfoTitle = styled.div`
 `;
 
 export const InfoSubTitle = styled.div`
-    font-family: 'SUIT';
     font-size: 0.875rem;
     font-weight: 400;
     line-height: normal;

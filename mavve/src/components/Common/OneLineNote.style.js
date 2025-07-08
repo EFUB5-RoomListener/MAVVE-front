@@ -38,7 +38,6 @@ export const NoteText = styled.div`
     overflow: hidden;
     color: #3C3E44;
     text-overflow: ellipsis;
-    font-family: SUIT;
     font-size: 1rem;
     font-weight: 400;
     line-height: 140%;
@@ -96,7 +95,6 @@ export const SongText = styled.div`
     overflow: hidden;
     color: #3C3E44;
     text-overflow: ellipsis;
-    font-family: SUIT;
     font-size: 1rem;
     font-weight: 400;
     line-height: 140%;
@@ -152,7 +150,7 @@ export const RoomInfo = styled.div`
     flex-direction: column;
     justify-content: center;
     gap: 0.63rem;
-    font-family: SUIT;
+
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
