@@ -17,9 +17,6 @@ const colors = {
 };
 
 export const Container = styled.div`
-  /* width: 1920px;
-  //height: 1378px;
-  height: 1080px; */
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -31,8 +28,6 @@ export const Container = styled.div`
 
 export const Header = styled.div`
   //검색 바, 알림 아이콘 등 포함되는 영역
-  /* width: 1920px;
-  height: 126px; */
   width: 120rem;
   height: 86.125rem;
   display: flex;
@@ -41,8 +36,6 @@ export const Header = styled.div`
   background-color: gray; //영역 구별용 임시 색. 실제는 색상 x
 `;
 export const MainContainer = styled.div`
-  /* width: 1920px;
-  height: 866px; */
   width: 120rem;
   height: 72.75rem;
   margin-bottom: 5.5rem;
@@ -51,8 +44,6 @@ export const MainContainer = styled.div`
 `;
 
 export const Sidebar = styled.div`
-  /* width: 265px;
-  height: 842px; */
   width: 16.5625rem;
   height: 52.625rem;
   background-color: gray; //영역 구별용, 추후 삭제
@@ -60,8 +51,6 @@ export const Sidebar = styled.div`
 `;
 
 export const Main = styled.div`
-  /* width: 1567px;
-  height: 842px; */
   width: 97.9375rem;
   height: 52.625rem;
   //background-color: gray; //영역 구별용, 추후 삭제
@@ -76,13 +65,11 @@ export const Main = styled.div`
 // `;
 
 export const ProfileContainer = styled.div`
-  width: 1566px;
-  height: 320px;
+  width: 97.875rem;
+  height: 20rem;
 `;
 
 export const WaveImg = styled.img`
-  /* width: 1566px;
-  height: 320px; */
   width: 97.875rem;
   height: 20rem;
   position: sticky;
@@ -99,8 +86,8 @@ export const ProfileContent = styled.div`
 `;
 
 export const ProfileImage = styled.img`
-  width: 228px;
-  height: 228px;
+  width: 14.25rem;
+  height: 14.25rem;
   object-fit: cover; //이미지 비율 유지
   border-radius: 50%; //이미지 동그란 형태로 자르기
 `;
@@ -113,9 +100,9 @@ export const ProfileTextContainer = styled.div`
 `;
 
 export const Nickname = styled.div`
-  font-size: 60px;
+  font-size: 3.75rem;
   font-weight: 400;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 `;
 
 export const UserCount = styled.div`
@@ -123,13 +110,13 @@ export const UserCount = styled.div`
   flex-direction: column;
   align-items: left;
   justify-content: center;
-  margin-right: 24px;
+  margin-right: 1.5rem;
 `;
 export const UserText = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
-  font-size: 24px;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
   font-weight: 400;
 `;
 
@@ -146,8 +133,8 @@ export const EditIcon = styled.img`
 `;
 
 export const ViewArea = styled.div`
-  width: 1567px;
-  height: 842px;
+  width: 97.9375rem;
+  height: 52.625rem;
   background: rgba(255, 255, 255, 0.4);
   border-radius: 16px;
   box-shadow: inset 0 0 0 3px #ffffff; //내부 테두리 구현
@@ -161,27 +148,23 @@ export const ViewArea = styled.div`
 `;
 
 export const DiaryArea = styled.div`
-  /* width: 1486px;
-  height: 169.5px; */
   width: 92.875rem;
   height: 10.5938rem;
   background-color: white; //임시
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 1.91rem 33px 32px 48px;
+  margin: 1.91rem 2.06rem 2rem 3rem;
 `;
 
 export const MyRoomArea = styled.div`
-  /* width: 1487px;
-  height: 270px; */
   width: 92.875rem;
   height: 16.875rem;
   background-color: white; //임시
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 0 32px 31px 48px;
+  margin: 0 2rem 1.94rem 3rem;
 `;
 
 export const LikedRoomArea = styled.div`
@@ -191,11 +174,11 @@ export const LikedRoomArea = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 0px 32px 20px 48px; //스크롤 설정 이후 위아래여백 조절해야함
+  margin: 0 2rem 1.25rem 3rem;
 `;
 
 export const Title = styled.div`
   color: ${colors.b};
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 600;
 `;
