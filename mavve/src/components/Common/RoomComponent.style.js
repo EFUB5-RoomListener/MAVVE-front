@@ -8,8 +8,8 @@ export const RoomContainer = styled.div`
     flex-direction: column;
     align-items: flex-start;
     gap: 0.37rem;
-    background-color: #FCFEFF;
-    border: 1px solid #3C3E44;
+    background: var(--w);
+    border: 1px solid var(--b);
     border-radius: 40px;
     box-sizing: border-box;
 
@@ -24,9 +24,9 @@ export const Thumbnail = styled.div`
     align-items: center;
     flex-shrink: 0;
     align-self: stretch;
-    border: 1px solid #3C3E44;
+    border: 1px solid var(--b);
     border-radius: 40px;
-    background-color: #F3F4F6;
+    background: var(--g1);
 `;
 
 export const Hashtag = styled.div`
@@ -40,11 +40,10 @@ export const Hashtag = styled.div`
     gap: 0.5rem;
 
     border-radius: 16px;
-    background-color: #FCFFFFBF;
+    background: #FCFFFFBF;
 
-    color: var(--b, #3C3E44);
+    color: var(--b);
 
-    font-family: 'SUIT';
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 1.5rem;
@@ -65,7 +64,7 @@ export const InfoText = styled.div`
     align-items: flex-start;
     justify-content: center;
     color: #3C3E44;
-    font-family: 'SUIT';
+
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 1.5rem;

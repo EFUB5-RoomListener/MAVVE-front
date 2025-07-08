@@ -25,7 +25,7 @@ export const NoteContent = styled.div`
     align-items: center;
     justify-content: space-between;
     border-radius: 16px;
-    background: #FCFEFF;
+    background: var(--w);
     padding: 1.31rem 2.87rem 1.31rem 8.94rem;
     box-sizing: border-box;
 `;
@@ -81,7 +81,7 @@ export const SongContent = styled.div`
     align-items: center;
     gap: 2.5rem;
     border-radius: 16px;
-    background: #FCFEFF;
+    background: var(--w);
     padding: 1rem 3rem 1rem 9.44rem;
     box-sizing: border-box;
 `;
@@ -133,7 +133,7 @@ export const RoomCover = styled.div`
     justify-content: flex-start;
     border-radius: 16px;
     border: 0.5px solid #3C3E44;
-    background: #FCFEFF;
+    background: var(--w);
 `;
 
 export const RoomThumbnail = styled.div`
@@ -156,7 +156,7 @@ export const RoomInfo = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
-    color: #3C3E44
+    color: var(--b);
 `;
 
 export const RoomText = styled.div`

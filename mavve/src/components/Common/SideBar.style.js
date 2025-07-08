@@ -7,7 +7,7 @@ export const SideBarContainer = styled.div`
     padding: 1.5rem 1.5rem 3.1875rem 1rem;
     flex-direction: column;
     align-items: flex-start;
-    background-color: #FCFEFF;
+    background: var(--w);
     border-radius: 16px;
     box-sizing: border-box;
 
@@ -30,7 +30,7 @@ export const CreateButton = styled.button`
     align-items: center;
     gap: 0.5rem;
     border-radius: 16px;
-    background-color: #65C3FF;
+    background: var(--sec);
 
     font-family: Pretendard;
     color: #FFFFFF;
@@ -45,7 +45,7 @@ export const Title = styled.div`
     align-items: center;
     gap: 0.5rem;
     border-radius: 16px;
-    background-color: #009BFF;
+    background-color: var(--pri);
     margin-bottom: 1.5rem;
     margin-top: 2.5rem;
 
@@ -71,7 +71,7 @@ export const Thumbnail = styled.div`
     width: 3rem;
     height: 3rem;
     border-radius: 8px;
-    background-color: lightgray;
+    background: lightgray;
 `;
 
 export const Info = styled.div`
@@ -85,7 +85,7 @@ export const InfoTitle = styled.div`
     font-size: 1rem;
     font-weight: 600;
     line-height: 1.5rem;
-    color: #3C3E44
+    color: var(--b)
 `;
 
 export const InfoSubTitle = styled.div`
@@ -93,5 +93,5 @@ export const InfoSubTitle = styled.div`
     font-size: 0.875rem;
     font-weight: 400;
     line-height: normal;
-    color: #3C3E44
+    color: var(--b)
 `;

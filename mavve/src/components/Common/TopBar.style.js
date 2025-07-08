@@ -23,6 +23,7 @@ export const Logo = styled.div`
     margin-right: 1.44rem;
     flex-shrink: 0;
     aspect-ratio: 11/8;
+    cursor: pointer;
 `;
 
 export const SearchBar = styled.div`
@@ -32,7 +33,7 @@ export const SearchBar = styled.div`
     padding: 0.6875rem 1.5rem;
     align-items: flex-start;
     gap: 5.31rem;
-    background-color: #FCFEFF;
+    background: var(--w);
     border-radius: 24px;
     box-sizing: border-box;
 
@@ -72,7 +73,7 @@ export const ProfileButton = styled.div`
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
-    background-color: #3C3E44;
+    background: var(--b);
     border-radius: 50px;
     cursor: pointer;
 `;
