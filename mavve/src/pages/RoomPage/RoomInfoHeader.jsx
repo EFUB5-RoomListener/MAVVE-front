@@ -10,8 +10,9 @@ function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists }) {
 
    // selectedLists는 id 배열이므로, 해당 id로 다시 플레이리스트 정보 찾기
    const selectedPlaylists = mockPlayLists.filter(p =>
-    selectedLists.includes(p.id)
+    selectedLists.includes(p.id.toString())
   );
+  
 
   const totalPlaylists = selectedPlaylists.length;
   const totalSongs = selectedPlaylists.reduce(
