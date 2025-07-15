@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import DownIcon from "../../assets/RoomPage/dropdown_down.svg";
 import UpIcon  from "../../assets/RoomPage/dropdown_up.svg";
-import * as S from "../RoomPage/RoomPage.style";
+import * as S from "../../pages/RoomPage/RoomPage.style";
 
 function VisibilityDropdown({selected, setSelected}) {
   const [isOpen, setIsOpen] = useState(false);

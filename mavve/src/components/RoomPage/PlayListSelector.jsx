@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import MusicIcon from '../../assets/RoomPage/room_icn_music.svg'
-import * as S from '../RoomPage/RoomPage.style';
+import * as S from '../../pages/RoomPage/RoomPage.style';
 import SearchIcon from "../../assets/RoomPage/room_icn_search.svg";
 import playlistData from "./playlistMockData";
 import UncheckedBoxIcon from '../../assets/RoomPage/checkbox.svg';

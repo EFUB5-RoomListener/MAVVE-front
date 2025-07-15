@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import RoomCreateForm from "./RoomCreateForm";
 import CreateBtn from "../../assets/RoomPage/createpencil.svg";
-import * as S from "./RoomPage.style";
+import * as S from "../../pages/RoomPage/RoomPage.style.js";
 import mockPlayLists from "./playlistMockData";
 
 function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists }) {

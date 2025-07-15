@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import UploadIcon from "../../assets/RoomPage/pic-upload.svg";
 import CloseIcon  from "../../assets/RoomPage/close.svg";
 import VisibilityDropdown from "./VisibilityDropdown";
-import * as S from "../RoomPage/RoomPage.style";
+import * as S from "../../pages/RoomPage/RoomPage.style";
 
 function RoomCreateForm({roomInfo, setRoomInfo, onClose}){
     const [title, setTitle] = useState(roomInfo.title || "");

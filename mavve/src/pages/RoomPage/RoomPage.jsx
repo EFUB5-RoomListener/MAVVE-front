@@ -1,10 +1,10 @@
 import React, {useState} from 'react'
-import RoomInfoHeader from '../RoomPage/RoomInfoHeader';
-import PlayListSelector from './PlayListSelector';
+import RoomInfoHeader from '../../components/RoomPage/RoomInfoHeader';
+import PlayListSelector from '../../components/RoomPage/PlayListSelector';
 import * as S from "./RoomPage.style";
 import SideBar from "../../components/Common/SideBar";
 import TopBar from "../../components/Common/TopBar";
-import ConfirmedPlaylistView from './ConfirmedPlaylistView';
+import ConfirmedPlaylistView from '../../components/RoomPage/ConfirmedPlaylistView';
 
 
 

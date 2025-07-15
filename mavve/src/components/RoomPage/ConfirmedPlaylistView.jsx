@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as S from './RoomPage.style';
+import * as S from '../../pages/RoomPage/RoomPage.style';
 import mockPlayLists from "./playlistMockData";
 import ClockIcon from '../../assets/RoomPage/clock.svg';
 import MoreIcon from '../../assets//RoomPage/mypage_after_btn_more.svg';
