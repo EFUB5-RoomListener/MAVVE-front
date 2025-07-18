@@ -17,8 +17,8 @@ const colors = {
 };
 
 export const Container = styled.div`
-  width: 1920px;
-  height: 1080px;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,8 +26,8 @@ export const Container = styled.div`
 `;
 
 export const LoginBox = styled.div`
-  width: 832px;
-  height: 542px;
+  width: 52rem;
+  height: 33.875rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -39,39 +39,21 @@ export const LoginBox = styled.div`
 `;
 
 export const LogoMavve = styled.img`
-  width: 152px;
-  height: 145px;
-  margin-bottom: 32px;
+  width: 9.5rem;
+  height: 9.0625rem;
+  margin-bottom: 2rem;
 `;
 
 export const Title = styled.div`
-  font-size: 36px;
-  font-weight: bold;
-  margin-bottom: 76px;
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 4.31rem;
   color: ${colors.w};
 `;
 
-export const LoginButton = styled.button`
-  width: 700px;
-  height: 84px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  background-color: ${colors.w};
-  color: ${colors.b};
-  font-size: 24px;
-  font-weight: 600;
-  border-radius: 16px;
-
-  &:hover {
-    background-color: ${colors.g1};
-    border: 1px solid ${colors.g2};
-  }
-`;
-
-export const LogoKakao = styled.img`
-  width: 44px;
-  height: 44px;
-  margin-right: 156px;
-  margin-left: 56px;
+export const LoginButton = styled.img`
+  width: 37.5rem;
+  height: 5.625rem;
+  cursor: pointer;
+  border: none;
 `;
