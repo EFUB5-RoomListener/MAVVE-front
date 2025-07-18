@@ -1,7 +1,7 @@
 import React from "react";
 import * as S from "./LoginPage.style";
 import LogoMavve from "../../assets/LoginPage/LogoMavve.svg";
-import kakaoButtonImg from "../../assets/LoginPage/kakao_login_large_wide 1.svg";
+import LoginButtonImg from "../../assets/LoginPage/LoginButton.svg";
 
 export default function LoginPage() {
   const handleLogin = () => {
@@ -14,8 +14,8 @@ export default function LoginPage() {
         <S.LogoMavve src={LogoMavve} alt="MAVVE 로고" />
         <S.Title>MAVVE에 로그인하기</S.Title>
         <S.LoginButton
-          src={kakaoButtonImg}
-          alt="카카오 로그인 버튼"
+          src={LoginButtonImg}
+          alt="스포티파이 로그인"
           onClick={handleLogin}
         ></S.LoginButton>
       </S.LoginBox>
