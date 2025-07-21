@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import * as S from "./MyPage.style";
+import TopBar from "../../components/Common/TopBar";
+import SideBar from "../../components/Common/SideBar";
 
 export default function MyPage() {
   return (
     <S.Container>
-      <S.Header></S.Header>
+      <S.TopBarContainer>
+        <TopBar />
+      </S.TopBarContainer>
       <S.MainContainer>
-        <S.Sidebar />
+        <S.SidebarContainer>
+          <SideBar />
+        </S.SidebarContainer>
         <S.Main>
           <S.ViewArea>
             <S.Title>내가 만든 방</S.Title>
