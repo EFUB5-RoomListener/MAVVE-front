@@ -1,21 +1,5 @@
 import styled from "styled-components";
 
-const colors = {
-  pri: "#009BFF",
-  sec: "#65C3FF",
-  trd: "#E4F6FF",
-  g1: "#F3F4F6",
-  g2: "#D7D9DD",
-  g3: "#BFC4CA",
-  g4: "#93959B",
-  b: "#3C3E44",
-  w: "#FCFEFF",
-  fth: "#CFEFFF",
-  sixth: "#46A1DB",
-  seventh: "#005993",
-  red: "#FA7878",
-};
-
 export const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -26,14 +10,12 @@ export const Container = styled.div`
   background-color: #caedff;
 `;
 
-export const Header = styled.div`
-  //검색 바, 알림 아이콘 등 포함되는 영역
+export const TopBarContainer = styled.div`
   width: 120rem;
   height: 86.125rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: gray; //영역 구별용 임시 색. 실제는 색상 x
 `;
 export const MainContainer = styled.div`
   width: 120rem;
@@ -43,17 +25,16 @@ export const MainContainer = styled.div`
   flex-direction: row;
 `;
 
-export const Sidebar = styled.div`
+export const SidebarContainer = styled.div`
   width: 16.5625rem;
   height: 52.625rem;
-  background-color: gray; //영역 구별용, 추후 삭제
   margin: 0.5rem 2rem 0 1.5rem;
 `;
 
 export const Main = styled.div`
   width: 97.9375rem;
   height: 52.625rem;
-  //background-color: gray; //영역 구별용, 추후 삭제
+
   margin: 0.5rem 2rem 0 0;
 `;
 
@@ -96,7 +77,7 @@ export const ProfileTextContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 32px;
-  color: ${colors.b};
+  color: var(--b);
 `;
 
 export const Nickname = styled.div`
@@ -127,8 +108,8 @@ export const InfoContainer = styled.div`
 `;
 
 export const EditIcon = styled.img`
-  width: 48px;
-  height: 48px;
+  width: 3rem;
+  height: 3rem;
   cursor: pointer;
 `;
 
@@ -147,10 +128,9 @@ export const ViewArea = styled.div`
   -ms-overflow-style: none; /* IE and Edge */
 `;
 
-export const DiaryArea = styled.div`
+export const OneLineNoteContainer = styled.div`
   width: 92.875rem;
   height: 10.5938rem;
-  background-color: white; //임시
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -159,31 +139,119 @@ export const DiaryArea = styled.div`
 
 export const MyRoomArea = styled.div`
   width: 92.875rem;
-  height: 16.875rem;
-  background-color: white; //임시
+  height: 18.875rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin: 0 2rem 1.94rem 3rem;
 `;
 
+export const MyRoomContainer = styled.div`
+  display: flex;
+  width: 92.9375rem;
+  height: 16rem;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  padding-bottom: 0.5rem;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  //scroll-snap-type: x mandatory;
+
+  & > * {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+  }
+`;
+
 export const LikedRoomArea = styled.div`
-  width: 1487px;
-  height: 270px;
-  background-color: white; //임시
+  width: 92.9375rem;
+  height: 16.875rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin: 0 2rem 1.25rem 3rem;
 `;
 
-export const Title = styled.div`
-  color: ${colors.b};
-  font-size: 1.5rem;
-  font-weight: 600;
+export const LikedRoomContainer = styled.div`
+  display: flex;
+  width: 92.9375rem;
+  height: 14rem;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  overflow-x: auto;
+  scrollbar-width: thin; /* for Firefox */
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+  }
 `;
 
-//프로필 편집 모달
+export const Title = styled.div`
+  color: var(--b);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  margin-left: 0.5rem;
+`;
+export const NoticeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+`;
+export const NoticeLarge = styled.div`
+  width: 100%;
+  align-self: stretch;
+  margin-bottom: 1rem;
+
+  color: var(--g4);
+  text-align: center;
+
+  /* MAVVE/Caption/Headline/Medium */
+
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+`;
+
+export const NoticeSmall = styled.div`
+  color: var(--g4, #93959b);
+  text-align: center;
+
+  /* MAVVE/Caption/Title/Large */
+
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+`;
+
+//프로필 편집 모달//////////////////////////////////////////////
 export const ProfileEditBackground = styled.div`
   position: fixed;
   top: 0;
@@ -202,7 +270,7 @@ export const ProfileEditBox = styled.div`
   height: 23.5rem;
   flex-shrink: 0;
   border-radius: 5rem;
-  background-color: ${colors.w};
+  background-color: var(--w);
   margin: 18.8rem 31.3rem 25.3rem 44.8rem;
   //피그마대로 했는데 화면과 달라서 조정 필요할 듯..
   display: flex;
@@ -216,7 +284,7 @@ export const ProfileEditHeader = styled.div`
   flex-direction: row;
   justify-content: space-between;
   flex-shrink: 0;
-  color: ${colors.b};
+  color: var(--b);
   font-weight: 500;
   font-size: 1.875rem;
   margin: 2rem 2rem 1rem 5rem;
@@ -244,7 +312,7 @@ export const ProfileImgContainer = styled.div`
   align-items: center;
   justify-content: center;
   padding-right: 2rem;
-  border-right: 0.03125rem solid ${colors.b};
+  border-right: 0.03125rem solid var(--b);
   margin-right: 3rem;
 `;
 
@@ -252,7 +320,7 @@ export const ProfileImgEdit = styled.div`
   width: 15rem;
   height: 15rem;
   border-radius: 7.5rem;
-  border: 1px solid ${colors.b};
+  border: 1px solid var(--b);
   background: #f4f4f4;
   display: flex;
   align-items: center;
@@ -272,7 +340,7 @@ export const ProfileEditInputs = styled.div`
   flex-direction: column;
   justify-content: center;
   //gap: 1rem;
-  color: ${colors.b};
+  color: var(--b);
   font-size: 1.5rem;
   font-weight: 600;
 
@@ -286,12 +354,12 @@ export const ProfileEditInputs = styled.div`
     flex-shrink: 0;
     margin: 0.5rem 2.13rem 3.81rem 0;
     border-radius: 1.5rem;
-    border: 1px solid ${colors.b};
-    background: ${colors.g1};
-    color: ${colors.b};
+    border: 1px solid var(--b);
+    background: var(--g1);
+    color: var(--b);
 
     /* MAVVE/Caption/Body/Large */
-    font-family: SUIT;
+
     font-size: 1.125rem;
     font-style: normal;
     font-weight: 400;
@@ -308,15 +376,16 @@ export const SaveButton = styled.button`
   align-items: center;
   flex-shrink: 0;
   border-radius: 1.875rem;
-  background: ${colors.pri};
-  color: ${colors.w};
+  background: var(--pri);
+  color: var(--w);
   align-self: flex-end;
   margin-right: 2rem;
 
   /* MAVVE/Caption/Title/Small */
-  font-family: SUIT;
   font-size: 1rem;
   font-style: normal;
   font-weight: 500;
   line-height: 1.5rem; /* 150% */
 `;
+
+/////////////////////////////////////////////////
