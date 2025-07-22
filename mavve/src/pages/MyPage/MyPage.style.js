@@ -138,17 +138,32 @@ export const OneLineNoteContainer = styled.div`
 `;
 
 export const MyRoomArea = styled.div`
-  width: 92.875rem;
+  width: 93rem;
   height: 18.875rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin: 0 2rem 1.94rem 3rem;
 `;
+export const MyRoomHeader = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const CreateRoomBtn = styled.img`
+  display: flex;
+  width: 7.0625rem;
+  height: 2.0625rem;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+`;
 
 export const MyRoomContainer = styled.div`
   display: flex;
-  width: 92.9375rem;
+  width: 93rem;
   height: 16rem;
   flex-direction: row;
   align-items: center;
@@ -180,7 +195,7 @@ export const MyRoomContainer = styled.div`
 `;
 
 export const LikedRoomArea = styled.div`
-  width: 92.9375rem;
+  width: 93rem;
   height: 16.875rem;
   display: flex;
   flex-direction: column;
@@ -190,7 +205,7 @@ export const LikedRoomArea = styled.div`
 
 export const LikedRoomContainer = styled.div`
   display: flex;
-  width: 92.9375rem;
+  width: 93rem;
   height: 14rem;
   flex-direction: row;
   align-items: center;
