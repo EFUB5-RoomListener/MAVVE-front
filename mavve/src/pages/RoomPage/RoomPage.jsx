@@ -33,6 +33,7 @@ export default function RoomPage() {
           roomInfo={roomInfo}
           setRoomInfo={setRoomInfo}
           selectedLists={selectedLists}
+          step={step}
         />
         <S.PlayListContainer>
         {step === "search" && (
@@ -66,6 +67,7 @@ export default function RoomPage() {
               setStep={setStep}
               roomInfo={roomInfo}
             />
+          
           </>
         )}
         </S.PlayListContainer>
