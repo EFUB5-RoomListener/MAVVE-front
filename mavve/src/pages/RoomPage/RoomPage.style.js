@@ -229,7 +229,16 @@ export const FormBtn = styled.button`
   width: 104px;
   height: 56px;
 
+  cursor: pointer;
+  &:hover{
+    background: ${({ disabled }) => !disabled && '#0079D3'};
+  }
+
+  &:active {
+    transform: ${({ disabled }) => !disabled && 'scale(0.925)'}; /* 크기 살짝 줄임 */
+  }
 `;
+
 
 
 // VisibilityDropdown 
@@ -239,8 +248,8 @@ export const DropdownHeader = styled.div`
   width: 268px;
   height: 56px;
   padding: 0 16px;
-  background-color: ${({ $isOpen, $isSelected }) =>
-    $isOpen || !$isSelected ? '#F3F4F6' : '#FFFFFF'};
+  background-color: ${({ $isSelected }) =>
+    $isSelected ? '#FCFEFF' : '#F3F4F6'};
   border: 1px solid #3C3E44;
   border-radius: 32px;
 
@@ -251,7 +260,8 @@ export const DropdownHeader = styled.div`
   font-size: 18px;
 
   span {
-    color: ${({ $isSelected }) => ($isSelected ? '#3C3E44' : '#BFC4CA')};
+    color: ${({ $isSelected, $isOpen }) =>
+      !$isSelected && !$isOpen ? '#BFC4CA' : '#3C3E44'};
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -264,6 +274,7 @@ export const DropdownHeader = styled.div`
     flex-shrink: 0;
   }
 `;
+
 
 
 export const DropdownList = styled.ul`
@@ -406,15 +417,16 @@ export const RoomTitle = styled.h2`
 export const EditButton = styled.button`
   background: none;
   border: none;
-  cursor: pointer;
 
   svg {
     width: 3rem;
     height: 3rem;
+    cursor: pointer;
   }
   &:focus {
     outline: none;
   }
+
 `;
 
 export const HashtagContainer = styled.div`
@@ -454,11 +466,17 @@ export const SubInfo = styled.div`
 
 export const DeleteBtnWrapper = styled.div`
   display: flex;
+  
 `;
 
 export const RoomDeleteBtn = styled.button`
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
   padding: 0.5rem 1.5rem;
-  height: 3rem;
+  height: 3.5rem;
   background: var(--fth, #CFEFFF);
   border-radius: 1.875rem;
   border: none;
@@ -467,8 +485,16 @@ export const RoomDeleteBtn = styled.button`
   font-style: normal;
   font-weight: 500;
   line-height: 1.5rem; 
-  margin-left: 45.5rem;
-  margin-top: 10.4rem;
+  margin-left: 37rem;
+  margin-top: 9.9rem;
+
+  &:active {
+    transform: scale(0.925); /* 크기 살짝 줄임 */
+  }
+
+  &:hover {
+    background-color:#B0CDDC
+    }
 `
 
 
@@ -566,10 +592,6 @@ export const PlayListSearchBar = styled.input`
     color: #aaa;
   }
 
-  &:focus {
-    outline: none;
-    box-shadow: 0px 0px 0px 2px #a4cafe;
-  }
 `;
 
 
@@ -599,6 +621,10 @@ export const PlayListRow = styled.div`
   padding-left: 2rem;
 
   background-color: ${({ selected }) => (selected ? '#65C3FF' : 'transparent')};
+
+  &:hover{
+    background-color: ${({ selected }) => (!selected && 'rgba(101, 195, 255, 0.50)')};
+  }
 `;
 
 export const Thumbnail = styled.img`
@@ -669,6 +695,14 @@ export const PlayListAddBtn = styled.button`
   align-self: flex-end; 
   margin-top: 1rem;      
   margin-right: 3.38rem;    
+  cursor: pointer;
+  &:hover{
+    background: #0079D3
+  }
+
+  &:active {
+    transform: scale(0.925); /* 크기 살짝 줄임 */
+  }
 `;
 
 export const NoResultText = styled.div`
@@ -869,6 +903,15 @@ export const CreateRoomButton = styled.button`
   font-weight: 500;
   line-height: 1.5rem;
   color: var(--w, #FCFEFF);
+
+  cursor: pointer;
+  &:hover{
+    background: #0079D3
+  }
+
+  &:active {
+    transform: scale(0.925); /* 크기 살짝 줄임 */
+  }
 `;
 
 
@@ -908,7 +951,7 @@ export const DeleteText = styled.div`
   font-weight: 400;
 `;
 
-
+ 
 // RoomDeleteModal.jsx
 
 export const DeleteModalOverlay = styled.div`
@@ -978,7 +1021,6 @@ export const DeleteTextBody = styled.div`
   margin-top: 1rem;
   margin-left: 5rem;
 `;
-
 export const CancelBtn = styled.button`
   cursor: pointer;
   display: inline-flex;
@@ -990,7 +1032,17 @@ export const CancelBtn = styled.button`
   background: var(--fth, #CFEFFF);
   margin-top: 3rem;
   margin-left: 27.5rem;
+  transition: filter 0.15s ease, transform 0.1s ease;
+
+ 
+  &:hover {
+    background-color:#B0CDDC
+    }
+  &:active {
+    transform: scale(0.925);
+  }
 `;
+
 export const DeleteConfirmBtn = styled.button`
   cursor: pointer;
   display: inline-flex;
@@ -1002,4 +1054,13 @@ export const DeleteConfirmBtn = styled.button`
   background: var(--pri, #009BFF);
   margin-top: 3rem;
   margin-left: 1.5rem;
+  transition: filter 0.15s ease, transform 0.1s ease;
+
+ 
+  &:hover{
+    background: #0079D3;
+  }
+  &:active {
+    transform: scale(0.925);
+  }
 `;

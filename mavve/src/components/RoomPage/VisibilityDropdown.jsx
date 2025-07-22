@@ -11,9 +11,10 @@ function VisibilityDropdown({selected, setSelected}) {
       {!isOpen ? (
         <S.DropdownHeader
           onClick={() => setIsOpen(true)}
-          $isSelected={!!selected}
+          $isSelected={selected === '전체 공개' || selected === '친구 공개'}
           $isOpen={isOpen}
         >
+      
           <span>{selected || "전체 공개"}</span>
           <img src={DownIcon} width="26px" height="26px" />
         </S.DropdownHeader>

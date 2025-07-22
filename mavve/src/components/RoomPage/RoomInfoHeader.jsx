@@ -39,7 +39,7 @@ function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists, step }) {
         <S.VisibilityText>{roomInfo.visibility}</S.VisibilityText>
         <S.TitleArea>
           <S.RoomTitle>{roomInfo.title || "방 제목"}</S.RoomTitle>
-          {totalPlaylists > 0 &&
+          {totalPlaylists > 0 && step === "done" &&
               <S.SubInfo>
                <div>플레이리스트 {totalPlaylists}개</div>
                <div>곡 {totalSongs}곡</div>
