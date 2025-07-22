@@ -4,8 +4,9 @@ import RoomCreateForm from "./RoomCreateForm";
 import CreateBtn from "../../assets/RoomPage/createpencil.svg";
 import * as S from "../../pages/RoomPage/RoomPage.style.js";
 import mockPlayLists from "./playlistMockData";
+import RoomDeleteModal from './RoomDeleteModal.jsx';
 
-function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists }) {
+function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists, step }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
    // selectedLists는 id 배열이므로, 해당 id로 다시 플레이리스트 정보 찾기
@@ -18,6 +19,10 @@ function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists }) {
   const totalSongs = selectedPlaylists.reduce(
     (acc, playlist) => acc + playlist.songCount, 0
   );
+
+
+  // 방 삭제 모달
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
 
   return (
@@ -55,6 +60,14 @@ function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists }) {
         </S.HashtagContainer>
       </S.HeaderTextArea>
 
+      {step === "done" &&
+        <S.DeleteBtnWrapper>
+          <S.RoomDeleteBtn onClick={() => setIsDeleteModalOpen(true)}>
+            방 삭제하기
+          </S.RoomDeleteBtn>
+        </S.DeleteBtnWrapper>
+      }
+
       {isModalOpen && (
        <S.ModalWrapper>
        <S.ModalContent>
@@ -66,6 +79,15 @@ function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists }) {
        </S.ModalContent>
      </S.ModalWrapper>
       )}
+      
+
+      {step === "done" &&
+      isDeleteModalOpen &&
+        <RoomDeleteModal 
+        onClose={() => setIsDeleteModalOpen(false)}
+        roomTitle={roomInfo.title}
+        />
+      }
     </S.HeaderContainer>
   );
 }
