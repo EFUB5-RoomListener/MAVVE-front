@@ -28,7 +28,7 @@ export default function MyPage() {
   const [myRooms, setMyRooms] = useState([
     {
       id: 1,
-      title: "나만의 방1",
+      title: "1번 방",
       tag: "신나는",
       duration: "01:24:34",
       liked: false,
@@ -55,7 +55,7 @@ export default function MyPage() {
       title: "나만의 방1",
       tag: "신나는",
       duration: "01:24:34",
-      liked: false,
+      liked: true,
       likes: 200,
     },
     {
@@ -63,7 +63,7 @@ export default function MyPage() {
       title: "나만의 방1",
       tag: "신나는",
       duration: "01:24:34",
-      liked: false,
+      liked: true,
       likes: 200,
     },
     {
@@ -71,7 +71,7 @@ export default function MyPage() {
       title: "나만의 방1",
       tag: "신나는",
       duration: "01:24:34",
-      liked: false,
+      liked: true,
       likes: 200,
     },
     {
@@ -79,7 +79,7 @@ export default function MyPage() {
       title: "나만의 방1",
       tag: "신나는",
       duration: "01:24:34",
-      liked: false,
+      liked: true,
       likes: 200,
     },
     {
@@ -87,7 +87,7 @@ export default function MyPage() {
       title: "나만의 방1",
       tag: "신나는",
       duration: "01:24:34",
-      liked: false,
+      liked: true,
       likes: 200,
     },
     {
@@ -95,7 +95,7 @@ export default function MyPage() {
       title: "나만의 방1",
       tag: "신나는",
       duration: "01:24:34",
-      liked: false,
+      liked: true,
       likes: 200,
     },
     {
@@ -161,107 +161,104 @@ export default function MyPage() {
           <SideBar />
         </S.SidebarContainer>
         <S.Main>
-          <S.ViewArea>
-            <Profile user={user} onEditClick={() => setIsEditing(true)} />
-            {isEditing && (
-              <ProfileEditModal
-                user={user}
-                nameInput={nameInput}
-                setNameInput={setNameInput}
-                setUser={setUser}
-                onClose={() => setIsEditing(false)}
-                onImageUpload={handleImgUplad}
-              />
-            )}
-            <S.OneLineNoteContainer>
-              <S.Title>오늘의 한 줄 일기</S.Title>
-              <OneLineNote />
-            </S.OneLineNoteContainer>
+          <Profile user={user} onEditClick={() => setIsEditing(true)} />
+          {isEditing && (
+            <ProfileEditModal
+              user={user}
+              nameInput={nameInput}
+              setNameInput={setNameInput}
+              setUser={setUser}
+              onClose={() => setIsEditing(false)}
+              onImageUpload={handleImgUplad}
+            />
+          )}
+          <S.OneLineNoteContainer>
+            <S.Title>오늘의 한 줄 일기</S.Title>
+            <OneLineNote />
+          </S.OneLineNoteContainer>
 
-            <S.MyRoomArea>
-              <S.MyRoomHeader>
-                <S.Title
-                  onClick={() => {
-                    if (myRooms.length >= 8) {
-                      navigate("/mypage/myroom");
-                    }
-                  }}
-                  style={{
-                    cursor: myRooms.length >= 8 ? "pointer" : "default",
-                  }}
-                >
-                  내가 만든 방
-                </S.Title>
-                <S.CreateRoomBtn
-                  src={isHovered ? CreateRoomBtnHover : CreateRoomBtn}
-                  alt="방 만들기"
-                  onClick={() => navigate("/room")}
-                  onMouseEnter={() => setIsHovered(true)}
-                  onMouseLeave={() => setIsHovered(false)}
-                />
-              </S.MyRoomHeader>
-              <S.MyRoomContainer
-                ref={myRoomRef}
-                onWheel={handleHorizontalScroll(myRoomRef)}
-                style={{
-                  overflowX: myRooms.length >= 5 ? "auto" : "unset",
-                }}
-              >
-                {myRooms.length > 0 ? (
-                  myRooms.map((room) => (
-                    <RoomComponent key={room.id} data={room} />
-                  ))
-                ) : (
-                  <>
-                    <S.NoticeContainer>
-                      <S.NoticeLarge>아직 내가 만든 방이 없어요!</S.NoticeLarge>
-                      <S.NoticeSmall>
-                        지금 바로 나만의 음악 방을 만들어 친구들과 함께
-                        플레이리스트를 공유하고, 함께 감상하며 대화를
-                        나눠보세요.
-                      </S.NoticeSmall>
-                    </S.NoticeContainer>
-                  </>
-                )}
-              </S.MyRoomContainer>
-            </S.MyRoomArea>
-
-            <S.LikedRoomArea>
+          <S.MyRoomArea>
+            <S.MyRoomHeader>
               <S.Title
                 onClick={() => {
-                  if (likedRooms.length >= 8) {
-                    navigate("/mypage/likedroom");
+                  if (myRooms.length >= 8) {
+                    navigate("/mypage/myroom");
                   }
                 }}
                 style={{
-                  cursor: likedRooms.length >= 8 ? "pointer" : "default",
+                  cursor: myRooms.length >= 8 ? "pointer" : "default",
                 }}
               >
-                내가 좋아하는 방
+                내가 만든 방
               </S.Title>
-              <S.LikedRoomContainer
-                ref={likedRoomRef}
-                onWheel={handleHorizontalScroll(likedRoomRef)}
-                style={{ overflowX: likedRooms.length >= 5 ? "auto" : "unset" }}
-              >
-                {likedRooms.length > 0 ? (
-                  likedRooms.map((room) => (
-                    <RoomComponent key={room.id} data={room} />
-                  ))
-                ) : (
-                  <>
-                    <S.NoticeContainer>
-                      <S.NoticeLarge>아직 좋아요한 방이 없어요!</S.NoticeLarge>
-                      <S.NoticeSmall>
-                        마음에 드는 방에 좋아요를 눌러 나만의 컬렉션을
-                        만들어보세요.
-                      </S.NoticeSmall>
-                    </S.NoticeContainer>
-                  </>
-                )}
-              </S.LikedRoomContainer>
-            </S.LikedRoomArea>
-          </S.ViewArea>
+              <S.CreateRoomBtn
+                src={isHovered ? CreateRoomBtnHover : CreateRoomBtn}
+                alt="방 만들기"
+                onClick={() => navigate("/room")}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+              />
+            </S.MyRoomHeader>
+            <S.MyRoomContainer
+              ref={myRoomRef}
+              onWheel={handleHorizontalScroll(myRoomRef)}
+              style={{
+                overflowX: myRooms.length >= 5 ? "auto" : "unset",
+              }}
+            >
+              {myRooms.length > 0 ? (
+                myRooms.map((room) => (
+                  <RoomComponent key={room.id} data={room} />
+                ))
+              ) : (
+                <>
+                  <S.NoticeContainer>
+                    <S.NoticeLarge>아직 내가 만든 방이 없어요!</S.NoticeLarge>
+                    <S.NoticeSmall>
+                      지금 바로 나만의 음악 방을 만들어 친구들과 함께
+                      플레이리스트를 공유하고, 함께 감상하며 대화를 나눠보세요.
+                    </S.NoticeSmall>
+                  </S.NoticeContainer>
+                </>
+              )}
+            </S.MyRoomContainer>
+          </S.MyRoomArea>
+
+          <S.LikedRoomArea>
+            <S.Title
+              onClick={() => {
+                if (likedRooms.length >= 8) {
+                  navigate("/mypage/likedroom");
+                }
+              }}
+              style={{
+                cursor: likedRooms.length >= 8 ? "pointer" : "default",
+              }}
+            >
+              내가 좋아하는 방
+            </S.Title>
+            <S.LikedRoomContainer
+              ref={likedRoomRef}
+              onWheel={handleHorizontalScroll(likedRoomRef)}
+              style={{ overflowX: likedRooms.length >= 5 ? "auto" : "unset" }}
+            >
+              {likedRooms.length > 0 ? (
+                likedRooms.map((room) => (
+                  <RoomComponent key={room.id} data={room} />
+                ))
+              ) : (
+                <>
+                  <S.NoticeContainer>
+                    <S.NoticeLarge>아직 좋아요한 방이 없어요!</S.NoticeLarge>
+                    <S.NoticeSmall>
+                      마음에 드는 방에 좋아요를 눌러 나만의 컬렉션을
+                      만들어보세요.
+                    </S.NoticeSmall>
+                  </S.NoticeContainer>
+                </>
+              )}
+            </S.LikedRoomContainer>
+          </S.LikedRoomArea>
         </S.Main>
       </S.MainContainer>
     </S.Container>

@@ -44,14 +44,16 @@ export default function ProfileEditModal({
               onChange={onImageUpload}
             />
           </S.ProfileImgContainer>
-          <S.ProfileEditInputs>
-            이름
-            <input
-              type="text"
-              value={nameInput}
-              maxLength={10}
-              onChange={(e) => setNameInput(e.target.value)}
-            />
+          <S.ProfileNameEditArea>
+            <S.ProfileNameEditInputs>
+              이름
+              <input
+                type="text"
+                value={nameInput}
+                maxLength={10}
+                onChange={(e) => setNameInput(e.target.value)}
+              />
+            </S.ProfileNameEditInputs>
             <S.SaveButton
               onClick={() => {
                 setUser((prev) => ({ ...prev, name: nameInput }));
@@ -60,7 +62,7 @@ export default function ProfileEditModal({
             >
               저장하기
             </S.SaveButton>
-          </S.ProfileEditInputs>
+          </S.ProfileNameEditArea>
         </S.ProfileEditArea>
       </S.ProfileEditBox>
     </S.ProfileEditBackground>

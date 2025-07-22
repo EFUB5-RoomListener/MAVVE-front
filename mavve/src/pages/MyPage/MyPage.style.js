@@ -36,6 +36,17 @@ export const Main = styled.div`
   height: 52.625rem;
 
   margin: 0.5rem 2rem 0 0;
+
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 16px;
+  box-shadow: inset 0 0 0 3px #ffffff; //내부 테두리 구현
+  overflow: scroll;
+  /* 스크롤바 숨기기 */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 `;
 
 // export const Playbar = styled.div`
@@ -113,21 +124,6 @@ export const EditIcon = styled.img`
   cursor: pointer;
 `;
 
-export const ViewArea = styled.div`
-  width: 97.9375rem;
-  height: 52.625rem;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 16px;
-  box-shadow: inset 0 0 0 3px #ffffff; //내부 테두리 구현
-  overflow: scroll;
-  /* 스크롤바 숨기기 */
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
-`;
-
 export const OneLineNoteContainer = styled.div`
   width: 92.875rem;
   height: 10.5938rem;
@@ -196,29 +192,43 @@ export const MyRoomContainer = styled.div`
 
 export const LikedRoomArea = styled.div`
   width: 93rem;
-  height: 16.875rem;
+  height: 18.875rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 0 2rem 1.25rem 3rem;
+  margin: 0 2rem 1.94rem 3rem;
 `;
 
 export const LikedRoomContainer = styled.div`
   display: flex;
   width: 93rem;
-  height: 14rem;
+  height: 16rem;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   gap: 1rem;
+  padding-bottom: 0.5rem;
+
   overflow-x: auto;
-  scrollbar-width: thin; /* for Firefox */
+  overflow-y: hidden;
+
+  //scroll-snap-type: x mandatory;
+
+  & > * {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
   &::-webkit-scrollbar {
     height: 8px;
   }
+
   &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
     background-color: #ccc;
-    border-radius: 4px;
   }
 `;
 
@@ -339,7 +349,6 @@ export const ProfileImgEdit = styled.div`
   background: #f4f4f4;
   display: flex;
   align-items: center;
-  justify-content: center;
   overflow: hidden;
 
   img {
@@ -350,19 +359,29 @@ export const ProfileImgEdit = styled.div`
   }
 `;
 
-export const ProfileEditInputs = styled.div`
+export const ProfileNameEditArea = styled.div`
+  width: 19.88rem;
+  height: 13.38rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3.81rem;
+`;
+
+export const ProfileNameEditInputs = styled.div`
+  width: 19.875rem;
+  height: 6.1875rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  //gap: 1rem;
   color: var(--b);
   font-size: 1.5rem;
   font-weight: 600;
+  //margin: 3.63rem 2.12rem 3.69rem 0;
 
   input {
     display: flex;
-    width: 19.875rem;
-    height: 3.5rem;
+    width: 16.9rem;
+    height: 1.38rem;
     padding: 1.0625rem 1.5rem;
     justify-content: space-between;
     align-items: center;
@@ -394,7 +413,7 @@ export const SaveButton = styled.button`
   background: var(--pri);
   color: var(--w);
   align-self: flex-end;
-  margin-right: 2rem;
+  //margin-right: 2rem;
 
   /* MAVVE/Caption/Title/Small */
   font-size: 1rem;
@@ -404,3 +423,22 @@ export const SaveButton = styled.button`
 `;
 
 /////////////////////////////////////////////////
+export const PageHeader = styled.div`
+  display: flex;
+  width: 91.94rem;
+  height: 2.06rem;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 2rem 0 1.5rem 4.5rem;
+
+  img {
+    margin-top: -0.5rem;
+  }
+`;
+
+export const PageRoomContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); // 가로 5개
+  gap: 2.5rem; // 요소 간 간격 (원하는 값으로 조정)
+  padding: 0 4rem 1.25rem 4rem; // 전체 여백
+`;
