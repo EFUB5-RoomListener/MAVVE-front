@@ -452,7 +452,24 @@ export const SubInfo = styled.div`
 
 `;
 
+export const DeleteBtnWrapper = styled.div`
+  display: flex;
+`;
 
+export const RoomDeleteBtn = styled.button`
+  padding: 0.5rem 1.5rem;
+  height: 3rem;
+  background: var(--fth, #CFEFFF);
+  border-radius: 1.875rem;
+  border: none;
+  color: var(--b, #3C3E44);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.5rem; 
+  margin-left: 45.5rem;
+  margin-top: 10.4rem;
+`
 
 
 
@@ -570,7 +587,6 @@ export const SearchedContainer = styled.div`
   width: 87.875rem;
   margin-left: 6rem;
   margin-top: 2.75rem;
-  gap: 0.5rem;
 `;
 
 export const PlayListRow = styled.div`
@@ -890,4 +906,100 @@ export const DeleteText = styled.div`
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 400;
+`;
+
+
+// RoomDeleteModal.jsx
+
+export const DeleteModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* 다른 요소 위에 올라오게 */
+`;
+
+export const DeleteModalContainer = styled.div`
+  background: var(--w, #FCFEFF);
+  width: 44rem;
+  height: 17.0625rem;
+  border-radius: 5rem;
+  background: var(--w, #FCFEFF);
+  position: relative;
+`;
+
+export const ModalCloseBtn = styled.button`
+  cursor: pointer;
+  position: absolute;
+  margin-left: 40.9rem;
+  margin-top: 2rem;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 12px;
+    height: 12px;
+    pointer-events: none;
+  }
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const DeleteTextTitle = styled.div`
+  color: var(--b, #3C3E44);
+  font-size: 1.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-left: 5rem;
+  margin-top: 4rem;
+`;
+
+export const DeleteTextBody = styled.div`
+  color: var(--g4, #93959B);
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-top: 1rem;
+  margin-left: 5rem;
+`;
+
+export const CancelBtn = styled.button`
+  cursor: pointer;
+  display: inline-flex;
+  height: 3.5rem;
+  padding: 0.5rem 1.5rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1.875rem;
+  background: var(--fth, #CFEFFF);
+  margin-top: 3rem;
+  margin-left: 27.5rem;
+`;
+export const DeleteConfirmBtn = styled.button`
+  cursor: pointer;
+  display: inline-flex;
+  height: 3.5rem;
+  padding: 0.5rem 1.5rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1.875rem;
+  background: var(--pri, #009BFF);
+  margin-top: 3rem;
+  margin-left: 1.5rem;
 `;
