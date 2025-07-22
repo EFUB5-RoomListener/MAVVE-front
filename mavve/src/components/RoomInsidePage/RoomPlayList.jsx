@@ -73,12 +73,23 @@ function RoomPlayList({isChatOpen, setIsChatOpen}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   // props로 내려줄 노래 추가 함수 
   const handleAddSongs = (newSongs) => {
-    // 중복 제거 (같은 ID 가진 곡이 이미 있는 경우 추가 안 함)
     const existingIds = new Set(playList.map(song => song.id));
     const filteredNewSongs = newSongs.filter(song => !existingIds.has(song.id));
   
-    setPlayList(prev => [...prev, ...filteredNewSongs]);
+    if (filteredNewSongs.length > 0) {
+      setPlayList(prev => [...prev, ...filteredNewSongs]);
+      setAddedCount(filteredNewSongs.length);
+      setIsAddToastVisible(true);
+  
+      setTimeout(() => {
+        setIsAddToastVisible(false);
+      }, 1500);
+    }
   };
+  
+  // 노래 추가 토스트 모달 
+  const [isAddToastVisible, setIsAddToastVisible] = useState(false);
+  const [addedCount, setAddedCount] = useState(0);
   
   return (
     <>
@@ -144,6 +155,12 @@ function RoomPlayList({isChatOpen, setIsChatOpen}) {
       {isToastVisible && (
         <S.Toast>
           선택하신 {deletedCount}곡의 노래가 삭제되었습니다.
+        </S.Toast>
+      )}
+
+      {isAddToastVisible && (
+        <S.Toast>
+          (방 제목)에 {addedCount}곡이 추가되었습니다.
         </S.Toast>
       )}
       </S.MusicListContainer>

@@ -122,6 +122,16 @@ export const RoomLeaveBtn = styled.button`
 
     margin-left: 105rem;
     margin-top: 2rem;
+    cursor: pointer;
+    
+    
+    &:hover {
+    background-color:#B0CDDC
+    }
+
+    &:active {
+    transform: scale(0.925); /* 크기 살짝 줄임 */
+  }
 `;
 
 
@@ -206,6 +216,10 @@ export const EditButton = styled.button`
   margin-top: 3rem;
   right: 5rem;
   position: fixed;
+
+  &:hover {
+    background-color:#B0CDDC
+    }
 `;
 
 
@@ -228,6 +242,14 @@ export const ChatToggleBtn = styled.button`
   position: fixed;
   margin-top: 9rem;
   right: 5rem;
+  
+  &:hover {
+  background-color: ${({ isChatOpen }) =>
+    isChatOpen ? '#CFEFFF' : '#B0CDDC'};
+}
+
+
+  
 `;
 
 export const SongAddBtn = styled.button`
@@ -248,8 +270,20 @@ export const SongAddBtn = styled.button`
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 400;
-  line-height: 1.5rem; 
+  line-height: 1.5rem;
+
+  transition: all 0.1s ease-in-out;
+
+  &:hover {
+    background-color: #F3F4F6;
+  }
+
+  &:active {
+    background-color: #D7D9DD;
+    transform: scale(0.925); /* 크기 살짝 줄임 */
+  }
 `;
+
 
 export const SongDeleteBtn = styled.button`
   position: absolute;
@@ -271,6 +305,15 @@ export const SongDeleteBtn = styled.button`
   font-style: normal;
   font-weight: 500;
   line-height: 1.5rem;
+
+  &:hover {
+    background-color: #F3F4F6;
+  }
+
+  &:active {
+    background-color: #D7D9DD;
+    transform: scale(0.925); /* 크기 살짝 줄임 */
+  }
 `;
 
 
@@ -305,6 +348,12 @@ export const FriendsBtn = styled.button`
   border: none;
 
   position: relative;
+  &:hover {
+  background-color: ${({  isActive  }) =>
+     isActive  ? '#CFEFFF' : '#B0CDDC'};
+  }
+
+  
 `;
 
 
@@ -632,6 +681,14 @@ export const AddButton = styled.button`
   font-weight: 500;
   line-height: 1.5rem; 
   color: var(--w, #FCFEFF);
+
+  &:hover{
+    background: #0079D3
+  }
+
+  &:active {
+    transform: scale(0.925); /* 크기 살짝 줄임 */
+  }
   `;
 
 
