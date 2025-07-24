@@ -41,3 +41,19 @@ export const LoginButton = styled.img`
   cursor: pointer;
   border: none;
 `;
+
+export const LoadBackground = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg);
+  color: var(--b);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const LoadingIcon = styled.img`
+  width: 5rem;
+  height: 5rem;
+  margin-top: 3rem;
+`;

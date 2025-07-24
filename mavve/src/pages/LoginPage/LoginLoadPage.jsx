@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import * as S from "./LoginPage.style";
+import Loading from "../../assets/LoginPage/loading.png";
 
 export default function LoginLoad() {
   const navigate = useNavigate();
@@ -39,7 +41,7 @@ export default function LoginLoad() {
 
         if (res.status === 200 && token) {
           localStorage.setItem("accessToken", token);
-          setMessage("✅ 로그인 성공! 홈으로 이동 중...");
+          setMessage("✅ 로그인 성공! 잠시후 메인 화면으로 이동합니다...");
           setTimeout(() => navigate("/"), 1000);
         } else {
           setMessage(`❌ 로그인 실패: 상태 코드 ${res.status}, 토큰: ${token}`);
@@ -52,9 +54,10 @@ export default function LoginLoad() {
   }, [navigate]);
 
   return (
-    <div>
+    <S.LoadBackground>
+      <S.LoadingIcon src={Loading} alt="로딩 중" />
       <h2>로그인 처리 중...</h2>
       <p>{message}</p>
-    </div>
+    </S.LoadBackground>
   );
 }
