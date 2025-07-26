@@ -29,11 +29,12 @@ function PlayListSelector({ selectedLists, setSelectedLists, roomInfo, setStep }
       };
     // 방 세부 정보 입력했는지 
     const isRoomInfoComplete =
-        roomInfo.title.trim() !== "" &&
-        typeof roomInfo.thumbnailPreview === "string" &&
-        roomInfo.thumbnailPreview.trim() !== "" &&
-        roomInfo.hashtags.length > 0 &&
-        roomInfo.visibility !== "" && roomInfo.visibility !== null;
+    roomInfo?.title?.trim?.() !== "" &&
+    typeof roomInfo?.thumbnailPreview === "string" &&
+    roomInfo?.thumbnailPreview?.trim?.() !== "" &&
+    roomInfo?.hashtags?.length > 0 &&
+    roomInfo?.visibility !== "" && roomInfo?.visibility !== null;
+    
 
     // 방 모든 정보 확정 
     const handleConfirm = () => {
