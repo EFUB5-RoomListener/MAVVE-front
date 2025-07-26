@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import * as S from "./MyPage.style";
+import * as S from "./ProfileEditModal.style";
 import ImgUploadIcon from "../../assets/MyPage/imgUploadIcon.svg";
 import XIcon from "../../assets/MyPage/xIcon.svg";
 
@@ -54,14 +54,14 @@ export default function ProfileEditModal({
                 onChange={(e) => setNameInput(e.target.value)}
               />
             </S.ProfileNameEditInputs>
-            <S.SaveButton
+            <S.SaveBtn
               onClick={() => {
                 setUser((prev) => ({ ...prev, name: nameInput }));
                 onClose();
               }}
             >
               저장하기
-            </S.SaveButton>
+            </S.SaveBtn>
           </S.ProfileNameEditArea>
         </S.ProfileEditArea>
       </S.ProfileEditBox>

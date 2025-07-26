@@ -10,11 +10,12 @@ import CreateRoomBtn from "../../assets/MyPage/createRoomBtn.svg";
 import CreateRoomBtnHover from "../../assets/MyPage/createRoomBtnHover.svg";
 import Profile from "./Profile";
 import ProfileEditModal from "./ProfileEditModal";
+import OneLineNoteModal from "../../pages/MyPage/OneLineNoteModal";
 
 export default function MyPage() {
   const [user, setUser] = useState({
     name: "테스트유저",
-    profileImg: ProfileTestImg, //기본 프로필 테스트 하려면 "" 으로 변경
+    profileImg: "", //ProfileTestImg, //기본 프로필 테스트 하려면 "" 으로 변경
     playlistCount: 5,
     roomCount: 10,
   });
@@ -132,6 +133,19 @@ export default function MyPage() {
     },
   ]);
 
+  const [noteData, setNoteData] = useState({
+    diaryId: 1,
+    emojiUrl: "",
+    nickname: "테스트 유저",
+    comment: "",
+    songTitle: "",
+    songArtist: "",
+    songImage: "",
+    createdAt: "2022-11-20T08:02:21.347+0000",
+    duration: "",
+  });
+  const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
+
   const likedRooms = myRooms.filter((room) => room.liked);
 
   const myRoomRef = useRef(null);
@@ -172,10 +186,22 @@ export default function MyPage() {
               onImageUpload={handleImgUplad}
             />
           )}
+
           <S.OneLineNoteContainer>
             <S.Title>오늘의 한 줄 일기</S.Title>
-            <OneLineNote />
+            <OneLineNote
+              profileImg={user.profileImg}
+              noteData={noteData}
+              onEditClick={() => setIsNoteModalOpen(true)}
+            />
           </S.OneLineNoteContainer>
+          {isNoteModalOpen && (
+            <OneLineNoteModal
+              onClose={() => setIsNoteModalOpen(false)}
+              noteData={noteData}
+              setNoteData={setNoteData}
+            />
+          )}
 
           <S.MyRoomArea>
             <S.MyRoomHeader>

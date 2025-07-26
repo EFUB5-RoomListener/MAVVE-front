@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "./MyPage.style";
 import WaveImg from "../../assets/MyPage/wave.svg";
-import DefaultProfile from "../../assets/MyPage/defaultProfile.svg";
+import DefaultProfile from "../../assets/Common/defaultProfile.svg";
 import EditIcon from "../../assets/MyPage/editIcon.svg";
 import EditIconHover from "../../assets/MyPage/editIconHover.svg";
 
