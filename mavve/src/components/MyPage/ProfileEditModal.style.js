@@ -174,6 +174,7 @@ export const SaveBtn = styled.button`
   }
 
   &:active {
+    margin-top: ${({ disabled }) => (disabled ? "0" : "0.25rem")};
     padding: ${({ disabled }) =>
       disabled ? "0.5rem 1.5rem" : " 0.375rem 1.375rem"};
     width: ${({ disabled }) => (disabled ? "6.5rem" : "6.25rem")};

@@ -58,7 +58,7 @@ export const NotePlaceholder = styled.div`
   line-height: 1.5rem;
 `;
 
-export const Emotion = styled.div`
+export const EmotionEdit = styled.div`
   width: 2rem;
   height: 2rem;
   padding: 1rem;
@@ -71,6 +71,12 @@ export const Emotion = styled.div`
 
 export const EditIcon = styled.img`
   cursor: pointer;
+`;
+
+export const Emoji = styled.img`
+  width: 2rem;
+  height: 2rem;
+  padding: 1rem;
 `;
 
 export const UserProfile = styled.img`

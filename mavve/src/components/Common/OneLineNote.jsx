@@ -29,13 +29,13 @@ export default function OneLineNote({ profileImg, noteData, onEditClick }) {
               </S.NotePlaceholder>
             )}
           </S.NoteText>
-          <S.Emotion onClick={onEditClick}>
+          <S.EmotionEdit onClick={onEditClick}>
             {noteData?.emojiUrl ? (
-              <img src={noteData.emojiUrl} alt="이모지" />
+              <S.Emoji src={noteData.emojiUrl} alt="이모지" />
             ) : (
               <S.EditIcon src={EditIcon} alt="편집 아이콘" />
             )}
-          </S.Emotion>
+          </S.EmotionEdit>
         </S.NoteContent>
       </S.Note>
       <S.Song>

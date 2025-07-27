@@ -54,12 +54,46 @@ export const BtnWrapper = styled.div`
   margin-left: 32.5rem;
 `;
 export const SelectBtn = styled.button`
-  background: none;
+  width: 3rem;
+  height: 3rem;
+  flex-shrink: 0;
+  background: var(--sec);
+  border-radius: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  img {
-    width: 3rem;
-    height: 3rem;
+  &:hover {
+    background: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.2) 0%,
+        rgba(0, 0, 0, 0.2) 100%
+      ),
+      #65c3ff;
   }
+
+  &:active {
+    margin-right: 0.25rem;
+    width: 2.75rem;
+    height: 2.75rem;
+    flex-shrink: 0;
+    aspect-ratio: 1/1;
+    background: var(--sec);
+  }
+`;
+
+export const MusicIcon = styled.img`
+  width: 1.49281rem;
+  height: 1.4375rem;
+  flex-shrink: 0;
+  aspect-ratio: 23.88/23;
+`;
+
+export const EmojiIcon = styled.img`
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+  aspect-ratio: 1/1;
 `;
 
 export const TextareaWrapper = styled.div`

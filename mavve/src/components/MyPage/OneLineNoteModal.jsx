@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import * as S from "./OneLineNoteModal.style";
 import XIcon from "../../assets/MyPage/xIcon.svg";
-import SelectEmojiBtn from "../../assets/MyPage/selectEmojiBtn.svg";
-import SelectMusicBtn from "../../assets/MyPage/selectMusicBtn.svg";
 import MusicSelectModal from "./MusicSelectModal";
 import EmojiSelectModal from "./EmojiSelectModal";
+import EmojiIcon from "../../assets/MyPage/EmojiIcon.svg";
+import MusicIcon from "../../assets/MyPage/MusicIcon.svg";
 
 export default function OneLineNoteModal({ onClose, noteData, setNoteData }) {
   const [comment, setComment] = useState(noteData?.comment || "");
@@ -32,10 +32,10 @@ export default function OneLineNoteModal({ onClose, noteData, setNoteData }) {
         </S.OneLineNoteHeader>
         <S.BtnWrapper>
           <S.SelectBtn onClick={() => setShowMusicSelectModal(true)}>
-            <img src={SelectMusicBtn} alt="음악 선택 버튼" />
+            <S.MusicIcon src={MusicIcon} alt="음악 선택 버튼" />
           </S.SelectBtn>
           <S.SelectBtn onClick={() => setShowEmojiSelectModal(true)}>
-            <img src={SelectEmojiBtn} alt="이모지 선택 버튼" />
+            <S.EmojiIcon src={EmojiIcon} alt="이모지 선택 버튼" />
           </S.SelectBtn>
         </S.BtnWrapper>
         <S.TextareaWrapper>

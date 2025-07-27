@@ -6,8 +6,7 @@ import OneLineNote from "../../components/Common/OneLineNote";
 import RoomComponent from "../../components/Common/RoomComponent";
 import SideBar from "../../components/Common/SideBar";
 import TopBar from "../../components/Common/TopBar";
-import CreateRoomBtn from "../../assets/MyPage/createRoomBtn.svg";
-import CreateRoomBtnHover from "../../assets/MyPage/createRoomBtnHover.svg";
+import PlusIcon from "../../assets/MyPage/plusIcon.svg";
 import Profile from "../../components/MyPage/Profile";
 import ProfileEditModal from "../../components/MyPage/ProfileEditModal";
 import OneLineNoteModal from "../../components/MyPage/OneLineNoteModal";
@@ -217,13 +216,9 @@ export default function MyPage() {
               >
                 내가 만든 방
               </S.Title>
-              <S.CreateRoomBtn
-                src={isHovered ? CreateRoomBtnHover : CreateRoomBtn}
-                alt="방 만들기"
-                onClick={() => navigate("/room")}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-              />
+              <S.CreateRoomBtn onClick={() => navigate("/room")}>
+                <S.PlusIcon src={PlusIcon} alt="방 생성 아이콘" />방 생성하기
+              </S.CreateRoomBtn>
             </S.MyRoomHeader>
             <S.MyRoomContainer
               ref={myRoomRef}
