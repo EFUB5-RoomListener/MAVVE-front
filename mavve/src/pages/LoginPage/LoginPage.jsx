@@ -5,7 +5,11 @@ import LoginButtonImg from "../../assets/LoginPage/LoginButton.svg";
 
 export default function LoginPage() {
   const handleLogin = () => {
+    const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+    const redirectUri = import.meta.env.VITE_SPOTIFY_REDIRECT_URI;
+
     console.log("로그인 버튼 클릭됨");
+    window.location.href = `https://accounts.spotify.com/ko/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}`;
   };
 
   return (

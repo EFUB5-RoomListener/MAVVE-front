@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 //RoomCreateForm 
 
-export const FormContainer = styled.form`
+export const FormContainer = styled.div`
   position: relative;
   width: 960px;
   height: 601px;
@@ -115,7 +115,7 @@ export const InputWrapper = styled.div`
   width: 268px;
   height: 56px;
   border-radius: 24px;
-  background-color: ${({ isTitleFocused }) => (isTitleFocused ? '#D7D9DD' : '#F3F4F6')};
+  background-color: ${({ $isTitleFocused }) => ($isTitleFocused ? '#D7D9DD' : '#F3F4F6')};
   border: 1px solid #3C3E44;
   display: flex;
   align-items: center;
@@ -160,7 +160,7 @@ export const CharCount = styled.div`
 export const HashContainer = styled.div`
   width: 268px;
   height: 136px;
-  background-color: ${({ isFocused }) => (isFocused ? '#D7D9DD' : '#F3F4F6')};
+  background-color: ${({ $isFocused }) => ($isFocused ? '#D7D9DD' : '#F3F4F6')};
   border: 1px solid #3C3E44;
   border-radius: 32px;
   padding: 16px 12px; 
@@ -229,7 +229,16 @@ export const FormBtn = styled.button`
   width: 104px;
   height: 56px;
 
+  cursor: pointer;
+  &:hover{
+    background: ${({ disabled }) => !disabled && '#0079D3'};
+  }
+
+  &:active {
+    transform: ${({ disabled }) => !disabled && 'scale(0.925)'}; /* 크기 살짝 줄임 */
+  }
 `;
+
 
 
 // VisibilityDropdown 
@@ -239,8 +248,8 @@ export const DropdownHeader = styled.div`
   width: 268px;
   height: 56px;
   padding: 0 16px;
-  background-color: ${({ $isOpen, $isSelected }) =>
-    $isOpen || !$isSelected ? '#F3F4F6' : '#FFFFFF'};
+  background-color: ${({ $isSelected }) =>
+    $isSelected ? '#FCFEFF' : '#F3F4F6'};
   border: 1px solid #3C3E44;
   border-radius: 32px;
 
@@ -251,7 +260,8 @@ export const DropdownHeader = styled.div`
   font-size: 18px;
 
   span {
-    color: ${({ $isSelected }) => ($isSelected ? '#3C3E44' : '#BFC4CA')};
+    color: ${({ $isSelected, $isOpen }) =>
+      !$isSelected && !$isOpen ? '#BFC4CA' : '#3C3E44'};
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -264,6 +274,7 @@ export const DropdownHeader = styled.div`
     flex-shrink: 0;
   }
 `;
+
 
 
 export const DropdownList = styled.ul`
@@ -406,15 +417,16 @@ export const RoomTitle = styled.h2`
 export const EditButton = styled.button`
   background: none;
   border: none;
-  cursor: pointer;
 
   svg {
     width: 3rem;
     height: 3rem;
+    cursor: pointer;
   }
   &:focus {
     outline: none;
   }
+
 `;
 
 export const HashtagContainer = styled.div`
@@ -452,7 +464,39 @@ export const SubInfo = styled.div`
 
 `;
 
+export const DeleteBtnWrapper = styled.div`
+  display: flex;
+  
+`;
 
+export const RoomDeleteBtn = styled.button`
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  padding: 0.5rem 1.5rem;
+  height: 3.5rem;
+  background: var(--fth, #CFEFFF);
+  border-radius: 1.875rem;
+  border: none;
+  color: var(--b, #3C3E44);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.5rem; 
+  position: sticky;
+  margin-left: 25rem;
+  margin-top: 9.9rem;
+
+  &:active {
+    transform: scale(0.925); /* 크기 살짝 줄임 */
+  }
+
+  &:hover {
+    background-color:#B0CDDC
+    }
+`
 
 
 
@@ -549,10 +593,6 @@ export const PlayListSearchBar = styled.input`
     color: #aaa;
   }
 
-  &:focus {
-    outline: none;
-    box-shadow: 0px 0px 0px 2px #a4cafe;
-  }
 `;
 
 
@@ -570,7 +610,6 @@ export const SearchedContainer = styled.div`
   width: 87.875rem;
   margin-left: 6rem;
   margin-top: 2.75rem;
-  gap: 0.5rem;
 `;
 
 export const PlayListRow = styled.div`
@@ -583,6 +622,10 @@ export const PlayListRow = styled.div`
   padding-left: 2rem;
 
   background-color: ${({ selected }) => (selected ? '#65C3FF' : 'transparent')};
+
+  &:hover{
+    background-color: ${({ selected }) => (!selected && 'rgba(101, 195, 255, 0.50)')};
+  }
 `;
 
 export const Thumbnail = styled.img`
@@ -653,6 +696,14 @@ export const PlayListAddBtn = styled.button`
   align-self: flex-end; 
   margin-top: 1rem;      
   margin-right: 3.38rem;    
+  cursor: pointer;
+  &:hover{
+    background: #0079D3
+  }
+
+  &:active {
+    transform: scale(0.925); /* 크기 살짝 줄임 */
+  }
 `;
 
 export const NoResultText = styled.div`
@@ -853,6 +904,15 @@ export const CreateRoomButton = styled.button`
   font-weight: 500;
   line-height: 1.5rem;
   color: var(--w, #FCFEFF);
+
+  cursor: pointer;
+  &:hover{
+    background: #0079D3
+  }
+
+  &:active {
+    transform: scale(0.925); /* 크기 살짝 줄임 */
+  }
 `;
 
 
@@ -890,4 +950,118 @@ export const DeleteText = styled.div`
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 400;
+`;
+
+ 
+// RoomDeleteModal.jsx
+
+export const DeleteModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* 다른 요소 위에 올라오게 */
+`;
+
+export const DeleteModalContainer = styled.div`
+  background: var(--w, #FCFEFF);
+  width: 44rem;
+  height: 17.0625rem;
+  border-radius: 5rem;
+  background: var(--w, #FCFEFF);
+  position: relative;
+`;
+
+export const ModalCloseBtn = styled.button`
+  cursor: pointer;
+  position: absolute;
+  margin-left: 40.9rem;
+  margin-top: 2rem;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 12px;
+    height: 12px;
+    pointer-events: none;
+  }
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const DeleteTextTitle = styled.div`
+  color: var(--b, #3C3E44);
+  font-size: 1.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-left: 5rem;
+  margin-top: 4rem;
+`;
+
+export const DeleteTextBody = styled.div`
+  color: var(--g4, #93959B);
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-top: 1rem;
+  margin-left: 5rem;
+`;
+export const CancelBtn = styled.button`
+  cursor: pointer;
+  display: inline-flex;
+  height: 3.5rem;
+  padding: 0.5rem 1.5rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1.875rem;
+  background: var(--fth, #CFEFFF);
+  margin-top: 3rem;
+  margin-left: 27.5rem;
+  transition: filter 0.15s ease, transform 0.1s ease;
+
+ 
+  &:hover {
+    background-color:#B0CDDC
+    }
+  &:active {
+    transform: scale(0.925);
+  }
+`;
+
+export const DeleteConfirmBtn = styled.button`
+  cursor: pointer;
+  display: inline-flex;
+  height: 3.5rem;
+  padding: 0.5rem 1.5rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1.875rem;
+  background: var(--pri, #009BFF);
+  margin-top: 3rem;
+  margin-left: 1.5rem;
+  transition: filter 0.15s ease, transform 0.1s ease;
+
+ 
+  &:hover{
+    background: #0079D3;
+  }
+  &:active {
+    transform: scale(0.925);
+  }
 `;
