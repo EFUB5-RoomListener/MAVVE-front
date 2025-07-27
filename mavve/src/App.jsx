@@ -12,7 +12,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/room" element={<RoomPage />} />
+        <Route path="/rooms" element={<RoomPage />} />
+        <Route path="/rooms/:roomCode" element={<RoomPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/likedroom" element={<LikedRoomPage />} />

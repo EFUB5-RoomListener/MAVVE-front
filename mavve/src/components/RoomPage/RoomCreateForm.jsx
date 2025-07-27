@@ -3,14 +3,16 @@ import UploadIcon from "../../assets/RoomPage/pic-upload.svg";
 import CloseIcon  from "../../assets/RoomPage/close.svg";
 import VisibilityDropdown from "./VisibilityDropdown";
 import * as S from "../../pages/RoomPage/RoomPage.style";
+import { useParams } from "react-router-dom";
+import { updateRoom } from "../../api/room";
 
-function RoomCreateForm({roomInfo, setRoomInfo, onClose}){
+function RoomCreateForm({roomInfo, setRoomInfo, onClose, setThumbnailFile, step}){
     const [title, setTitle] = useState(roomInfo.title || "");
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
     }
 
-    const [thumbnailFile, setThumbnailFile] = useState(null); // file 객체 (서버로 업로드)
+    
     const [thumbnailPreview, setThumbnailPreview] = useState(roomInfo.thumbnailPreview || ""); // 이미지 URL 
     const handleThumbnailChange = (e) => {
         const file = e.target.files[0];
@@ -29,7 +31,8 @@ function RoomCreateForm({roomInfo, setRoomInfo, onClose}){
     const [isComposingTag, setIsComposingTag] = useState(false);
 
     const handleKeyDown = (e) => {
-        if (isComposingTag) return; 
+        if (e.isComposing || isComposingTag) return;
+        
         if (e.key === 'Enter') {
             e.preventDefault();
             const newTag = input.trim();
@@ -53,17 +56,35 @@ function RoomCreateForm({roomInfo, setRoomInfo, onClose}){
 
     
 
+    const { roomCode } = useParams();
+    const handleSave = async () => {
+        if (!isFormComplete) return;
 
-    const handleSave = () => {
-
-        setRoomInfo({
+        const updatedData = {
             thumbnailPreview,
             title,
             hashtags: tags,
             visibility: selected,
-          });          
+          };
+      
+        setRoomInfo(updatedData); // 프론트 상태는 항상 업데이트
+
+        // step이 done일 때만 서버에도 반영
+        if (step === "done" && roomCode) {
+            try {
+            await updateRoom(roomCode, {
+                roomName: title,
+                tag: tags,
+                imageURL: thumbnailPreview,
+                isPublic: selected === "전체 공개",
+            });     
+            console.log("수정된 정보 서버에 저장 완료");
+            } catch (error) {
+            console.error("방 정보 저장 실패", error);
+            }
+        }
         onClose(); 
-    }
+    };
 
     
     //입력 완료되었는지 검사
@@ -106,7 +127,7 @@ function RoomCreateForm({roomInfo, setRoomInfo, onClose}){
 
                 <S.FormRight>
                     <S.Label htmlFor="roomTitle">제목</S.Label>
-                    <S.InputWrapper isTitleFocused={isTitleFocused}>
+                    <S.InputWrapper $isTitleFocused={isTitleFocused}>
                     <S.StyledInput
                         value={title}
                         onChange={handleTitleChange}
@@ -115,7 +136,6 @@ function RoomCreateForm({roomInfo, setRoomInfo, onClose}){
                         onKeyDown={(e) => {
                             if (e.key === "Enter") {
                               e.preventDefault();
-                              e.target.blur(); // 엔터 누르면 입력 완료!
                             }
                           }}
                         placeholder="방의 제목을 입력해주세요!"
@@ -132,7 +152,7 @@ function RoomCreateForm({roomInfo, setRoomInfo, onClose}){
 
                     <S.Label>해시태그</S.Label>
                     <S.HashContainer
-                    isFocused={isComposingTag || isFocused}
+                    $isFocused={isComposingTag || isFocused}
 
                     onClick={() => {
                         setIsFocused(true);
@@ -172,7 +192,7 @@ function RoomCreateForm({roomInfo, setRoomInfo, onClose}){
 
                     <S.BtnWrapper>
 
-                    <S.FormBtn onClick={handleSave} disabled={!isFormComplete}>저장하기</S.FormBtn>
+                    <S.FormBtn type="button" onClick={handleSave} disabled={!isFormComplete}>저장하기</S.FormBtn>
 
                     </S.BtnWrapper>
                 </S.FormRight>

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 //RoomCreateForm 
 
-export const FormContainer = styled.form`
+export const FormContainer = styled.div`
   position: relative;
   width: 960px;
   height: 601px;
@@ -115,7 +115,7 @@ export const InputWrapper = styled.div`
   width: 268px;
   height: 56px;
   border-radius: 24px;
-  background-color: ${({ isTitleFocused }) => (isTitleFocused ? '#D7D9DD' : '#F3F4F6')};
+  background-color: ${({ $isTitleFocused }) => ($isTitleFocused ? '#D7D9DD' : '#F3F4F6')};
   border: 1px solid #3C3E44;
   display: flex;
   align-items: center;
@@ -160,7 +160,7 @@ export const CharCount = styled.div`
 export const HashContainer = styled.div`
   width: 268px;
   height: 136px;
-  background-color: ${({ isFocused }) => (isFocused ? '#D7D9DD' : '#F3F4F6')};
+  background-color: ${({ $isFocused }) => ($isFocused ? '#D7D9DD' : '#F3F4F6')};
   border: 1px solid #3C3E44;
   border-radius: 32px;
   padding: 16px 12px; 
@@ -485,7 +485,8 @@ export const RoomDeleteBtn = styled.button`
   font-style: normal;
   font-weight: 500;
   line-height: 1.5rem; 
-  margin-left: 37rem;
+  position: sticky;
+  margin-left: 25rem;
   margin-top: 9.9rem;
 
   &:active {

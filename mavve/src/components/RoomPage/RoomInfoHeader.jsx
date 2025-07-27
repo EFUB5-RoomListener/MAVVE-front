@@ -6,7 +6,7 @@ import * as S from "../../pages/RoomPage/RoomPage.style.js";
 import mockPlayLists from "./playlistMockData";
 import RoomDeleteModal from './RoomDeleteModal.jsx';
 
-function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists, step }) {
+function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists, step, setThumbnailFile }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
    // selectedLists는 id 배열이므로, 해당 id로 다시 플레이리스트 정보 찾기
@@ -61,11 +61,9 @@ function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists, step }) {
       </S.HeaderTextArea>
 
       {step === "done" &&
-        <S.DeleteBtnWrapper>
           <S.RoomDeleteBtn onClick={() => setIsDeleteModalOpen(true)}>
             방 삭제하기
           </S.RoomDeleteBtn>
-        </S.DeleteBtnWrapper>
       }
 
       {isModalOpen && (
@@ -75,6 +73,8 @@ function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists, step }) {
            roomInfo={roomInfo}
            setRoomInfo={setRoomInfo}
            onClose={() => setIsModalOpen(false)}
+           setThumbnailFile={setThumbnailFile}
+           step={step}
          />
        </S.ModalContent>
      </S.ModalWrapper>
