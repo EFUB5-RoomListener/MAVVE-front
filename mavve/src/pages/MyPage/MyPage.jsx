@@ -8,9 +8,9 @@ import SideBar from "../../components/Common/SideBar";
 import TopBar from "../../components/Common/TopBar";
 import CreateRoomBtn from "../../assets/MyPage/createRoomBtn.svg";
 import CreateRoomBtnHover from "../../assets/MyPage/createRoomBtnHover.svg";
-import Profile from "./Profile";
-import ProfileEditModal from "./ProfileEditModal";
-import OneLineNoteModal from "../../pages/MyPage/OneLineNoteModal";
+import Profile from "../../components/MyPage/Profile";
+import ProfileEditModal from "../../components/MyPage/ProfileEditModal";
+import OneLineNoteModal from "../../components/MyPage/OneLineNoteModal";
 
 export default function MyPage() {
   const [user, setUser] = useState({
@@ -157,7 +157,7 @@ export default function MyPage() {
     }
   };
 
-  const handleImgUplad = (e) => {
+  const handleImgUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
       const imgUrl = URL.createObjectURL(file);
@@ -183,7 +183,7 @@ export default function MyPage() {
               setNameInput={setNameInput}
               setUser={setUser}
               onClose={() => setIsEditing(false)}
-              onImageUpload={handleImgUplad}
+              onImageUpload={handleImgUpload}
             />
           )}
 

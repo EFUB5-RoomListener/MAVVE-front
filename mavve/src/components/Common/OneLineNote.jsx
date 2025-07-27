@@ -9,11 +9,16 @@ import EditIcon from "../../assets/Common/icn_edit.svg";
 export default function OneLineNote({ profileImg, noteData, onEditClick }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const isEditMode = !!noteData?.emojiUrl;
 
   return (
     <S.DiaryContainer>
       <S.Note>
-        <S.NoteContent $empty={!noteData?.comment}>
+        <S.NoteContent
+          $empty={!noteData?.comment}
+          onClick={isEditMode ? onEditClick : undefined}
+          $clickable={isEditMode}
+        >
           <S.UserProfile src={profileImg || defaultProfile} alt="유저 프로필" />
           <S.NoteText $empty={!noteData?.comment}>
             {noteData?.comment ? (

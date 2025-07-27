@@ -3,12 +3,17 @@ import * as S from "./OneLineNoteModal.style";
 import XIcon from "../../assets/MyPage/xIcon.svg";
 import SelectEmojiBtn from "../../assets/MyPage/selectEmojiBtn.svg";
 import SelectMusicBtn from "../../assets/MyPage/selectMusicBtn.svg";
+import MusicSelectModal from "./MusicSelectModal";
+import EmojiSelectModal from "./EmojiSelectModal";
 
 export default function OneLineNoteModal({ onClose, noteData, setNoteData }) {
   const [comment, setComment] = useState(noteData?.comment || "");
   const [isFocused, setIsFocused] = useState(false);
-  const isOverLimit = comment.length > 100;
+  const [showEmojiSelectModal, setShowEmojiSelectModal] = useState(false);
+  const [showMusicSelectModal, setShowMusicSelectModal] = useState(false);
 
+  const isOverLimit = comment.length > 100;
+  const isEdit = noteData?.comment?.length > 0;
   const colorState =
     !isOverLimit && !isFocused ? "g4" : isOverLimit ? "red" : "b";
 
@@ -26,10 +31,10 @@ export default function OneLineNoteModal({ onClose, noteData, setNoteData }) {
           <img src={XIcon} alt="닫기" onClick={onClose} />
         </S.OneLineNoteHeader>
         <S.BtnWrapper>
-          <S.SelectBtn>
+          <S.SelectBtn onClick={() => setShowMusicSelectModal(true)}>
             <img src={SelectMusicBtn} alt="음악 선택 버튼" />
           </S.SelectBtn>
-          <S.SelectBtn>
+          <S.SelectBtn onClick={() => setShowEmojiSelectModal(true)}>
             <img src={SelectEmojiBtn} alt="이모지 선택 버튼" />
           </S.SelectBtn>
         </S.BtnWrapper>
@@ -60,9 +65,23 @@ export default function OneLineNoteModal({ onClose, noteData, setNoteData }) {
           disabled={isOverLimit}
           $isDisabled={isOverLimit}
         >
-          저장하기
+          {isEdit ? "수정하기" : "저장하기"}
         </S.SaveBtn>
       </S.OneLineNoteModalBox>
+      {showEmojiSelectModal && (
+        <EmojiSelectModal
+          onClose={() => setShowEmojiSelectModal(false)}
+          noteData={noteData}
+          setNoteData={setNoteData}
+        />
+      )}
+      {showMusicSelectModal && (
+        <MusicSelectModal
+          onClose={() => setShowMusicSelectModal(false)}
+          noteData={noteData}
+          setNoteData={setNoteData}
+        />
+      )}
     </S.OneLineNoteModalBackground>
   );
 }

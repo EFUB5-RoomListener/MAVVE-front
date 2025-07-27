@@ -28,6 +28,7 @@ export const NoteContent = styled.div`
   background: var(--w);
   padding: 1.31rem 2.87rem 1.31rem 8.94rem;
   box-sizing: border-box;
+  cursor: ${({ $clickable }) => ($clickable ? "pointer" : "default")};
 `;
 
 export const NoteText = styled.div`

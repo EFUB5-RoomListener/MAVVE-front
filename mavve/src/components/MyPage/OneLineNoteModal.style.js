@@ -21,7 +21,7 @@ export const OneLineNoteModalBox = styled.div`
   background: var(--w);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  margin: 18.75rem 31.25rem 25.25rem 44.75rem;
 `;
 
 export const OneLineNoteHeader = styled.div`
@@ -61,6 +61,7 @@ export const SelectBtn = styled.button`
     height: 3rem;
   }
 `;
+
 export const TextareaWrapper = styled.div`
   position: relative;
 `;
