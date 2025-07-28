@@ -6,6 +6,8 @@ import EmojiSelectModal from "./EmojiSelectModal";
 import EmojiIcon from "../../assets/MyPage/EmojiIcon.svg";
 import MusicIcon from "../../assets/MyPage/MusicIcon.svg";
 
+import { createDiary } from "../../api/diary";
+
 export default function OneLineNoteModal({ onClose, noteData, setNoteData }) {
   const [comment, setComment] = useState(noteData?.comment || "");
   const [isFocused, setIsFocused] = useState(false);
@@ -17,10 +19,31 @@ export default function OneLineNoteModal({ onClose, noteData, setNoteData }) {
   const colorState =
     !isOverLimit && !isFocused ? "g4" : isOverLimit ? "red" : "b";
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (isOverLimit) return;
-    setNoteData((prev) => ({ ...prev, comment: comment }));
-    onClose();
+
+    console.log("🐛 일기 저장 시 보낼 데이터 확인:");
+    console.log("emojiId:", noteData.emojiId);
+    console.log("spotifySongId:", noteData.spotifySongId);
+    console.log("comment:", comment);
+
+    try {
+      const response = await createDiary({
+        emojiId: noteData.emojiId,
+        spotifySongId: noteData.spotifySongId,
+        comment: comment,
+      });
+
+      // 성공적으로 저장 후 noteData 갱신
+      setNoteData((prev) => ({
+        ...prev,
+        ...response, // 또는 필요한 필드만 추출해서 반영
+      }));
+
+      onClose();
+    } catch (error) {
+      alert("일기 저장에 실패했습니다.");
+    }
   };
 
   return (

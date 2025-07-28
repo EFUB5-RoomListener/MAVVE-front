@@ -1,5 +1,5 @@
-import React, { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import * as S from "./MyPage.style";
 import ProfileTestImg from "../../assets/MyPage/profileTest.png";
 import OneLineNote from "../../components/Common/OneLineNote";
@@ -11,126 +11,55 @@ import Profile from "../../components/MyPage/Profile";
 import ProfileEditModal from "../../components/MyPage/ProfileEditModal";
 import OneLineNoteModal from "../../components/MyPage/OneLineNoteModal";
 
+import { fetchUserInfo } from "../../api/user";
+import { uploadImage } from "../../api/image";
+import { fetchMyRooms } from "../../api/room";
+
 export default function MyPage() {
-  const [user, setUser] = useState({
-    name: "테스트유저",
-    profileImg: "", //ProfileTestImg, //기본 프로필 테스트 하려면 "" 으로 변경
-    playlistCount: 5,
-    roomCount: 10,
-  });
-
   const navigate = useNavigate();
+  const [user, setUser] = useState({ nickname: "", profile: "" });
+  const [myRooms, setMyRooms] = useState([]);
 
-  const [isHovered, setIsHovered] = useState(false);
+  const [nameInput, setNameInput] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  const [nameInput, setNameInput] = useState(user.name);
+  const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
+  const prevNicknameRef = useRef("");
+  const location = useLocation();
 
-  const [myRooms, setMyRooms] = useState([
-    {
-      id: 1,
-      title: "1번 방",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: false,
-      likes: 200,
-    },
-    {
-      id: 2,
-      title: "222",
-      tag: "차분한",
-      duration: "00:00:10",
-      liked: true,
-      likes: 2,
-    },
-    {
-      id: 3,
-      title: "333",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: true,
-      likes: 200,
-    },
-    {
-      id: 4,
-      title: "나만의 방1",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: true,
-      likes: 200,
-    },
-    {
-      id: 5,
-      title: "나만의 방1",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: true,
-      likes: 200,
-    },
-    {
-      id: 6,
-      title: "나만의 방1",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: true,
-      likes: 200,
-    },
-    {
-      id: 7,
-      title: "나만의 방1",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: true,
-      likes: 200,
-    },
-    {
-      id: 8,
-      title: "나만의 방1",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: true,
-      likes: 200,
-    },
-    {
-      id: 9,
-      title: "나만의 방1",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: true,
-      likes: 200,
-    },
-    {
-      id: 10,
-      title: "나만의 방1",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: false,
-      likes: 200,
-    },
-    {
-      id: 11,
-      title: "나만의 방1",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: false,
-      likes: 200,
-    },
-    {
-      id: 12,
-      title: "나만의 방1",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: false,
-      likes: 200,
-    },
-    {
-      id: 13,
-      title: "나만의 방1",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: false,
-      likes: 200,
-    },
-  ]);
+  useEffect(() => {
+    const fetchUser = async () => {
+      const data = await fetchUserInfo();
+      setUser(data);
+    };
+    fetchUser();
+  }, []);
+
+  useEffect(() => {
+    if (user.nickname !== prevNicknameRef.current) {
+      setNameInput(user.nickname);
+      prevNicknameRef.current = user.nickname;
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user.profile === null || user.profile === undefined) {
+      setUser((prev) => ({ ...prev, profile: "" }));
+    }
+  }, [user.profile]);
+
+  useEffect(() => {
+    const getMyRooms = async () => {
+      try {
+        const roomList = await fetchMyRooms();
+
+        setMyRooms(Array.isArray(roomList) ? roomList : []);
+      } catch (error) {
+        console.error("내가 만든 방 목록을 불러오는 데 실패했습니다:", error);
+        setMyRooms([]);
+      }
+    };
+    getMyRooms();
+  }, [location]);
 
   const [noteData, setNoteData] = useState({
     diaryId: 1,
@@ -141,14 +70,13 @@ export default function MyPage() {
     songArtist: "",
     songImage: "",
     createdAt: "2022-11-20T08:02:21.347+0000",
-    duration: "",
+    songDuration: "",
   });
-  const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
 
-  const likedRooms = myRooms.filter((room) => room.liked);
+  //const likedRooms = myRooms.filter((room) => room.liked);
 
   const myRoomRef = useRef(null);
-  const likedRoomRef = useRef(null);
+  //const likedRoomRef = useRef(null);
 
   const handleHorizontalScroll = (ref) => (e) => {
     if (ref.current) {
@@ -156,11 +84,16 @@ export default function MyPage() {
     }
   };
 
-  const handleImgUpload = (e) => {
+  const handleImgUpload = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const imgUrl = URL.createObjectURL(file);
-      setUser((prev) => ({ ...prev, profileImg: imgUrl }));
+    if (!file) return;
+
+    try {
+      const imageUrl = await uploadImage(file, "profile");
+      setUser((prev) => ({ ...prev, profile: imageUrl }));
+    } catch (error) {
+      console.error("이미지 업로드 중 오류:", error);
+      alert("이미지 업로드에 실패했습니다.");
     }
   };
 
@@ -189,7 +122,7 @@ export default function MyPage() {
           <S.OneLineNoteContainer>
             <S.Title>오늘의 한 줄 일기</S.Title>
             <OneLineNote
-              profileImg={user.profileImg}
+              profileImg={user.profile}
               noteData={noteData}
               onEditClick={() => setIsNoteModalOpen(true)}
             />
@@ -216,7 +149,7 @@ export default function MyPage() {
               >
                 내가 만든 방
               </S.Title>
-              <S.CreateRoomBtn onClick={() => navigate("/room")}>
+              <S.CreateRoomBtn onClick={() => navigate("/rooms")}>
                 <S.PlusIcon src={PlusIcon} alt="방 생성 아이콘" />방 생성하기
               </S.CreateRoomBtn>
             </S.MyRoomHeader>
@@ -229,7 +162,7 @@ export default function MyPage() {
             >
               {myRooms.length > 0 ? (
                 myRooms.map((room) => (
-                  <RoomComponent key={room.id} data={room} />
+                  <RoomComponent key={room.roomId} data={room} />
                 ))
               ) : (
                 <>
@@ -246,7 +179,7 @@ export default function MyPage() {
           </S.MyRoomArea>
 
           <S.LikedRoomArea>
-            <S.Title
+            {/* <S.Title
               onClick={() => {
                 if (likedRooms.length >= 8) {
                   navigate("/mypage/likedroom");
@@ -278,7 +211,7 @@ export default function MyPage() {
                   </S.NoticeContainer>
                 </>
               )}
-            </S.LikedRoomContainer>
+            </S.LikedRoomContainer> */}
           </S.LikedRoomArea>
         </S.Main>
       </S.MainContainer>
