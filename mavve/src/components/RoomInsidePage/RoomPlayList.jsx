@@ -100,35 +100,35 @@ function RoomPlayList({isChatOpen, setIsChatOpen}) {
           {isEditMode ? '수정 완료' : '플레이리스트 수정'}
         </S.EditButton>
 
-        <S.ChatToggleBtn isChatOpen={isChatOpen} onClick={() => setIsChatOpen((prev) => !prev)}>
+        <S.ChatToggleBtn $isChatOpen={isChatOpen} onClick={() => setIsChatOpen((prev) => !prev)}>
            <img src={Chat}/> 채팅
         </S.ChatToggleBtn>
       </S.PlayListHeader>
 
       <S.PlayListInfo>
         <span>{playList.length}곡, {totalDuration}</span>
-        <S.FriendsBtn isActive={isActive} onClick={toggleStyle}>
+        <S.FriendsBtn $isActive={isActive} onClick={toggleStyle}>
           참여중인 친구들
         </S.FriendsBtn>
       </S.PlayListInfo>
       
-        {isActive && <FriendsModal  isChatOpen={isChatOpen} />}
+        {isActive && <FriendsModal  $isChatOpen={isChatOpen} />}
 
-        {!isEditMode && <S.CurrentPlayingBar isShrinked={isChatOpen}/>}
+        {!isEditMode && <S.CurrentPlayingBar $isShrinked={isChatOpen}/>}
       
       {isEditMode && (
         <>
-          <S.SongAddBtn onClick={() => setIsModalOpen(true)} isChatOpen={isChatOpen}>노래 추가</S.SongAddBtn>
-          <S.SongDeleteBtn onClick={onDelete} isChatOpen={isChatOpen}>선택한 노래 삭제하기</S.SongDeleteBtn>
+          <S.SongAddBtn onClick={() => setIsModalOpen(true)} $isChatOpen={isChatOpen}>노래 추가</S.SongAddBtn>
+          <S.SongDeleteBtn onClick={onDelete} $isChatOpen={isChatOpen}>선택한 노래 삭제하기</S.SongDeleteBtn>
         </>
       )}
 
-      <S.MusicListContainer isShrinked={isChatOpen}>
+      <S.MusicListContainer $isShrinked={isChatOpen}>
         {playList.map((song) => {
           const isSelected = selectedSongs.includes(song.id.toString());
 
           return (
-            <S.SongRow key={song.id} isSelected={isSelected} isShrinked={isChatOpen}>
+            <S.SongRow key={song.id} $isSelected={isSelected} $isShrinked={isChatOpen}>
               {isEditMode ? (
                 <S.CheckboxWrapper onClick={() => toggleSelect(song.id)} isSelected={isSelected}>
                   <S.CheckBoxIcon src={CheckBox} />
@@ -147,7 +147,7 @@ function RoomPlayList({isChatOpen, setIsChatOpen}) {
                 <div>{song.title}</div>
                 <div>{song.artist}</div>
               </S.SongTextInfo>
-              <S.SongAlbum isChatOpen={isChatOpen}>{song.album}</S.SongAlbum>
+              <S.SongAlbum $isChatOpen={isChatOpen}>{song.album}</S.SongAlbum>
               <S.SongDuration>{song.duration}</S.SongDuration>
             </S.SongRow>
           );
