@@ -11,15 +11,15 @@ export default function Profile({ user, onEditClick }) {
       <S.WaveImg src={WaveImg} alt="wave" />
       <S.ProfileContent>
         <S.ProfileImage
-          src={user.profileImg || DefaultProfile}
+          src={user.profile || DefaultProfile}
           alt="프로필 이미지"
         />
         <S.ProfileTextContainer>
-          <S.Nickname>{user.name}</S.Nickname>
+          <S.Nickname>{user.nickname}</S.Nickname>
           <S.InfoContainer>
             <S.UserCount>
-              <S.UserText>내 플레이리스트 {user.playlistCount}개</S.UserText>
-              <S.UserText>내 방 {user.roomCount}개</S.UserText>
+              <S.UserText>내 플레이리스트 0개</S.UserText>
+              <S.UserText>내 방 0개</S.UserText>
             </S.UserCount>
             <S.EditIconBtn onClick={onEditClick}>
               <S.EditIcon src={EditIcon} alt="편집 아이콘" />
@@ -30,5 +30,3 @@ export default function Profile({ user, onEditClick }) {
     </S.ProfileContainer>
   );
 }
-
-//

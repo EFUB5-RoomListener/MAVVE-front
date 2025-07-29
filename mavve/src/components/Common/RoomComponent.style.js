@@ -109,5 +109,3 @@ export const HeartIcon = styled.div`
 export const LikedNum = styled.div`
   color: #000000;
 `;
-
-//

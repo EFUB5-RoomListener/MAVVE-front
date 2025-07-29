@@ -4,7 +4,7 @@ export const DiaryContainer = styled.div`
   display: flex;
   width: 87.5rem;
   height: 6.75rem;
-  gap: 1.5rem;
+  gap: 2.38rem;
   padding-bottom: 0.37rem;
 
   font-style: normal;
@@ -218,5 +218,3 @@ export const Hashtag = styled.div`
   width: 4.2rem;
   font-size: 0.875rem;
 `;
-
-//

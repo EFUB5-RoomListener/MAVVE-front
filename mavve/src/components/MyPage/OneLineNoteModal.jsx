@@ -6,6 +6,8 @@ import EmojiSelectModal from "./EmojiSelectModal";
 import EmojiIcon from "../../assets/MyPage/EmojiIcon.svg";
 import MusicIcon from "../../assets/MyPage/MusicIcon.svg";
 
+import { createDiary, updateDiary } from "../../api/diary";
+
 export default function OneLineNoteModal({ onClose, noteData, setNoteData }) {
   const [comment, setComment] = useState(noteData?.comment || "");
   const [isFocused, setIsFocused] = useState(false);
@@ -17,10 +19,45 @@ export default function OneLineNoteModal({ onClose, noteData, setNoteData }) {
   const colorState =
     !isOverLimit && !isFocused ? "g4" : isOverLimit ? "red" : "b";
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (isOverLimit) return;
-    setNoteData((prev) => ({ ...prev, comment: comment }));
-    onClose();
+
+    try {
+      if (noteData?.diaryId) {
+        //기존 데이터가 있다면 수정하기
+        const updated = await updateDiary(noteData.diaryId, {
+          emojiId: noteData.emojiId,
+          spotifySongId: noteData.spotifySongId,
+          comment: comment,
+        });
+
+        setNoteData((prev) => ({
+          ...prev,
+          ...updated,
+          comment,
+        }));
+
+        console.log("수정된 데이터: ", updated);
+
+        alert("일기가 성공적으로 수정되었습니다.");
+      } else {
+        // 기존 데이터가 없다면 작성 모드
+        const created = await createDiary({
+          emojiId: noteData.emojiId,
+          spotifySongId: noteData.spotifySongId,
+          comment: comment,
+        });
+
+        setNoteData((prev) => ({
+          ...prev,
+          ...created,
+        }));
+      }
+
+      onClose();
+    } catch (error) {
+      alert("일기 저장에 실패했습니다.");
+    }
   };
 
   return (
@@ -85,5 +122,3 @@ export default function OneLineNoteModal({ onClose, noteData, setNoteData }) {
     </S.OneLineNoteModalBackground>
   );
 }
-
-//
