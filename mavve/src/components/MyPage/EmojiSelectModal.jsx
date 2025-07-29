@@ -75,3 +75,4 @@ export default function EmojiSelectModal({ onClose, noteData, setNoteData }) {
     </S.EmojiSelectModalBackground>
   );
 }
+//

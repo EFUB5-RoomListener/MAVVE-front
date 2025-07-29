@@ -407,3 +407,5 @@ export const PageRoomContainer = styled.div`
   gap: 2.5rem;
   padding: 0 4rem 1.25rem 4rem;
 `;
+
+//

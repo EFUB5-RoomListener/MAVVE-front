@@ -12,3 +12,5 @@ export const searchSongs = async (query, page = 0, size = 10) => {
     throw error;
   }
 };
+
+//

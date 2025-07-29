@@ -13,3 +13,5 @@ export const updateUserInfo = async ({ nickname, profile }) => {
   });
   return response.data;
 };
+
+//

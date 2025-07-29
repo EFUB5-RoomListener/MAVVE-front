@@ -73,3 +73,5 @@ export default function OneLineNote({ profileImg, noteData, onEditClick }) {
     </S.DiaryContainer>
   );
 }
+
+//

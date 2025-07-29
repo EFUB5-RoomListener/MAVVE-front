@@ -196,3 +196,5 @@ export const DeleteImgButton = styled.button`
     height: 1.5rem;
   }
 `;
+
+//
