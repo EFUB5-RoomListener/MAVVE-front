@@ -486,11 +486,37 @@ export const RoomDeleteBtn = styled.button`
   font-weight: 500;
   line-height: 1.5rem; 
   position: sticky;
-  margin-left: 25rem;
   margin-top: 9.9rem;
 
   &:active {
     transform: scale(0.925); /* 크기 살짝 줄임 */
+  }
+
+  &:hover {
+    background-color:#B0CDDC
+    }
+`
+
+export const RoomEnterBtn = styled.button`
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  padding: 0.5rem 1.5rem;
+  height: 3.5rem;
+  background: var(--fth, #CFEFFF);
+  border-radius: 1.875rem;
+  border: none;
+  color: var(--b, #3C3E44);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.5rem; 
+  margin-top: 9.9rem;
+  margin-left: 20rem;
+  &:active {
+    transform: scale(0.925); 
   }
 
   &:hover {
