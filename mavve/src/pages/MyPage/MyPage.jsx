@@ -160,7 +160,11 @@ export default function MyPage() {
           <SideBar />
         </S.SidebarContainer>
         <S.Main>
-          <Profile user={user} onEditClick={() => setIsEditing(true)} />
+          <Profile
+            user={user}
+            onEditClick={() => setIsEditing(true)}
+            myRoomCount={myRooms.length}
+          />
           {isEditing && (
             <ProfileEditModal
               user={user}
