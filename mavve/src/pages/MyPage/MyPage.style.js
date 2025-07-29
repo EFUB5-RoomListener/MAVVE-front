@@ -176,11 +176,52 @@ export const MyRoomArea = styled.div`
   align-items: flex-start;
   margin: 0 2rem 1.94rem 3rem;
 `;
-export const MyRoomHeader = styled.div`
+export const TitleContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+`;
+
+export const DeleteDiaryBtn = styled.button`
+  display: flex;
+  width: 9.9rem;
+  height: 2.0625rem;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 0.5rem 1rem;
+  gap: 0.25rem;
+  border-radius: 1.875rem;
+  background: var(--pri);
+
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  &:hover {
+    background: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.2) 0%,
+        rgba(0, 0, 0, 0.2) 100%
+      ),
+      #009bff;
+  }
+
+  &:active {
+    display: flex;
+    width: 9.6rem;
+    height: 1.8125rem;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 0.375rem 0.875rem;
+    gap: 0.25rem;
+    border-radius: 1.875rem;
+    background: var(--pri);
+  }
 `;
 
 export const CreateRoomBtn = styled.button`
@@ -224,7 +265,7 @@ export const CreateRoomBtn = styled.button`
   }
 `;
 
-export const PlusIcon = styled.img`
+export const BtnIcon = styled.img`
   width: 0.75rem;
   height: 0.75rem;
 `;

@@ -7,8 +7,6 @@ import cdOverlayImg from "../../assets/Common/cdOverlay.svg";
 import EditIcon from "../../assets/Common/icn_edit.svg";
 
 export default function OneLineNote({ profileImg, noteData, onEditClick }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const isEditMode = !!noteData?.emojiUrl;
 
   return (
@@ -16,8 +14,8 @@ export default function OneLineNote({ profileImg, noteData, onEditClick }) {
       <S.Note>
         <S.NoteContent
           $empty={!noteData?.comment}
-          onClick={isEditMode ? onEditClick : undefined}
-          $clickable={isEditMode}
+          onClick={onEditClick && isEditMode ? onEditClick : undefined}
+          $clickable={!!onEditClick && isEditMode}
         >
           <S.UserProfile src={profileImg || defaultProfile} alt="유저 프로필" />
           <S.NoteText $empty={!noteData?.comment}>
@@ -29,17 +27,23 @@ export default function OneLineNote({ profileImg, noteData, onEditClick }) {
               </S.NotePlaceholder>
             )}
           </S.NoteText>
-          <S.EmotionEdit onClick={onEditClick}>
-            {noteData?.emojiUrl ? (
+          {onEditClick ? (
+            <S.EmotionEdit onClick={onEditClick}>
+              {noteData?.emojiUrl ? (
+                <S.Emoji src={noteData.emojiUrl} alt="이모지" />
+              ) : (
+                <S.EditIcon src={EditIcon} alt="편집 아이콘" />
+              )}
+            </S.EmotionEdit>
+          ) : noteData?.emojiUrl ? (
+            <S.EmotionEdit>
               <S.Emoji src={noteData.emojiUrl} alt="이모지" />
-            ) : (
-              <S.EditIcon src={EditIcon} alt="편집 아이콘" />
-            )}
-          </S.EmotionEdit>
+            </S.EmotionEdit>
+          ) : null}
         </S.NoteContent>
       </S.Note>
       <S.Song>
-        <S.AlbumCover src={noteData.songImage || defaultSongImage} />
+        <S.AlbumCover src={noteData.songImageUrl || defaultSongImage} />
         <S.CdOverlay src={cdOverlayImg} alt="cd 오버레이" />
         <S.SongContent $empty={!noteData.songTitle}>
           {noteData.songTitle ? (

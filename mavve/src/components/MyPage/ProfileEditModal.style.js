@@ -61,6 +61,7 @@ export const ProfileImgContainer = styled.div`
   padding-right: 2rem;
   border-right: 0.03125rem solid var(--b);
   margin-right: 3rem;
+  position: relative;
 `;
 
 export const ProfileImgEdit = styled.div`
@@ -179,5 +180,19 @@ export const SaveBtn = styled.button`
       disabled ? "0.5rem 1.5rem" : " 0.375rem 1.375rem"};
     width: ${({ disabled }) => (disabled ? "6.5rem" : "6.25rem")};
     height: ${({ disabled }) => (disabled ? "3.5rem" : "3.25rem")};
+  }
+`;
+
+export const DeleteImgButton = styled.button`
+  position: absolute;
+  top: 0rem;
+  right: 1.5rem;
+  cursor: pointer;
+  z-index: 10;
+  background: transparent;
+
+  img {
+    width: 1.5rem;
+    height: 1.5rem;
   }
 `;
