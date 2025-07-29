@@ -14,6 +14,7 @@ export const RoomContainer = styled.div`
   box-sizing: border-box;
 
   font-style: normal;
+  cursor: pointer;
 `;
 
 export const Thumbnail = styled.div`

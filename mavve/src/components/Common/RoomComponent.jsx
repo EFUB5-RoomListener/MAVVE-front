@@ -1,11 +1,15 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import * as S from "../Common/RoomComponent.style";
 import filled from "../../assets/Common/filled_heart.svg";
 import unfilled from "../../assets/Common/unfilled_heart.svg";
 import { toggleRoomLike } from "../../api/room";
 
 export default function RoomComponent({ data, onLikeToggle }) {
-  const handleToggleLike = async () => {
+  const navigate = useNavigate();
+
+  const handleToggleLike = async (e) => {
+    e.stopPropagation();
     try {
       const response = await toggleRoomLike(data.roomId);
       onLikeToggle({
@@ -19,8 +23,17 @@ export default function RoomComponent({ data, onLikeToggle }) {
     }
   };
 
+  const handleRoomClick = () => {
+    // roomId가 존재하는 경우에만 이동
+    if (data.roomId) {
+      navigate(`/rooms/${data.roomId}/enter`);
+    } else {
+      alert("방 코드가 존재하지 않습니다.");
+    }
+  };
+
   return (
-    <S.RoomContainer>
+    <S.RoomContainer onClick={handleRoomClick}>
       <S.Thumbnail $image={data.imageURL}>
         {Array.isArray(data.tag) && data.tag.length > 0 && (
           <S.HashtagWrapper>
