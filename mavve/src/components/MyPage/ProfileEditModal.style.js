@@ -187,16 +187,12 @@ export const DeleteImgButton = styled.button`
   position: absolute;
   top: 0rem;
   right: 1.5rem;
-  background-color: var(--w);
-  border: 1px solid var(--g4);
-  border-radius: 50%;
-  width: 2rem;
-  height: 2rem;
-  font-size: 1.2rem;
   cursor: pointer;
   z-index: 10;
+  background: transparent;
 
-  &:hover {
-    background-color: var(--g2);
+  img {
+    width: 1.5rem;
+    height: 1.5rem;
   }
 `;

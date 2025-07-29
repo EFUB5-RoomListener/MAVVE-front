@@ -40,7 +40,7 @@ export default function MyPage() {
           <S.PageHeader>
             <S.Title>내가 만든 방</S.Title>
             <S.CreateRoomBtn onClick={() => navigate("/rooms")}>
-              <S.PlusIcon src={PlusIcon} alt="방 생성 아이콘" />방 생성하기
+              <S.BtnIcon src={PlusIcon} alt="방 생성 아이콘" />방 생성하기
             </S.CreateRoomBtn>
           </S.PageHeader>
           <S.PageRoomContainer>

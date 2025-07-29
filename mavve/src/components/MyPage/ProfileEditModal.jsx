@@ -71,11 +71,7 @@ export default function ProfileEditModal({
             </S.ProfileImgEdit>
             {user.profile && (
               <S.DeleteImgButton onClick={handleImageDelete}>
-                <img
-                  src={XIcon}
-                  alt="삭제"
-                  style={{ width: "1rem", height: "1rem" }}
-                />
+                <img src={XIcon} alt="삭제" />
               </S.DeleteImgButton>
             )}
 

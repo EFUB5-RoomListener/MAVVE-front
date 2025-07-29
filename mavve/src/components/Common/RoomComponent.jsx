@@ -15,9 +15,7 @@ export default function RoomComponent({ data }) {
       <S.Thumbnail $image={data.imageURL}>
         {Array.isArray(data.tag) && data.tag.length > 0 && (
           <S.HashtagWrapper>
-            {data.tag.map((tag, index) => (
-              <S.Hashtag key={index}>#{tag}</S.Hashtag>
-            ))}
+            <S.Hashtag>#{data.tag[0]}</S.Hashtag> {/* ✅ 첫 번째 태그만 */}
           </S.HashtagWrapper>
         )}
       </S.Thumbnail>

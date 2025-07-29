@@ -7,6 +7,7 @@ import RoomComponent from "../../components/Common/RoomComponent";
 import SideBar from "../../components/Common/SideBar";
 import TopBar from "../../components/Common/TopBar";
 import PlusIcon from "../../assets/MyPage/plusIcon.svg";
+import MinusIcon from "../../assets/MyPage/MinusIcon.svg";
 import Profile from "../../components/MyPage/Profile";
 import ProfileEditModal from "../../components/MyPage/ProfileEditModal";
 import OneLineNoteModal from "../../components/MyPage/OneLineNoteModal";
@@ -14,11 +15,13 @@ import OneLineNoteModal from "../../components/MyPage/OneLineNoteModal";
 import { fetchUserInfo } from "../../api/user";
 import { uploadImage } from "../../api/image";
 import { fetchMyRooms } from "../../api/room";
+import { fetchDiaryByUser, deleteDiary } from "../../api/diary";
 
 export default function MyPage() {
   const navigate = useNavigate();
   const [user, setUser] = useState({ nickname: "", profile: "" });
   const [myRooms, setMyRooms] = useState([]);
+  const [noteData, setNoteData] = useState([]);
 
   const [nameInput, setNameInput] = useState("");
   const [isEditing, setIsEditing] = useState(false);
@@ -61,17 +64,34 @@ export default function MyPage() {
     getMyRooms();
   }, [location]);
 
-  const [noteData, setNoteData] = useState({
-    diaryId: 1,
-    emojiUrl: "",
-    nickname: "테스트 유저",
-    comment: "",
-    songTitle: "",
-    songArtist: "",
-    songImage: "",
-    createdAt: "2022-11-20T08:02:21.347+0000",
-    songDuration: "",
-  });
+  useEffect(() => {
+    const fetchDiary = async () => {
+      try {
+        const data = await fetchDiaryByUser();
+
+        console.log("📒 불러온 일기 데이터:", data);
+
+        setNoteData({
+          diaryId: data.diaryId,
+          emojiUrl: data.emojiUrl,
+          nickname: data.nickname,
+          comment: data.comment,
+          songTitle: data.songTitle,
+          songArtist: Array.isArray(data.songArtist)
+            ? data.songArtist.join(", ")
+            : data.songArtist,
+          songImageUrl: data.songImageUrl,
+          songDuration: data.songDuration,
+          album: data.album,
+          createdAt: data.createdAt,
+        });
+      } catch (error) {
+        console.error("한 줄 일기 조회 실패:", error);
+      }
+    };
+
+    fetchDiary();
+  }, []);
 
   //const likedRooms = myRooms.filter((room) => room.liked);
 
@@ -94,6 +114,23 @@ export default function MyPage() {
     } catch (error) {
       console.error("이미지 업로드 중 오류:", error);
       alert("이미지 업로드에 실패했습니다.");
+    }
+  };
+
+  const handleDeleteDiary = async () => {
+    if (!noteData?.diaryId) return;
+
+    const confirmDelete = window.confirm("한 줄 일기를 삭제하시겠습니까?");
+    if (!confirmDelete) return;
+
+    try {
+      const success = await deleteDiary(noteData.diaryId);
+      if (success) {
+        alert("일기가 삭제되었습니다.");
+        setNoteData({}); // 일기 데이터 초기화
+      }
+    } catch (error) {
+      alert("일기 삭제에 실패했습니다.");
     }
   };
 
@@ -120,7 +157,15 @@ export default function MyPage() {
           )}
 
           <S.OneLineNoteContainer>
-            <S.Title>오늘의 한 줄 일기</S.Title>
+            <S.TitleContainer>
+              <S.Title>오늘의 한 줄 일기</S.Title>
+              {noteData?.comment && (
+                <S.DeleteDiaryBtn onClick={handleDeleteDiary}>
+                  <S.BtnIcon src={MinusIcon} alt="한 줄 일기 삭제 아이콘" />한
+                  줄 일기 삭제하기
+                </S.DeleteDiaryBtn>
+              )}
+            </S.TitleContainer>
             <OneLineNote
               profileImg={user.profile}
               noteData={noteData}
@@ -136,7 +181,7 @@ export default function MyPage() {
           )}
 
           <S.MyRoomArea>
-            <S.MyRoomHeader>
+            <S.TitleContainer>
               <S.Title
                 onClick={() => {
                   if (myRooms.length >= 8) {
@@ -150,9 +195,9 @@ export default function MyPage() {
                 내가 만든 방
               </S.Title>
               <S.CreateRoomBtn onClick={() => navigate("/rooms")}>
-                <S.PlusIcon src={PlusIcon} alt="방 생성 아이콘" />방 생성하기
+                <S.BtnIcon src={PlusIcon} alt="방 생성 아이콘" />방 생성하기
               </S.CreateRoomBtn>
-            </S.MyRoomHeader>
+            </S.TitleContainer>
             <S.MyRoomContainer
               ref={myRoomRef}
               onWheel={handleHorizontalScroll(myRoomRef)}
@@ -161,9 +206,11 @@ export default function MyPage() {
               }}
             >
               {myRooms.length > 0 ? (
-                myRooms.map((room) => (
-                  <RoomComponent key={room.roomId} data={room} />
-                ))
+                myRooms
+                  .slice(0, 8)
+                  .map((room) => (
+                    <RoomComponent key={room.roomId} data={room} />
+                  ))
               ) : (
                 <>
                   <S.NoticeContainer>

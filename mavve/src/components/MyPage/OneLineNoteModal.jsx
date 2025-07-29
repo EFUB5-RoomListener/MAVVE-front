@@ -6,7 +6,7 @@ import EmojiSelectModal from "./EmojiSelectModal";
 import EmojiIcon from "../../assets/MyPage/EmojiIcon.svg";
 import MusicIcon from "../../assets/MyPage/MusicIcon.svg";
 
-import { createDiary } from "../../api/diary";
+import { createDiary, updateDiary } from "../../api/diary";
 
 export default function OneLineNoteModal({ onClose, noteData, setNoteData }) {
   const [comment, setComment] = useState(noteData?.comment || "");
@@ -22,23 +22,37 @@ export default function OneLineNoteModal({ onClose, noteData, setNoteData }) {
   const handleSave = async () => {
     if (isOverLimit) return;
 
-    console.log("🐛 일기 저장 시 보낼 데이터 확인:");
-    console.log("emojiId:", noteData.emojiId);
-    console.log("spotifySongId:", noteData.spotifySongId);
-    console.log("comment:", comment);
-
     try {
-      const response = await createDiary({
-        emojiId: noteData.emojiId,
-        spotifySongId: noteData.spotifySongId,
-        comment: comment,
-      });
+      if (noteData?.diaryId) {
+        //기존 데이터가 있다면 수정하기
+        const updated = await updateDiary(noteData.diaryId, {
+          emojiId: noteData.emojiId,
+          spotifySongId: noteData.spotifySongId,
+          comment: comment,
+        });
 
-      // 성공적으로 저장 후 noteData 갱신
-      setNoteData((prev) => ({
-        ...prev,
-        ...response, // 또는 필요한 필드만 추출해서 반영
-      }));
+        setNoteData((prev) => ({
+          ...prev,
+          ...updated,
+          comment,
+        }));
+
+        console.log("수정된 데이터: ", updated);
+
+        alert("일기가 성공적으로 수정되었습니다.");
+      } else {
+        // 기존 데이터가 없다면 작성 모드
+        const created = await createDiary({
+          emojiId: noteData.emojiId,
+          spotifySongId: noteData.spotifySongId,
+          comment: comment,
+        });
+
+        setNoteData((prev) => ({
+          ...prev,
+          ...created,
+        }));
+      }
 
       onClose();
     } catch (error) {

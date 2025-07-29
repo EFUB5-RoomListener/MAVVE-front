@@ -43,7 +43,7 @@ export default function OneLineNote({ profileImg, noteData, onEditClick }) {
         </S.NoteContent>
       </S.Note>
       <S.Song>
-        <S.AlbumCover src={noteData.songImage || defaultSongImage} />
+        <S.AlbumCover src={noteData.songImageUrl || defaultSongImage} />
         <S.CdOverlay src={cdOverlayImg} alt="cd 오버레이" />
         <S.SongContent $empty={!noteData.songTitle}>
           {noteData.songTitle ? (
