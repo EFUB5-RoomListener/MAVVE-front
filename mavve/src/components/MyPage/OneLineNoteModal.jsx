@@ -56,7 +56,7 @@ export default function OneLineNoteModal({ onClose, noteData, setNoteData }) {
 
       onClose();
     } catch (error) {
-      alert("일기 저장에 실패했습니다.");
+      alert("일기 저장에 실패했습니다. 세 가지 요소를 모두 선택해주세요.");
     }
   };
 

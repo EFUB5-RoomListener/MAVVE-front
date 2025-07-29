@@ -14,19 +14,22 @@ import OneLineNoteModal from "../../components/MyPage/OneLineNoteModal";
 
 import { fetchUserInfo } from "../../api/user";
 import { uploadImage } from "../../api/image";
-import { fetchMyRooms } from "../../api/room";
+import { fetchMyRooms, fetchLikedRooms } from "../../api/room";
 import { fetchDiaryByUser, deleteDiary } from "../../api/diary";
 
 export default function MyPage() {
   const navigate = useNavigate();
   const [user, setUser] = useState({ nickname: "", profile: "" });
   const [myRooms, setMyRooms] = useState([]);
-  const [noteData, setNoteData] = useState([]);
+  const [likedRooms, setLikedRooms] = useState([]);
+  const [noteData, setNoteData] = useState({});
 
   const [nameInput, setNameInput] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
   const prevNicknameRef = useRef("");
+  const myRoomRef = useRef(null);
+  const likedRoomRef = useRef(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -50,20 +53,7 @@ export default function MyPage() {
     }
   }, [user.profile]);
 
-  useEffect(() => {
-    const getMyRooms = async () => {
-      try {
-        const roomList = await fetchMyRooms();
-
-        setMyRooms(Array.isArray(roomList) ? roomList : []);
-      } catch (error) {
-        console.error("내가 만든 방 목록을 불러오는 데 실패했습니다:", error);
-        setMyRooms([]);
-      }
-    };
-    getMyRooms();
-  }, [location]);
-
+  //한 줄 일기 조회
   useEffect(() => {
     const fetchDiary = async () => {
       try {
@@ -93,10 +83,36 @@ export default function MyPage() {
     fetchDiary();
   }, []);
 
-  //const likedRooms = myRooms.filter((room) => room.liked);
+  //내가 만든 방 가져오기
+  useEffect(() => {
+    const getMyRooms = async () => {
+      try {
+        const roomList = await fetchMyRooms();
 
-  const myRoomRef = useRef(null);
-  //const likedRoomRef = useRef(null);
+        setMyRooms(Array.isArray(roomList) ? roomList : []);
+      } catch (error) {
+        console.error("내가 만든 방 목록을 불러오는 데 실패했습니다:", error);
+        setMyRooms([]);
+      }
+    };
+    getMyRooms();
+  }, [location]);
+
+  //좋아요한 방 목록 가져오기
+  useEffect(() => {
+    const getLikedRooms = async () => {
+      try {
+        const data = await fetchLikedRooms();
+        console.log("💖 좋아요한 방 목록 불러오기 완료:", data);
+        setLikedRooms(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("좋아요한 방 목록을 불러오는 데 실패했습니다:", error);
+        setLikedRooms([]);
+      }
+    };
+
+    getLikedRooms();
+  }, [location]);
 
   const handleHorizontalScroll = (ref) => (e) => {
     if (ref.current) {
@@ -206,11 +222,28 @@ export default function MyPage() {
               }}
             >
               {myRooms.length > 0 ? (
-                myRooms
-                  .slice(0, 8)
-                  .map((room) => (
-                    <RoomComponent key={room.roomId} data={room} />
-                  ))
+                myRooms.slice(0, 8).map((room) => (
+                  <RoomComponent
+                    key={room.roomId}
+                    data={room}
+                    onLikeToggle={async (updated) => {
+                      setMyRooms((prev) =>
+                        prev.map((r) =>
+                          r.roomId === updated.roomId ? { ...r, ...updated } : r
+                        )
+                      );
+
+                      try {
+                        const refreshed = await fetchLikedRooms();
+                        setLikedRooms(
+                          Array.isArray(refreshed) ? refreshed : []
+                        );
+                      } catch (error) {
+                        console.error("좋아요 목록 새로고침 실패:", error);
+                      }
+                    }}
+                  />
+                ))
               ) : (
                 <>
                   <S.NoticeContainer>
@@ -226,7 +259,7 @@ export default function MyPage() {
           </S.MyRoomArea>
 
           <S.LikedRoomArea>
-            {/* <S.Title
+            <S.Title
               onClick={() => {
                 if (likedRooms.length >= 8) {
                   navigate("/mypage/likedroom");
@@ -244,8 +277,21 @@ export default function MyPage() {
               style={{ overflowX: likedRooms.length >= 5 ? "auto" : "unset" }}
             >
               {likedRooms.length > 0 ? (
-                likedRooms.map((room) => (
-                  <RoomComponent key={room.id} data={room} />
+                likedRooms.slice(0, 8).map((room) => (
+                  <RoomComponent
+                    key={room.roomId}
+                    data={room}
+                    onLikeToggle={async () => {
+                      try {
+                        const refreshed = await fetchLikedRooms(); // roomList 배열이 반환됨
+                        setLikedRooms(
+                          Array.isArray(refreshed) ? refreshed : []
+                        );
+                      } catch (error) {
+                        console.error("좋아요 목록 새로고침 실패:", error);
+                      }
+                    }}
+                  />
                 ))
               ) : (
                 <>
@@ -258,7 +304,7 @@ export default function MyPage() {
                   </S.NoticeContainer>
                 </>
               )}
-            </S.LikedRoomContainer> */}
+            </S.LikedRoomContainer>
           </S.LikedRoomArea>
         </S.Main>
       </S.MainContainer>

@@ -1,118 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import * as S from "./MyPage.style";
 import TopBar from "../../components/Common/TopBar";
 import SideBar from "../../components/Common/SideBar";
 import RoomComponent from "../../components/Common/RoomComponent";
 
-export default function LikedRoomPage() {
-  const [myRooms, setMyRooms] = useState([
-    {
-      id: 1,
-      title: "1번 방",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: false,
-      likes: 200,
-    },
-    {
-      id: 2,
-      title: "222",
-      tag: "차분한",
-      duration: "00:00:10",
-      liked: true,
-      likes: 2,
-    },
-    {
-      id: 3,
-      title: "333",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: true,
-      likes: 200,
-    },
-    {
-      id: 4,
-      title: "나만의 방1",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: true,
-      likes: 200,
-    },
-    {
-      id: 5,
-      title: "나만의 방1",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: true,
-      likes: 200,
-    },
-    {
-      id: 6,
-      title: "나만의 방1",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: true,
-      likes: 200,
-    },
-    {
-      id: 7,
-      title: "나만의 방1",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: true,
-      likes: 200,
-    },
-    {
-      id: 8,
-      title: "나만의 방1",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: true,
-      likes: 200,
-    },
-    {
-      id: 9,
-      title: "나만의 방1",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: true,
-      likes: 200,
-    },
-    {
-      id: 10,
-      title: "나만의 방1",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: false,
-      likes: 200,
-    },
-    {
-      id: 11,
-      title: "나만의 방1",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: false,
-      likes: 200,
-    },
-    {
-      id: 12,
-      title: "나만의 방1",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: false,
-      likes: 200,
-    },
-    {
-      id: 13,
-      title: "나만의 방1",
-      tag: "신나는",
-      duration: "01:24:34",
-      liked: false,
-      likes: 200,
-    },
-  ]);
+import { fetchLikedRooms } from "../../api/room";
 
-  const likedRooms = myRooms.filter((room) => room.liked);
+export default function LikedRoomPage() {
+  const [likedRooms, setLikedRooms] = useState([]);
+  const location = useLocation();
+
+  useEffect(() => {
+    const getLikedRooms = async () => {
+      try {
+        const data = await fetchLikedRooms();
+        console.log("💖 좋아요한 방 목록 불러오기 완료:", data);
+        setLikedRooms(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("좋아요한 방 목록을 불러오는 데 실패했습니다:", error);
+        setLikedRooms([]);
+      }
+    };
+
+    getLikedRooms();
+  }, [location]);
 
   return (
     <S.Container>
@@ -129,7 +41,18 @@ export default function LikedRoomPage() {
           </S.PageHeader>
           <S.PageRoomContainer>
             {likedRooms.map((room) => (
-              <RoomComponent key={room.id} data={room} />
+              <RoomComponent
+                key={room.roomId}
+                data={room}
+                onLikeToggle={async () => {
+                  try {
+                    const refreshed = await fetchLikedRooms(); // roomList 배열이 반환됨
+                    setLikedRooms(Array.isArray(refreshed) ? refreshed : []);
+                  } catch (error) {
+                    console.error("좋아요 목록 새로고침 실패:", error);
+                  }
+                }}
+              />
             ))}
           </S.PageRoomContainer>
         </S.Main>
