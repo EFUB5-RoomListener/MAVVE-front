@@ -5,6 +5,7 @@ import CreateBtn from "../../assets/RoomPage/createpencil.svg";
 import * as S from "../../pages/RoomPage/RoomPage.style.js";
 import mockPlayLists from "./playlistMockData";
 import RoomDeleteModal from './RoomDeleteModal.jsx';
+import { useNavigate, useParams } from "react-router-dom";
 
 function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists, step, setThumbnailFile }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,6 +25,12 @@ function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists, step, setThumbna
   // 방 삭제 모달
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
+  // 방 입장
+  const { roomCode } = useParams();
+  const navigate = useNavigate();
+  const handleEnter = (roomCode) => {
+    navigate(`/rooms/${roomCode}/enter`);
+  }
 
   return (
     <S.HeaderContainer>
@@ -59,12 +66,20 @@ function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists, step, setThumbna
           )}
         </S.HashtagContainer>
       </S.HeaderTextArea>
+      
+    
+      {step === "done" &&
+          <S.RoomEnterBtn onClick={() => handleEnter(roomCode)}>
+            방 입장하기
+          </S.RoomEnterBtn>
+      }
 
       {step === "done" &&
           <S.RoomDeleteBtn onClick={() => setIsDeleteModalOpen(true)}>
             방 삭제하기
           </S.RoomDeleteBtn>
       }
+      
 
       {isModalOpen && (
        <S.ModalWrapper>

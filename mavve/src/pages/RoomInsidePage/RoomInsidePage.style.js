@@ -143,7 +143,7 @@ export const PlayListAllContainer = styled.div`
 `;
 
 export const MusicListContainer = styled.div`
-    width: ${({ isShrinked }) => (isShrinked ? "40.25rem" : "59.25rem")};
+    width: ${({ $isShrinked }) => ($isShrinked ? "40.25rem" : "59.25rem")};
     height: 31.75rem;
     border-radius: 1rem;
     border: 3px solid var(--w, #FCFEFF);
@@ -163,7 +163,7 @@ export const MusicListContainer = styled.div`
 
 
 export const CurrentPlayingBar = styled.div`
-  width: ${({ isShrinked }) => (isShrinked ? "44.25rem" : "63.5rem")};
+  width: ${({ $isShrinked }) => ($isShrinked ? "44.25rem" : "63.5rem")};
   position: absolute;
   top: 23.35rem;          
   left: 42.25rem;
@@ -236,7 +236,7 @@ export const ChatToggleBtn = styled.button`
   font-weight: 400;
   line-height: 1.5rem;
 
-  background: ${({ isChatOpen }) => (isChatOpen ? '#CFEFFF' : 'none')};
+  background: ${({ $isChatOpen }) => ($isChatOpen ? '#CFEFFF' : 'none')};
   border: none;
 
   position: fixed;
@@ -244,8 +244,8 @@ export const ChatToggleBtn = styled.button`
   right: 5rem;
   
   &:hover {
-  background-color: ${({ isChatOpen }) =>
-    isChatOpen ? '#CFEFFF' : '#B0CDDC'};
+  background-color: ${({ $isChatOpen }) =>
+    $isChatOpen ? '#CFEFFF' : '#B0CDDC'};
 }
 
 
@@ -257,7 +257,7 @@ export const SongAddBtn = styled.button`
   z-index: 3; 
 
   margin-top: 1.75rem;
-  margin-left: ${({ isChatOpen }) => (isChatOpen ? '36.75rem' : '55.75rem')};
+  margin-left: ${({ $isChatOpen }) => ($isChatOpen ? '36.75rem' : '55.75rem')};
   display: inline-flex;
   padding: 0.25rem 0.5rem;
   justify-content: center;
@@ -287,7 +287,7 @@ export const SongAddBtn = styled.button`
 
 export const SongDeleteBtn = styled.button`
   position: absolute;
-  margin-left: ${({ isChatOpen }) => (isChatOpen ? '29.75rem' : '48.5rem')};
+  margin-left: ${({ $isChatOpen }) => ($isChatOpen ? '29.75rem' : '48.5rem')};
   bottom: 7rem;
   z-index: 3;        
   display: inline-flex;
@@ -344,13 +344,13 @@ export const FriendsBtn = styled.button`
   color: var(--b, #3C3E44);
   border-radius: 1rem;
 
-  background: ${({ isActive }) => (isActive ? '#CFEFFF' : 'none')};
+  background: ${({ $isActive }) => ($isActive ? '#CFEFFF' : 'none')};
   border: none;
 
   position: relative;
   &:hover {
-  background-color: ${({  isActive  }) =>
-     isActive  ? '#CFEFFF' : '#B0CDDC'};
+  background-color: ${({  $isActive  }) =>
+     $isActive  ? '#CFEFFF' : '#B0CDDC'};
   }
 
   
@@ -369,8 +369,8 @@ export const SongRow = styled.div`
 
   border-radius: 0.5rem;
   
-  background: ${({ isSelected }) =>
-  isSelected ? '#65C3FF' : 'transparent'};
+  background: ${({ $isSelected }) =>
+  $isSelected ? '#65C3FF' : 'transparent'};
   padding-left: 1rem;
   margin-right: 1rem;
 
@@ -421,7 +421,7 @@ export const SongTextInfo = styled.div`
 
 
 export const SongAlbum = styled.div`
-  width: ${({ isChatOpen }) => (isChatOpen ? '11rem' : '30rem')};
+  width: ${({ $isChatOpen }) => ($isChatOpen ? '11rem' : '30rem')};
   text-align: center;
   font-size: 0.875rem;
   font-style: normal;
@@ -506,7 +506,7 @@ export const ModalContainer = styled.div`
   z-index: 5;
 
   position: absolute;
-  margin-left: ${({ isChatOpen }) => (isChatOpen ? '27.25rem' : '46.25rem')};
+  margin-left: ${({ $isChatOpen }) => ($isChatOpen ? '27.25rem' : '46.25rem')};
   margin-top: 0.5rem;
 `;
 
@@ -604,7 +604,7 @@ export const ModalSongRow = styled.div`
   display: flex;
   align-items: center;
   border-radius: 0.5rem;
-  background: ${({ isSelected }) => isSelected ? '#65C3FF' : 'transparent'};
+  background: ${({ $isSelected }) => $isSelected ? '#65C3FF' : 'transparent'};
   cursor: pointer;
 `;
 

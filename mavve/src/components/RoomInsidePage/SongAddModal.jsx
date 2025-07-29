@@ -59,7 +59,7 @@ function SongAddModal({ onClose, onAddSongs }) {
             const isSelected = selectedSongs.includes(song.id.toString());
   
             return (
-              <S.ModalSongRow key={song.id} isSelected={isSelected}onClick={() => toggleSelect(song.id)}>
+              <S.ModalSongRow key={song.id} $isSelected={isSelected}onClick={() => toggleSelect(song.id)}>
                 <S.CheckboxWrapper
                   isSelected={isSelected}
                 >

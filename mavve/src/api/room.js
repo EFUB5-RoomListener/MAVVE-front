@@ -48,3 +48,13 @@ export const updateRoom = async (roomCode, { roomName, isPublic, tag, imageURL }
   return response.data;
 };
 
+export const enterRoom= async (roomCode) => {
+  const response = await axiosInstance.get(`/rooms/${roomCode}/enter`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  return response.data;
+};
+ 
