@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import * as S from "./MyPage.style";
 import ProfileTestImg from "../../assets/MyPage/profileTest.png";
 import OneLineNote from "../../components/Common/OneLineNote";
@@ -7,96 +7,148 @@ import RoomComponent from "../../components/Common/RoomComponent";
 import SideBar from "../../components/Common/SideBar";
 import TopBar from "../../components/Common/TopBar";
 import PlusIcon from "../../assets/MyPage/plusIcon.svg";
-import MinusIcon from "../../assets/MyPage/MinusIcon.svg";
 import Profile from "../../components/MyPage/Profile";
 import ProfileEditModal from "../../components/MyPage/ProfileEditModal";
 import OneLineNoteModal from "../../components/MyPage/OneLineNoteModal";
 
-import { fetchUserInfo } from "../../api/user";
-import { uploadImage } from "../../api/image";
-import { fetchMyRooms } from "../../api/room";
-import { fetchDiaryByUser, deleteDiary } from "../../api/diary";
-
 export default function MyPage() {
+  const [user, setUser] = useState({
+    name: "테스트유저",
+    profileImg: "", //ProfileTestImg, //기본 프로필 테스트 하려면 "" 으로 변경
+    playlistCount: 5,
+    roomCount: 10,
+  });
+
   const navigate = useNavigate();
-  const [user, setUser] = useState({ nickname: "", profile: "" });
-  const [myRooms, setMyRooms] = useState([]);
-  const [noteData, setNoteData] = useState([]);
 
-  const [nameInput, setNameInput] = useState("");
+  const [isHovered, setIsHovered] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [nameInput, setNameInput] = useState(user.name);
+
+  const [myRooms, setMyRooms] = useState([
+    {
+      id: 1,
+      title: "1번 방",
+      tag: "신나는",
+      duration: "01:24:34",
+      liked: false,
+      likes: 200,
+    },
+    {
+      id: 2,
+      title: "222",
+      tag: "차분한",
+      duration: "00:00:10",
+      liked: true,
+      likes: 2,
+    },
+    {
+      id: 3,
+      title: "333",
+      tag: "신나는",
+      duration: "01:24:34",
+      liked: true,
+      likes: 200,
+    },
+    {
+      id: 4,
+      title: "나만의 방1",
+      tag: "신나는",
+      duration: "01:24:34",
+      liked: true,
+      likes: 200,
+    },
+    {
+      id: 5,
+      title: "나만의 방1",
+      tag: "신나는",
+      duration: "01:24:34",
+      liked: true,
+      likes: 200,
+    },
+    {
+      id: 6,
+      title: "나만의 방1",
+      tag: "신나는",
+      duration: "01:24:34",
+      liked: true,
+      likes: 200,
+    },
+    {
+      id: 7,
+      title: "나만의 방1",
+      tag: "신나는",
+      duration: "01:24:34",
+      liked: true,
+      likes: 200,
+    },
+    {
+      id: 8,
+      title: "나만의 방1",
+      tag: "신나는",
+      duration: "01:24:34",
+      liked: true,
+      likes: 200,
+    },
+    {
+      id: 9,
+      title: "나만의 방1",
+      tag: "신나는",
+      duration: "01:24:34",
+      liked: true,
+      likes: 200,
+    },
+    {
+      id: 10,
+      title: "나만의 방1",
+      tag: "신나는",
+      duration: "01:24:34",
+      liked: false,
+      likes: 200,
+    },
+    {
+      id: 11,
+      title: "나만의 방1",
+      tag: "신나는",
+      duration: "01:24:34",
+      liked: false,
+      likes: 200,
+    },
+    {
+      id: 12,
+      title: "나만의 방1",
+      tag: "신나는",
+      duration: "01:24:34",
+      liked: false,
+      likes: 200,
+    },
+    {
+      id: 13,
+      title: "나만의 방1",
+      tag: "신나는",
+      duration: "01:24:34",
+      liked: false,
+      likes: 200,
+    },
+  ]);
+
+  const [noteData, setNoteData] = useState({
+    diaryId: 1,
+    emojiUrl: "",
+    nickname: "테스트 유저",
+    comment: "",
+    songTitle: "",
+    songArtist: "",
+    songImage: "",
+    createdAt: "2022-11-20T08:02:21.347+0000",
+    duration: "",
+  });
   const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
-  const prevNicknameRef = useRef("");
-  const location = useLocation();
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const data = await fetchUserInfo();
-      setUser(data);
-    };
-    fetchUser();
-  }, []);
-
-  useEffect(() => {
-    if (user.nickname !== prevNicknameRef.current) {
-      setNameInput(user.nickname);
-      prevNicknameRef.current = user.nickname;
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (user.profile === null || user.profile === undefined) {
-      setUser((prev) => ({ ...prev, profile: "" }));
-    }
-  }, [user.profile]);
-
-  useEffect(() => {
-    const getMyRooms = async () => {
-      try {
-        const roomList = await fetchMyRooms();
-
-        setMyRooms(Array.isArray(roomList) ? roomList : []);
-      } catch (error) {
-        console.error("내가 만든 방 목록을 불러오는 데 실패했습니다:", error);
-        setMyRooms([]);
-      }
-    };
-    getMyRooms();
-  }, [location]);
-
-  useEffect(() => {
-    const fetchDiary = async () => {
-      try {
-        const data = await fetchDiaryByUser();
-
-        console.log("📒 불러온 일기 데이터:", data);
-
-        setNoteData({
-          diaryId: data.diaryId,
-          emojiUrl: data.emojiUrl,
-          nickname: data.nickname,
-          comment: data.comment,
-          songTitle: data.songTitle,
-          songArtist: Array.isArray(data.songArtist)
-            ? data.songArtist.join(", ")
-            : data.songArtist,
-          songImageUrl: data.songImageUrl,
-          songDuration: data.songDuration,
-          album: data.album,
-          createdAt: data.createdAt,
-        });
-      } catch (error) {
-        console.error("한 줄 일기 조회 실패:", error);
-      }
-    };
-
-    fetchDiary();
-  }, []);
-
-  //const likedRooms = myRooms.filter((room) => room.liked);
+  const likedRooms = myRooms.filter((room) => room.liked);
 
   const myRoomRef = useRef(null);
-  //const likedRoomRef = useRef(null);
+  const likedRoomRef = useRef(null);
 
   const handleHorizontalScroll = (ref) => (e) => {
     if (ref.current) {
@@ -104,33 +156,11 @@ export default function MyPage() {
     }
   };
 
-  const handleImgUpload = async (e) => {
+  const handleImgUpload = (e) => {
     const file = e.target.files[0];
-    if (!file) return;
-
-    try {
-      const imageUrl = await uploadImage(file, "profile");
-      setUser((prev) => ({ ...prev, profile: imageUrl }));
-    } catch (error) {
-      console.error("이미지 업로드 중 오류:", error);
-      alert("이미지 업로드에 실패했습니다.");
-    }
-  };
-
-  const handleDeleteDiary = async () => {
-    if (!noteData?.diaryId) return;
-
-    const confirmDelete = window.confirm("한 줄 일기를 삭제하시겠습니까?");
-    if (!confirmDelete) return;
-
-    try {
-      const success = await deleteDiary(noteData.diaryId);
-      if (success) {
-        alert("일기가 삭제되었습니다.");
-        setNoteData({}); // 일기 데이터 초기화
-      }
-    } catch (error) {
-      alert("일기 삭제에 실패했습니다.");
+    if (file) {
+      const imgUrl = URL.createObjectURL(file);
+      setUser((prev) => ({ ...prev, profileImg: imgUrl }));
     }
   };
 
@@ -157,17 +187,9 @@ export default function MyPage() {
           )}
 
           <S.OneLineNoteContainer>
-            <S.TitleContainer>
-              <S.Title>오늘의 한 줄 일기</S.Title>
-              {noteData?.comment && (
-                <S.DeleteDiaryBtn onClick={handleDeleteDiary}>
-                  <S.BtnIcon src={MinusIcon} alt="한 줄 일기 삭제 아이콘" />한
-                  줄 일기 삭제하기
-                </S.DeleteDiaryBtn>
-              )}
-            </S.TitleContainer>
+            <S.Title>오늘의 한 줄 일기</S.Title>
             <OneLineNote
-              profileImg={user.profile}
+              profileImg={user.profileImg}
               noteData={noteData}
               onEditClick={() => setIsNoteModalOpen(true)}
             />
@@ -181,7 +203,7 @@ export default function MyPage() {
           )}
 
           <S.MyRoomArea>
-            <S.TitleContainer>
+            <S.MyRoomHeader>
               <S.Title
                 onClick={() => {
                   if (myRooms.length >= 8) {
@@ -194,10 +216,10 @@ export default function MyPage() {
               >
                 내가 만든 방
               </S.Title>
-              <S.CreateRoomBtn onClick={() => navigate("/rooms")}>
-                <S.BtnIcon src={PlusIcon} alt="방 생성 아이콘" />방 생성하기
+              <S.CreateRoomBtn onClick={() => navigate("/room")}>
+                <S.PlusIcon src={PlusIcon} alt="방 생성 아이콘" />방 생성하기
               </S.CreateRoomBtn>
-            </S.TitleContainer>
+            </S.MyRoomHeader>
             <S.MyRoomContainer
               ref={myRoomRef}
               onWheel={handleHorizontalScroll(myRoomRef)}
@@ -206,11 +228,9 @@ export default function MyPage() {
               }}
             >
               {myRooms.length > 0 ? (
-                myRooms
-                  .slice(0, 8)
-                  .map((room) => (
-                    <RoomComponent key={room.roomId} data={room} />
-                  ))
+                myRooms.map((room) => (
+                  <RoomComponent key={room.id} data={room} />
+                ))
               ) : (
                 <>
                   <S.NoticeContainer>
@@ -226,7 +246,7 @@ export default function MyPage() {
           </S.MyRoomArea>
 
           <S.LikedRoomArea>
-            {/* <S.Title
+            <S.Title
               onClick={() => {
                 if (likedRooms.length >= 8) {
                   navigate("/mypage/likedroom");
@@ -258,7 +278,7 @@ export default function MyPage() {
                   </S.NoticeContainer>
                 </>
               )}
-            </S.LikedRoomContainer> */}
+            </S.LikedRoomContainer>
           </S.LikedRoomArea>
         </S.Main>
       </S.MainContainer>

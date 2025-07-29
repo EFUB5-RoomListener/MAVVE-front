@@ -29,12 +29,10 @@ export const deleteRoom = async (roomCode) => {
   return response.data;
 };
 
-export const updateRoom = async (
-  roomCode,
-  { roomName, isPublic, tag, imageURL }
-) => {
+
+export const updateRoom = async (roomCode, { roomName, isPublic, tag, imageURL }) => {
   const response = await axiosInstance.patch(
-    `/rooms/${roomCode}`,
+    `/rooms/${roomCode}`, 
     {
       roomName,
       tag,
@@ -50,16 +48,6 @@ export const updateRoom = async (
   return response.data;
 };
 
-//내가 만든 방
-export const fetchMyRooms = async () => {
-  const response = await axiosInstance.get("/rooms/me");
-
-  console.log("🔎 [API 응답] /rooms/me:", response.data);
-
-  return response.data.roomList;
-};
-
-
 export const enterRoom= async (roomCode) => {
   const response = await axiosInstance.get(`/rooms/${roomCode}/enter`, {
     headers: {
@@ -70,4 +58,3 @@ export const enterRoom= async (roomCode) => {
   return response.data;
 };
  
-
