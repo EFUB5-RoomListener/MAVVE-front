@@ -2,10 +2,6 @@ import React, { useRef, useState } from "react";
 import * as S from "./ProfileEditModal.style";
 import ImgUploadIcon from "../../assets/MyPage/imgUploadIcon.svg";
 import XIcon from "../../assets/MyPage/xIcon.svg";
-import DefaultProfile from "../../assets/Common/defaultProfile.svg";
-
-import { updateUserInfo } from "../../api/user";
-import { deleteImage } from "../../api/image";
 
 export default function ProfileEditModal({
   user,
@@ -22,31 +18,10 @@ export default function ProfileEditModal({
   const colorState =
     !isOverLimit && !isFocused ? "g4" : isOverLimit ? "red" : "b";
 
-  const handleSave = async () => {
+  const handleSave = () => {
     if (isOverLimit) return;
-
-    try {
-      console.log("현재 유저 프로필:", user.profile);
-      const updatedUser = await updateUserInfo({
-        nickname: nameInput,
-        profile: user.profile || "",
-      });
-
-      setUser(updatedUser);
-      onClose();
-    } catch (error) {
-      console.error("프로필 업데이트 실패:", error);
-      alert("프로필 업데이트에 실패했습니다.");
-    }
-  };
-
-  const handleImageDelete = async () => {
-    try {
-      await deleteImage(user.profile);
-      setUser((prev) => ({ ...prev, profile: "" })); // 기본 이미지로 변경
-    } catch (error) {
-      alert("이미지 삭제에 실패했습니다.");
-    }
+    setUser((prev) => ({ ...prev, name: nameInput }));
+    onClose();
   };
 
   return (
@@ -59,8 +34,8 @@ export default function ProfileEditModal({
         <S.ProfileEditArea>
           <S.ProfileImgContainer>
             <S.ProfileImgEdit onClick={() => fileInputRef.current?.click()}>
-              {user.profile ? (
-                <img src={user.profile} alt="프로필 이미지" />
+              {user.profileImg ? (
+                <img src={user.profileImg} alt="프로필 이미지" />
               ) : (
                 <img
                   src={ImgUploadIcon}
@@ -69,12 +44,6 @@ export default function ProfileEditModal({
                 />
               )}
             </S.ProfileImgEdit>
-            {user.profile && (
-              <S.DeleteImgButton onClick={handleImageDelete}>
-                <img src={XIcon} alt="삭제" />
-              </S.DeleteImgButton>
-            )}
-
             <input
               type="file"
               id="profileImgInput"

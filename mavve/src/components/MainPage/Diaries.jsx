@@ -1,6 +1,6 @@
-import React from "react";
-import * as S from "../MainPage/Diaries.style";
-import OneLineNote from "../Common/OneLineNote";
+import React from 'react'
+import * as S from '../MainPage/Diaries.style'
+import OneLineNote from '../Common/OneLineNote'
 
 export default function Diaries() {
   return (
