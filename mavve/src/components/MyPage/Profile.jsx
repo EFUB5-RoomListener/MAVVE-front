@@ -30,3 +30,5 @@ export default function Profile({ user, onEditClick }) {
     </S.ProfileContainer>
   );
 }
+
+//

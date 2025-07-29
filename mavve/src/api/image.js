@@ -13,3 +13,5 @@ export const uploadThumbnailImage = async (file, dirName) => {
       throw error;
   }
 };
+
+//
