@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainPage from "./pages/MainPage/MainPage";
 import RoomPage from "../src/pages/RoomPage/RoomPage";
+import RoomInsidePage from '../src/pages/RoomInsidePage/RoomInsidePage';
 import LoginPage from "./pages/LoginPage/LoginPage";
 import MyPage from "./pages/MyPage/MyPage";
 import LikedRoomPage from "./pages/MyPage/LikedRoomPage";
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/rooms" element={<RoomPage />} />
         <Route path="/rooms/:roomCode" element={<RoomPage />} />
+        <Route path="/rooms/:roomCode/enter" element={<RoomInsidePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/likedroom" element={<LikedRoomPage />} />

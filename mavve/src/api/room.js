@@ -58,3 +58,16 @@ export const fetchMyRooms = async () => {
 
   return response.data.roomList;
 };
+
+
+export const enterRoom= async (roomCode) => {
+  const response = await axiosInstance.get(`/rooms/${roomCode}/enter`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  return response.data;
+};
+ 
+
