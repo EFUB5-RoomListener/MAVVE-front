@@ -49,6 +49,10 @@ export const SearchBar = styled.div`
     line-height: normal;
     color: #93959B;
     }
+
+    &:hover {
+        background: var(--g3);
+    }
 `;
 
 export const Buttons = styled.div`
