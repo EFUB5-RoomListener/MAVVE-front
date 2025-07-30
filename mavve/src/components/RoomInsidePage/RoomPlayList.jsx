@@ -175,6 +175,15 @@ function RoomPlayList({ isChatOpen, setIsChatOpen, songEvent, roomCode, currentS
     });
   }, [currentSong]);
 
+  // duration 밀리초를 분:초로 변환 
+  const formatDuration = (ms) => {
+    const totalSeconds = Math.floor(ms / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`; // 한자리 숫자를 두자리로 만들어줌 
+  };
+
 
   return (
     <>
@@ -246,7 +255,7 @@ function RoomPlayList({ isChatOpen, setIsChatOpen, songEvent, roomCode, currentS
                 <div>{song.artist}</div>
               </S.SongTextInfo>
               <S.SongAlbum $isChatOpen={isChatOpen}>{song.album}</S.SongAlbum>
-              <S.SongDuration>{song.duration}</S.SongDuration>
+              <S.SongDuration>{formatDuration(song.duration)}</S.SongDuration>
             </S.SongRow>
           );
         })
