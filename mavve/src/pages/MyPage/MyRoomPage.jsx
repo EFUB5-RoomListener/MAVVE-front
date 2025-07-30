@@ -8,7 +8,7 @@ import PlusIcon from "../../assets/MyPage/plusIcon.svg";
 
 import { fetchMyRooms } from "../../api/room";
 
-export default function MyPage() {
+export default function MyRoomPage() {
   const navigate = useNavigate();
   const [myRooms, setMyRooms] = useState([]);
   const location = useLocation();
@@ -45,7 +45,17 @@ export default function MyPage() {
           </S.PageHeader>
           <S.PageRoomContainer>
             {myRooms.map((room) => (
-              <RoomComponent key={room.roomId} data={room} />
+              <RoomComponent
+                key={room.roomId}
+                data={room}
+                onLikeToggle={(updated) => {
+                  setMyRooms((prev) =>
+                    prev.map((r) =>
+                      r.roomId === updated.roomId ? { ...r, ...updated } : r
+                    )
+                  );
+                }}
+              />
             ))}
           </S.PageRoomContainer>
         </S.Main>

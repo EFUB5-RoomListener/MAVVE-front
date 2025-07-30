@@ -61,6 +61,7 @@ export const ProfileImgContainer = styled.div`
   padding-right: 2rem;
   border-right: 0.03125rem solid var(--b);
   margin-right: 3rem;
+  position: relative;
 `;
 
 export const ProfileImgEdit = styled.div`
