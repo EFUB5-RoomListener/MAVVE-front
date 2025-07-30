@@ -14,8 +14,8 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/rooms" element={<RoomPage />} />
-        <Route path="/rooms/:roomCode" element={<RoomPage />} />
-        <Route path="/rooms/:roomCode/enter" element={<RoomInsidePage />} />
+        <Route path="/rooms/" element={<RoomPage />} />
+        <Route path="/rooms/:roomCode" element={<RoomInsidePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/likedroom" element={<LikedRoomPage />} />

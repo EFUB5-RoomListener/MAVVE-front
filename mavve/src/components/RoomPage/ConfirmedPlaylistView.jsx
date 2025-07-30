@@ -57,7 +57,7 @@ function ConfirmedPlaylistView({ selectedLists, setStep, mode, setSelectedLists,
        
 
        alert('방이 생성되었습니다!');
-       navigate(`/rooms/${roomCode}`, { state: { roomData } });
+       navigate(`/rooms/`, { state: { roomData } });
 
       
       

@@ -65,7 +65,7 @@ export const enterRoom = async (roomCode) => {
       "Content-Type": "application/json",
     },
   });
-
+  console.log("🔥 response:", response);
   return response.data;
 };
 

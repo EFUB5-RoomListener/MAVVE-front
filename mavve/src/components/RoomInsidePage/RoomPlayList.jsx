@@ -1,13 +1,66 @@
-import React, { useState,  } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import * as S from '../../pages/RoomInsidePage/RoomInsidePage.style';
-import { mockPlayList } from "./mockPlayList";
 import CheckBox from '../../assets/RoomInsidePage/play_frame_music.svg';
 import Check from '../../assets/RoomInsidePage/check-01.svg';
 import FriendsModal from './FriendsModal';
 import SongAddModal from "./SongAddModal";
 import Chat from '../../assets/RoomInsidePage/roomin_icn_chat.svg';
+import { sendAddSongMessage, sendDeleteSongMessage } from "../../api/websocket-song";
 
-function RoomPlayList({isChatOpen, setIsChatOpen}) {
+
+function RoomPlayList({ isChatOpen, setIsChatOpen, songEvent, roomCode, currentSong, setCurrentSong, playList, setPlayList, roomData, startTime, setStartTime  }) {
+
+  // 브로드캐스트 받은 동작 전달 
+  useEffect(() => {
+    if (!songEvent) return;
+    console.log("🎧 수신된 songEvent:", songEvent);
+
+    switch (songEvent.type) {
+      case "ADD_SONG":
+        if (songEvent.song) {
+          setPlayList(prev => [...prev, songEvent.song]);
+        }
+        break;
+      
+      case "DELETE_SONG":
+        if (songEvent.songIds) {
+          setPlayList(prev =>
+            prev.filter(song => !songEvent.songIds.includes(song.spotifyId.toString()))
+          );
+        }
+        break;
+      
+      case "NEXT":
+
+        const currentIndex = playList.findIndex(song => song.spotifyId === currentSong?.spotifyId);
+
+        if (currentIndex !== -1) {
+          if (currentIndex < playList.length - 1) {
+
+            // 다음 곡이 있음
+            const nextSong = playList[currentIndex + 1];
+            setCurrentSong(nextSong);
+          } else {
+            // 마지막 곡이면 처음으로 반복
+            const firstSong = playList[0];
+            console.log("🎵 마지막 곡 -> 첫 곡으로 반복 재생");
+            setCurrentSong(firstSong);
+          }
+        } else {
+          console.log("🎵 현재 곡을 찾을 수 없음");
+        }
+        break;
+
+        
+        
+        
+      default:
+        break;
+    }
+  }, [songEvent]);
+
+  
+  
   // 수정 모드 전환 
   const [isEditMode, setIsEditMode] = useState(false);
   const toggleEditMode = () => {
@@ -15,34 +68,40 @@ function RoomPlayList({isChatOpen, setIsChatOpen}) {
   };
   // 삭제 시 선택된 곡 목록 
   const [selectedSongs, setSelectedSongs] = useState([]);
-  const toggleSelect = (id) => {
-    setSelectedSongs((prev) =>
-      prev.includes(id.toString())
-        ? prev.filter(i => i !== id.toString())
-        : [...prev, id.toString()]
+  const toggleSelect = (songId) => {
+    setSelectedSongs(prev =>
+      prev.includes(songId)
+        ? prev.filter(id => id !== songId)
+        : [...prev, songId]
     );
   };
-  // 곡 삭제를 위해 mockPlayList를 상태로 만들자
-  const [playList, setPlayList] = useState(mockPlayList);
+  
   // 삭제 토스트 모달 상태 
   const [isToastVisible, setIsToastVisible] = useState(false);
   const [deletedCount, setDeletedCount] = useState(0); // 삭제 함수 밖에서도 접근 가능하게 
   // 곡 삭제 함수 
-  const onDelete = () => {
+  const onDelete = async () => {
     const count = selectedSongs.length;
-    setDeletedCount(count); 
+    setDeletedCount(count);
+  
+    const songIdsToDelete = playList
+      .filter(song => selectedSongs.includes(song.spotifyId.toString()))
+      .map(song => song.songId)
+      .filter(Boolean);
+  
+    sendDeleteSongMessage(roomCode, songIdsToDelete);
+    
+    setPlayList(prev =>
+      prev.filter(song => !songIdsToDelete.includes(song.songId))
+    );
 
-    const updatedList = playList.filter(song => !selectedSongs.includes(song.id.toString()));
-    setPlayList(updatedList);
-    setSelectedSongs([]); // 선택 초기화
-
+    setSelectedSongs([]);
     setIsToastVisible(true);
-
-    // 2.5초 뒤에 알림 자동 닫힘
+  
     setTimeout(() => {
       setIsToastVisible(false);
     }, 1500);
-  }
+  };
   
 
   // 친구 목록 버튼 보이는 상태
@@ -50,52 +109,78 @@ function RoomPlayList({isChatOpen, setIsChatOpen}) {
   const toggleStyle = () => setIsActive(prev => !prev); 
 
 
-  // 총 시간 계산 
-  // 재생시간 초로 변환 
-  function timeStringToSeconds(timeStr){
-    const [min, sec] = timeStr.split(":").map(Number); // : 기준으로 나눠서 배열 만든 후 숫자로 바꿔줌 
-    return min * 60 + sec; 
-  }
-  // 다시 포맷 변환
-  function formatSeconds(seconds) {
-    const min = Math.floor(seconds / 60);
-    const sec = seconds % 60;
-    return `${min}분 ${sec}초`;
-  }
-  // 총 시간!! 
-  const totalDuration = formatSeconds(
-    playList.reduce(
-      (acc, song) => acc + timeStringToSeconds(song.duration),
-      0
-    )
-  );
+
   // 노래 추가 모달 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // props로 내려줄 노래 추가 함수 
+
+  // 노래 추가 토스트 모달 
+  const [isAddToastVisible, setIsAddToastVisible] = useState(false);
+  const [addedCount, setAddedCount] = useState(0);
+
+  // 노래 추가 함수
   const handleAddSongs = (newSongs) => {
-    const existingIds = new Set(playList.map(song => song.id));
-    const filteredNewSongs = newSongs.filter(song => !existingIds.has(song.id));
-  
-    if (filteredNewSongs.length > 0) {
-      setPlayList(prev => [...prev, ...filteredNewSongs]);
-      setAddedCount(filteredNewSongs.length);
+    if (newSongs.length > 0) {
+      setPlayList(prev => [...prev, ...newSongs]); 
+      setAddedCount(newSongs.length);
       setIsAddToastVisible(true);
+  
+      // WebSocket으로 추가된 노래들 각각 전송 
+      newSongs.forEach(song => {
+        sendAddSongMessage(roomCode, song); 
+      });
   
       setTimeout(() => {
         setIsAddToastVisible(false);
       }, 1500);
     }
   };
+
+
+  // 자동 스크롤 구현
+  const songRefs = useRef({});
+  useEffect(() => {
+    playList.forEach(song => {
+      if (!songRefs.current[song.spotifyId]) {
+        songRefs.current[song.spotifyId] = React.createRef();
+      }
+    });
+  }, [playList]);
   
-  // 노래 추가 토스트 모달 
-  const [isAddToastVisible, setIsAddToastVisible] = useState(false);
-  const [addedCount, setAddedCount] = useState(0);
-  
+
+  const containerRef = useRef();
+
+  const lastScrolledId = useRef(null);
+
+  useEffect(() => {
+    if (!currentSong || !containerRef.current) return;
+    if (lastScrolledId.current === currentSong.spotifyId) return;
+
+    const currentRef = songRefs.current[currentSong.spotifyId];
+    if (!currentRef?.current) return;
+
+    lastScrolledId.current = currentSong.spotifyId;
+
+    const container = containerRef.current;
+    const songElem = currentRef.current;
+
+    const currentBarOffset = 4.5 * 1.75;
+    const remToPx = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const offset = currentBarOffset * remToPx;
+
+    const scrollTop = songElem.offsetTop - offset + songElem.clientHeight / 2;
+
+    container.scrollTo({
+      top: scrollTop,
+      behavior: 'smooth',
+    });
+  }, [currentSong]);
+
+
   return (
     <>
     <S.PlayListAllContainer>
       <S.PlayListHeader>
-        <S.PlayListTitle>방 제목</S.PlayListTitle>
+        <S.PlayListTitle>{roomData?.roomName}</S.PlayListTitle>
         <S.EditButton onClick={toggleEditMode}>
           {isEditMode ? '수정 완료' : '플레이리스트 수정'}
         </S.EditButton>
@@ -106,7 +191,7 @@ function RoomPlayList({isChatOpen, setIsChatOpen}) {
       </S.PlayListHeader>
 
       <S.PlayListInfo>
-        <span>{playList.length}곡, {totalDuration}</span>
+        <span>{roomData?.songCount}곡, {roomData?.totalDuration} </span>
         <S.FriendsBtn $isActive={isActive} onClick={toggleStyle}>
           참여중인 친구들
         </S.FriendsBtn>
@@ -123,14 +208,27 @@ function RoomPlayList({isChatOpen, setIsChatOpen}) {
         </>
       )}
 
-      <S.MusicListContainer $isShrinked={isChatOpen}>
-        {playList.map((song) => {
-          const isSelected = selectedSongs.includes(song.id.toString());
+      <S.MusicListContainer ref={containerRef} $isShrinked={isChatOpen}>
+       {!isEditMode && <S.Spacer />}
+      {playList === undefined ? (
+        <S.EmptyMessage>플레이리스트가 비어 있습니다.</S.EmptyMessage>
+      ) : (
+         playList.map((song) => {
+          const isSelected = selectedSongs.includes(song.spotifyId.toString());
+
+          // ref 연결
+          if (!songRefs.current[song.spotifyId]) {
+            songRefs.current[song.spotifyId] = React.createRef();
+          }
 
           return (
-            <S.SongRow key={song.id} $isSelected={isSelected} $isShrinked={isChatOpen}>
+            <S.SongRow 
+              ref={songRefs.current[song.spotifyId]}
+              key={song.spotifyId}
+              $isSelected={isSelected} $isShrinked={isChatOpen}
+              >
               {isEditMode ? (
-                <S.CheckboxWrapper onClick={() => toggleSelect(song.id)} isSelected={isSelected}>
+                <S.CheckboxWrapper onClick={() => toggleSelect(song.spotifyId)} isSelected={isSelected}>
                   <S.CheckBoxIcon src={CheckBox} />
                   {isSelected && <S.CheckIcon src={Check} />}
                 </S.CheckboxWrapper>
@@ -139,7 +237,7 @@ function RoomPlayList({isChatOpen, setIsChatOpen}) {
               )}
 
               <S.CDWrapper>
-                <S.CDThumbnail src={song.thumbnail} alt={song.title} />
+                <S.CDThumbnail src={song.coverUrl} alt={song.title} />
                 <S.CDDot />
               </S.CDWrapper>
 
@@ -151,7 +249,11 @@ function RoomPlayList({isChatOpen, setIsChatOpen}) {
               <S.SongDuration>{song.duration}</S.SongDuration>
             </S.SongRow>
           );
-        })}
+        })
+        )}
+        {!isEditMode && <S.Spacer />}
+
+
       {isToastVisible && (
         <S.Toast>
           선택하신 {deletedCount}곡의 노래가 삭제되었습니다.
@@ -160,7 +262,7 @@ function RoomPlayList({isChatOpen, setIsChatOpen}) {
 
       {isAddToastVisible && (
         <S.Toast>
-          (방 제목)에 {addedCount}곡이 추가되었습니다.
+          {roomData?.roomName}에 {addedCount}곡이 추가되었습니다.
         </S.Toast>
       )}
       </S.MusicListContainer>
@@ -170,9 +272,12 @@ function RoomPlayList({isChatOpen, setIsChatOpen}) {
      {isModalOpen && 
      <SongAddModal 
      onClose={() => setIsModalOpen(false)}
-     onAddSongs={handleAddSongs}  />}
+     onAddSongs={handleAddSongs}
+     currentPlayList={playList}  />}
      </>
   );
 }
+
+
 
 export default RoomPlayList;
