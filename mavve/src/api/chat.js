@@ -20,9 +20,7 @@ export const fetchOriginChat = async (roomId, lastChatId) => {
     : `/rooms/${roomId}/chats`;
 
   try {
-    const response = await axiosInstance.get(url); 
-
-    console.log("✅ 서버 응답:", response.data);
+    const response = await axiosInstance.get(url); ;
 
     const result = response.data?.chats ?? [];
     return result;

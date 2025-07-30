@@ -489,6 +489,16 @@ export const Toast = styled.div`
 
 `;
 
+export const EmptyMessage = styled.div`
+
+`;
+
+export const Spacer = styled.div`
+  height: 22.75rem;
+  background: transparent;
+`;
+
+
 // FriendsModal.jsx
 
 export const ModalContainer = styled.div`

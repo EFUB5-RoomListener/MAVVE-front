@@ -6,6 +6,7 @@ import * as S from "../../pages/RoomPage/RoomPage.style.js";
 import mockPlayLists from "./playlistMockData";
 import RoomDeleteModal from './RoomDeleteModal.jsx';
 import { useNavigate, useParams } from "react-router-dom";
+import { enterRoom } from "../../api/room.js";
 
 function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists, step, setThumbnailFile }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +30,7 @@ function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists, step, setThumbna
   const { roomCode } = useParams();
   const navigate = useNavigate();
   const handleEnter = (roomCode) => {
-    navigate(`/rooms/${roomCode}/enter`);
+    navigate(`/rooms/${roomCode}`);
   }
 
   return (
