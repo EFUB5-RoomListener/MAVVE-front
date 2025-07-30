@@ -31,17 +31,26 @@ function RoomPlayList({ isChatOpen, setIsChatOpen, songEvent, roomCode, currentS
         break;
       
       case "NEXT":
-          console.log("✅ NEXT 이벤트 수신됨");
-        
-          const currentIndex = playList.findIndex(song => song.spotifyId === currentSong.spotifyId);
-          if (currentIndex !== -1 && currentIndex < playList.length - 1) {
+
+        const currentIndex = playList.findIndex(song => song.spotifyId === currentSong?.spotifyId);
+
+        if (currentIndex !== -1) {
+          if (currentIndex < playList.length - 1) {
+
+            // 다음 곡이 있음
             const nextSong = playList[currentIndex + 1];
             setCurrentSong(nextSong);
           } else {
-            console.log("🎵 마지막 곡이거나 현재 곡을 찾을 수 없음");
-            break;
+            // 마지막 곡이면 처음으로 반복
+            const firstSong = playList[0];
+            console.log("🎵 마지막 곡 -> 첫 곡으로 반복 재생");
+            setCurrentSong(firstSong);
           }
-          break;
+        } else {
+          console.log("🎵 현재 곡을 찾을 수 없음");
+        }
+        break;
+
         
         
         
@@ -165,7 +174,6 @@ function RoomPlayList({ isChatOpen, setIsChatOpen, songEvent, roomCode, currentS
       behavior: 'smooth',
     });
   }, [currentSong]);
-
 
 
   return (

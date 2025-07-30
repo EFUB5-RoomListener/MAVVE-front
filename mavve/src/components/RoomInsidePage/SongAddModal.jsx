@@ -9,11 +9,11 @@ function SongAddModal({ onClose, onAddSongs, currentPlayList }) {
     const [selectedSongs, setSelectedSongs] = useState([]);
     const [search, setSearch] = useState("");
   
-    const toggleSelect = (spotifyId) => {
+    const toggleSelect = (songId) => {
       setSelectedSongs((prev) =>
-        prev.includes(spotifyId.toString())
-          ? prev.filter((id) => id !== spotifyId.toString())
-          : [...prev, spotifyId.toString()]
+        prev.includes(songId.toString())
+          ? prev.filter((id) => id !== songId.toString())
+          : [...prev, songId.toString()]
       );      
     };
   
@@ -24,7 +24,7 @@ function SongAddModal({ onClose, onAddSongs, currentPlayList }) {
     // selected song들을 추가하기 
     const handleAdd = () => {
       const songsToAdd = currentPlayList.filter(song =>
-        selectedSongs.includes(song.spotifyId.toString())
+        selectedSongs.includes(song.songId.toString())
       );
   
       onAddSongs(songsToAdd); // 상위로 전달
@@ -55,10 +55,10 @@ function SongAddModal({ onClose, onAddSongs, currentPlayList }) {
           {/* 노래 리스트 */}
           <S.SongListWrapper>
           {filteredList.map((song) => {
-            const isSelected = selectedSongs.includes(song.spotifyId.toString());
+            const isSelected = selectedSongs.includes(song.songId.toString());
   
             return (
-              <S.ModalSongRow key={song.spotifyId} $isSelected={isSelected}onClick={() => toggleSelect(song.spotifyId)}>
+              <S.ModalSongRow key={song.songId} $isSelected={isSelected}onClick={() => toggleSelect(song.songId)}>
                 <S.CheckboxWrapper
                   isSelected={isSelected}
                 >
