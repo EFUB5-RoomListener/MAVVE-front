@@ -17,9 +17,6 @@ function RoomChat(){
             try {
                 const chatList = await fetchOriginChat(roomId); 
                 setChatList(chatList); 
-                if (initialChats.length > 0) {
-                    setLastChatId(initialChats[0].id); // 맨 위 채팅을 lastchatId로 설정! 
-                }
             } catch (e) {
                 console.error('초기 채팅 로딩 실패', e);
             }
