@@ -26,7 +26,7 @@ export default function RoomComponent({ data, onLikeToggle }) {
   const handleRoomClick = () => {
     // roomId가 존재하는 경우에만 이동
     if (data.roomId) {
-      navigate(`/rooms/${data.roomId}/enter`);
+      navigate(`/rooms/${data.roomId}`);
     } else {
       alert("방 코드가 존재하지 않습니다.");
     }
