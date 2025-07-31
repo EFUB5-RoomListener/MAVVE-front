@@ -122,6 +122,16 @@ export const RoomLeaveBtn = styled.button`
 
     margin-left: 105rem;
     margin-top: 2rem;
+    cursor: pointer;
+    
+    
+    &:hover {
+    background-color:#B0CDDC
+    }
+
+    &:active {
+    transform: scale(0.925); /* 크기 살짝 줄임 */
+  }
 `;
 
 
@@ -133,7 +143,7 @@ export const PlayListAllContainer = styled.div`
 `;
 
 export const MusicListContainer = styled.div`
-    width: ${({ isShrinked }) => (isShrinked ? "40.25rem" : "59.25rem")};
+    width: ${({ $isShrinked }) => ($isShrinked ? "40.25rem" : "59.25rem")};
     height: 31.75rem;
     border-radius: 1rem;
     border: 3px solid var(--w, #FCFEFF);
@@ -153,7 +163,7 @@ export const MusicListContainer = styled.div`
 
 
 export const CurrentPlayingBar = styled.div`
-  width: ${({ isShrinked }) => (isShrinked ? "44.25rem" : "63.5rem")};
+  width: ${({ $isShrinked }) => ($isShrinked ? "44.25rem" : "63.5rem")};
   position: absolute;
   top: 23.35rem;          
   left: 42.25rem;
@@ -206,6 +216,10 @@ export const EditButton = styled.button`
   margin-top: 3rem;
   right: 5rem;
   position: fixed;
+
+  &:hover {
+    background-color:#B0CDDC
+    }
 `;
 
 
@@ -222,12 +236,20 @@ export const ChatToggleBtn = styled.button`
   font-weight: 400;
   line-height: 1.5rem;
 
-  background: ${({ isChatOpen }) => (isChatOpen ? '#CFEFFF' : 'none')};
+  background: ${({ $isChatOpen }) => ($isChatOpen ? '#CFEFFF' : 'none')};
   border: none;
 
   position: fixed;
   margin-top: 9rem;
   right: 5rem;
+  
+  &:hover {
+  background-color: ${({ $isChatOpen }) =>
+    $isChatOpen ? '#CFEFFF' : '#B0CDDC'};
+}
+
+
+  
 `;
 
 export const SongAddBtn = styled.button`
@@ -235,7 +257,7 @@ export const SongAddBtn = styled.button`
   z-index: 3; 
 
   margin-top: 1.75rem;
-  margin-left: ${({ isChatOpen }) => (isChatOpen ? '36.75rem' : '55.75rem')};
+  margin-left: ${({ $isChatOpen }) => ($isChatOpen ? '36.75rem' : '55.75rem')};
   display: inline-flex;
   padding: 0.25rem 0.5rem;
   justify-content: center;
@@ -248,12 +270,24 @@ export const SongAddBtn = styled.button`
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 400;
-  line-height: 1.5rem; 
+  line-height: 1.5rem;
+
+  transition: all 0.1s ease-in-out;
+
+  &:hover {
+    background-color: #F3F4F6;
+  }
+
+  &:active {
+    background-color: #D7D9DD;
+    transform: scale(0.925); /* 크기 살짝 줄임 */
+  }
 `;
+
 
 export const SongDeleteBtn = styled.button`
   position: absolute;
-  margin-left: ${({ isChatOpen }) => (isChatOpen ? '29.75rem' : '48.5rem')};
+  margin-left: ${({ $isChatOpen }) => ($isChatOpen ? '29.75rem' : '48.5rem')};
   bottom: 7rem;
   z-index: 3;        
   display: inline-flex;
@@ -271,6 +305,15 @@ export const SongDeleteBtn = styled.button`
   font-style: normal;
   font-weight: 500;
   line-height: 1.5rem;
+
+  &:hover {
+    background-color: #F3F4F6;
+  }
+
+  &:active {
+    background-color: #D7D9DD;
+    transform: scale(0.925); /* 크기 살짝 줄임 */
+  }
 `;
 
 
@@ -301,10 +344,16 @@ export const FriendsBtn = styled.button`
   color: var(--b, #3C3E44);
   border-radius: 1rem;
 
-  background: ${({ isActive }) => (isActive ? '#CFEFFF' : 'none')};
+  background: ${({ $isActive }) => ($isActive ? '#CFEFFF' : 'none')};
   border: none;
 
   position: relative;
+  &:hover {
+  background-color: ${({  $isActive  }) =>
+     $isActive  ? '#CFEFFF' : '#B0CDDC'};
+  }
+
+  
 `;
 
 
@@ -320,8 +369,8 @@ export const SongRow = styled.div`
 
   border-radius: 0.5rem;
   
-  background: ${({ isSelected }) =>
-  isSelected ? '#65C3FF' : 'transparent'};
+  background: ${({ $isSelected }) =>
+  $isSelected ? '#65C3FF' : 'transparent'};
   padding-left: 1rem;
   margin-right: 1rem;
 
@@ -372,7 +421,7 @@ export const SongTextInfo = styled.div`
 
 
 export const SongAlbum = styled.div`
-  width: ${({ isChatOpen }) => (isChatOpen ? '11rem' : '30rem')};
+  width: ${({ $isChatOpen }) => ($isChatOpen ? '11rem' : '30rem')};
   text-align: center;
   font-size: 0.875rem;
   font-style: normal;
@@ -440,6 +489,16 @@ export const Toast = styled.div`
 
 `;
 
+export const EmptyMessage = styled.div`
+
+`;
+
+export const Spacer = styled.div`
+  height: 22.75rem;
+  background: transparent;
+`;
+
+
 // FriendsModal.jsx
 
 export const ModalContainer = styled.div`
@@ -457,7 +516,7 @@ export const ModalContainer = styled.div`
   z-index: 5;
 
   position: absolute;
-  margin-left: ${({ isChatOpen }) => (isChatOpen ? '27.25rem' : '46.25rem')};
+  margin-left: ${({ $isChatOpen }) => ($isChatOpen ? '27.25rem' : '46.25rem')};
   margin-top: 0.5rem;
 `;
 
@@ -555,7 +614,7 @@ export const ModalSongRow = styled.div`
   display: flex;
   align-items: center;
   border-radius: 0.5rem;
-  background: ${({ isSelected }) => isSelected ? '#65C3FF' : 'transparent'};
+  background: ${({ $isSelected }) => $isSelected ? '#65C3FF' : 'transparent'};
   cursor: pointer;
 `;
 
@@ -632,6 +691,14 @@ export const AddButton = styled.button`
   font-weight: 500;
   line-height: 1.5rem; 
   color: var(--w, #FCFEFF);
+
+  &:hover{
+    background: #0079D3
+  }
+
+  &:active {
+    transform: scale(0.925); /* 크기 살짝 줄임 */
+  }
   `;
 
 

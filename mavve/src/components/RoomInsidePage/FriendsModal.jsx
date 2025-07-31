@@ -2,9 +2,9 @@ import React from "react";
 import { mockFriends }from "./mockFriends";
 import * as S from '../../pages/RoomInsidePage/RoomInsidePage.style';
 
-function FriendsModal({isChatOpen}) {
+function FriendsModal({$isChatOpen}) {
     return (
-      <S.ModalContainer  isChatOpen={isChatOpen}>
+      <S.ModalContainer  $isChatOpen={$isChatOpen}>
         {mockFriends.map((friend) => (
           <S.FriendItem key={friend.id}>
             <S.Avatar src={friend.avatar}/>

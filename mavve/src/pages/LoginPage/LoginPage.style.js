@@ -1,21 +1,5 @@
 import styled from "styled-components";
 
-const colors = {
-  pri: "#009BFF",
-  sec: "#65C3FF",
-  trd: "#E4F6FF",
-  g1: "#F3F4F6",
-  g2: "#D7D9DD",
-  g3: "#BFC4CA",
-  g4: "#93959B",
-  b: "#3C3E44",
-  w: "#FCFEFF",
-  fth: "#CFEFFF",
-  sixth: "#46A1DB",
-  seventh: "#005993",
-  red: "#FA7878",
-};
-
 export const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -48,7 +32,7 @@ export const Title = styled.div`
   font-size: 2.25rem;
   font-weight: 700;
   margin-bottom: 4.31rem;
-  color: ${colors.w};
+  color: var(--w);
 `;
 
 export const LoginButton = styled.img`
@@ -56,4 +40,20 @@ export const LoginButton = styled.img`
   height: 5.625rem;
   cursor: pointer;
   border: none;
+`;
+
+export const LoadBackground = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg);
+  color: var(--b);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const LoadingIcon = styled.img`
+  width: 5rem;
+  height: 5rem;
+  margin-top: 3rem;
 `;

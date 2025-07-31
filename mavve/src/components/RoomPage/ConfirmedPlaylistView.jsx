@@ -4,8 +4,13 @@ import mockPlayLists from "./playlistMockData";
 import ClockIcon from '../../assets/RoomPage/clock.svg';
 import MoreIcon from '../../assets//RoomPage/mypage_after_btn_more.svg';
 import DeleteIcon from '../../assets/RoomPage/trash-02.svg';
+import { createRoom } from "../../api/room";
+import { useNavigate } from "react-router-dom";
+import { uploadThumbnailImage } from '../../api/image';
 
-function ConfirmedPlaylistView({ selectedLists, setStep, mode, setSelectedLists }) {
+
+function ConfirmedPlaylistView({ selectedLists, setStep, mode, setSelectedLists, thumbnailFile, roomInfo }) {
+  const navigate = useNavigate();
   const selectedPlaylists = mockPlayLists.filter(p =>
     selectedLists.includes(p.id.toString())
   );
@@ -28,6 +33,42 @@ function ConfirmedPlaylistView({ selectedLists, setStep, mode, setSelectedLists 
     setSelectedLists(prev => prev.filter(pid => pid !== idStr));
     closeModal();
   };
+
+  const isPublic = roomInfo.visibility === "전체 공개";
+  const handleCreateRoom = async() => {
+    let roomData = null;
+    try {
+       //썸네일 업로드 
+      const thumbnailUrl = await uploadThumbnailImage(thumbnailFile, 'room');
+
+       //방 생성 
+       roomData = {
+          roomName: roomInfo.title,
+          tag: roomInfo.hashtags,
+          imageURL: thumbnailUrl,
+          isPublic,
+       }
+
+       // 플레이리스트 추가 (추후에 수정)
+
+       // 방 생성 
+       const response = await createRoom(roomData); // 요청 보내기
+       const roomCode = response.roomId; // 응답에서 roomCode 받기
+       
+
+       alert('방이 생성되었습니다!');
+       navigate(`/rooms/`, { state: { roomData } });
+
+      
+      
+      } catch (error) {
+      console.error('방 생성 실패:', error);
+      alert('방 생성 중 오류가 발생했어요 🥲');
+      
+    }
+  };
+
+
 
   return (
     <>
@@ -83,9 +124,9 @@ function ConfirmedPlaylistView({ selectedLists, setStep, mode, setSelectedLists 
           </S.DeleteContent>
         </S.DeleteWrapper>
       )}
-
-      {setStep && (
-        <S.CreateRoomButton onClick={() => setStep("done")}>
+ 
+      {setStep && mode === "confirm" && (
+        <S.CreateRoomButton type="button" onClick={handleCreateRoom}>
           방 생성하기
         </S.CreateRoomButton>
       )}

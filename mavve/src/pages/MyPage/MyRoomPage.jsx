@@ -1,18 +1,67 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import * as S from "./MyPage.style";
+import TopBar from "../../components/Common/TopBar";
+import SideBar from "../../components/Common/SideBar";
+import RoomComponent from "../../components/Common/RoomComponent";
+import PlusIcon from "../../assets/MyPage/plusIcon.svg";
 
-export default function MyPage() {
+import { fetchMyRooms } from "../../api/room";
+
+export default function MyRoomPage() {
+  const navigate = useNavigate();
+  const [myRooms, setMyRooms] = useState([]);
+  const location = useLocation();
+
+  useEffect(() => {
+    const getMyRooms = async () => {
+      try {
+        const roomList = await fetchMyRooms();
+
+        setMyRooms(Array.isArray(roomList) ? roomList : []);
+      } catch (error) {
+        console.error("내가 만든 방 목록을 불러오는 데 실패했습니다:", error);
+        setMyRooms([]);
+      }
+    };
+    getMyRooms();
+  }, [location]);
+
   return (
     <S.Container>
-      <S.Header></S.Header>
+      <S.TopBarContainer>
+        <TopBar />
+      </S.TopBarContainer>
       <S.MainContainer>
-        <S.Sidebar />
+        <S.SidebarContainer>
+          <SideBar />
+        </S.SidebarContainer>
         <S.Main>
-          <S.ViewArea>
+          <S.PageHeader>
             <S.Title>내가 만든 방</S.Title>
-          </S.ViewArea>
+            <S.CreateRoomBtn onClick={() => navigate("/rooms")}>
+              <S.BtnIcon src={PlusIcon} alt="방 생성 아이콘" />방 생성하기
+            </S.CreateRoomBtn>
+          </S.PageHeader>
+          <S.PageRoomContainer>
+            {myRooms.map((room) => (
+              <RoomComponent
+                key={room.roomId}
+                data={room}
+                onLikeToggle={(updated) => {
+                  setMyRooms((prev) =>
+                    prev.map((r) =>
+                      r.roomId === updated.roomId ? { ...r, ...updated } : r
+                    )
+                  );
+                }}
+              />
+            ))}
+          </S.PageRoomContainer>
         </S.Main>
       </S.MainContainer>
     </S.Container>
   );
 }
+
+//

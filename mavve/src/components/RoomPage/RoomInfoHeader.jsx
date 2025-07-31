@@ -5,8 +5,10 @@ import CreateBtn from "../../assets/RoomPage/createpencil.svg";
 import * as S from "../../pages/RoomPage/RoomPage.style.js";
 import mockPlayLists from "./playlistMockData";
 import RoomDeleteModal from './RoomDeleteModal.jsx';
+import { useNavigate, useParams } from "react-router-dom";
+import { enterRoom } from "../../api/room.js";
 
-function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists, step }) {
+function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists, step, setThumbnailFile }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
    // selectedLists는 id 배열이므로, 해당 id로 다시 플레이리스트 정보 찾기
@@ -24,6 +26,12 @@ function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists, step }) {
   // 방 삭제 모달
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
+  // 방 입장
+  const { roomCode } = useParams();
+  const navigate = useNavigate();
+  const handleEnter = (roomCode) => {
+    navigate(`/rooms/${roomCode}`);
+  }
 
   return (
     <S.HeaderContainer>
@@ -39,7 +47,7 @@ function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists, step }) {
         <S.VisibilityText>{roomInfo.visibility}</S.VisibilityText>
         <S.TitleArea>
           <S.RoomTitle>{roomInfo.title || "방 제목"}</S.RoomTitle>
-          {totalPlaylists > 0 &&
+          {totalPlaylists > 0 && step === "done" &&
               <S.SubInfo>
                <div>플레이리스트 {totalPlaylists}개</div>
                <div>곡 {totalSongs}곡</div>
@@ -59,14 +67,20 @@ function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists, step }) {
           )}
         </S.HashtagContainer>
       </S.HeaderTextArea>
+      
+    
+      {step === "done" &&
+          <S.RoomEnterBtn onClick={() => handleEnter(roomCode)}>
+            방 입장하기
+          </S.RoomEnterBtn>
+      }
 
       {step === "done" &&
-        <S.DeleteBtnWrapper>
           <S.RoomDeleteBtn onClick={() => setIsDeleteModalOpen(true)}>
             방 삭제하기
           </S.RoomDeleteBtn>
-        </S.DeleteBtnWrapper>
       }
+      
 
       {isModalOpen && (
        <S.ModalWrapper>
@@ -75,6 +89,8 @@ function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists, step }) {
            roomInfo={roomInfo}
            setRoomInfo={setRoomInfo}
            onClose={() => setIsModalOpen(false)}
+           setThumbnailFile={setThumbnailFile}
+           step={step}
          />
        </S.ModalContent>
      </S.ModalWrapper>
