@@ -46,7 +46,11 @@ function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists, step, setThumbna
       <S.HeaderTextArea>
         <S.VisibilityText>{roomInfo.visibility}</S.VisibilityText>
         <S.TitleArea>
-          <S.RoomTitle>{roomInfo.title || "방 제목"}</S.RoomTitle>
+          <S.RoomTitle>{roomInfo.title
+                          ? roomInfo.title.length > 8
+                            ? `${roomInfo.title.slice(0, 8)}...`
+                            : roomInfo.title
+                          : "방 제목"}</S.RoomTitle>
           {totalPlaylists > 0 && step === "done" &&
               <S.SubInfo>
                <div>플레이리스트 {totalPlaylists}개</div>

@@ -16,7 +16,7 @@ export default function RoomPage() {
     hashtags: [],
     visibility: "전체공개",
   });
-
+ 
   const [selectedLists, setSelectedLists] = useState([]);
 
   const [step, setStep] = useState("search"); 
