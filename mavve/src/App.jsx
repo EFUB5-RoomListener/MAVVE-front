@@ -1,7 +1,10 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MainPage from "./pages/MainPage/MainPage";
-import RoomPage from "../src/pages/RoomPage/RoomPage";
-import RoomInsidePage from '../src/pages/RoomInsidePage/RoomInsidePage';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import MainPage from './pages/MainPage/MainPage';
+import RoomPage from '../src/pages/RoomPage/RoomPage';
+import RoomInsidePage from './pages/RoomInsidePage/RoomInsidePage';
+import PlaylistPage from './pages/PlaylistPage/PlaylistPage';
+import PlaylistDetailPage from './pages/PlaylistPage/PlaylistDetailPage';
+import NewPlaylistPage from './pages/PlaylistPage/NewPlaylistPage';
 import LoginPage from "./pages/LoginPage/LoginPage";
 import MyPage from "./pages/MyPage/MyPage";
 import LikedRoomPage from "./pages/MyPage/LikedRoomPage";
@@ -12,8 +15,11 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/rooms" element={<RoomPage />} />
+        <Route path='/' element={<MainPage />} />
+        <Route path='/room' element={<RoomPage />} />
+        <Route path='/playlist' element={<PlaylistPage />} />
+        <Route path='/playlist/new' element={<NewPlaylistPage />} />
+        <Route path='/playlist/:id' element={<PlaylistDetailPage />} />
         <Route path="/rooms/" element={<RoomPage />} />
         <Route path="/rooms/:roomCode" element={<RoomInsidePage />} />
         <Route path="/login" element={<LoginPage />} />

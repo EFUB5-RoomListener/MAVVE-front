@@ -365,7 +365,6 @@ export const NoticeLarge = styled.div`
   width: 100%;
   align-self: stretch;
   margin-bottom: 1rem;
-
   color: var(--g4);
   text-align: center;
 

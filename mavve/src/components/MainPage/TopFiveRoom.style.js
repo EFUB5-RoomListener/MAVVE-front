@@ -10,8 +10,6 @@ export const Title = styled.div`
     justify-content: flex-start;
     color: #525252;
 
-    /* MAVVE/Caption/Headline/Large */
-    font-family: SUIT;
     font-size: 1.5rem;
     font-weight: 600;
 `;
@@ -29,7 +27,7 @@ export const Rooms = styled.div`
 
 export const RoomTitle = styled.div`
     color: var(--b);
-    font-family: SUIT;
+
     font-size: 1.25rem;
     font-style: normal;
     font-weight: 600;
@@ -128,12 +126,10 @@ export const SongInfo = styled.div`
 export const SongText = styled.div`
     color: var(--b);
 
-    /* MAVVE/Caption/Body/Medium */
-    font-family: SUIT;
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;
-    line-height: 140%; /* 1.4rem */
+    line-height: 140%;
 `;
 
 export const Room4 = styled.div`
