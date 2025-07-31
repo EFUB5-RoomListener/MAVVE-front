@@ -387,7 +387,7 @@ export const EmptyThumbnail = styled.div`
 export const HeaderTextArea = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 21px;
+  gap: 20px;
 `;
 
 export const VisibilityText = styled.div`
@@ -400,6 +400,7 @@ export const VisibilityText = styled.div`
 `;
 
 export const TitleArea = styled.div`
+  width: 45rem;
   display: flex;
   align-items: center;
   gap: 2rem;
@@ -464,10 +465,6 @@ export const SubInfo = styled.div`
 
 `;
 
-export const DeleteBtnWrapper = styled.div`
-  display: flex;
-  
-`;
 
 export const RoomDeleteBtn = styled.button`
   display: inline-flex;
@@ -485,7 +482,6 @@ export const RoomDeleteBtn = styled.button`
   font-style: normal;
   font-weight: 500;
   line-height: 1.5rem; 
-  position: sticky;
   margin-top: 9.9rem;
 
   &:active {
@@ -514,7 +510,7 @@ export const RoomEnterBtn = styled.button`
   font-weight: 500;
   line-height: 1.5rem; 
   margin-top: 9.9rem;
-  margin-left: 20rem;
+  margin-left: 10rem; 
   &:active {
     transform: scale(0.925); 
   }
