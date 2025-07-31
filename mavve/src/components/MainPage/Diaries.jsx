@@ -7,8 +7,8 @@ export default function Diaries() {
     <S.Container>
       <S.Title>친구들? 한줄 일기</S.Title>
       <S.Diaries>
-        {Array.from({ length: 6 }).map(() => (
-          <OneLineNote />
+        {Array.from({ length: 6 }).map((_, index) => (
+          <OneLineNote key={index}/>
         ))}
       </S.Diaries>
     </S.Container>
