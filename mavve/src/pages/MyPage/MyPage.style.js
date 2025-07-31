@@ -290,12 +290,10 @@ export const ProfileEditInputs = styled.div`
     background: ${colors.g1};
     color: ${colors.b};
 
-    /* MAVVE/Caption/Body/Large */
-    font-family: SUIT;
     font-size: 1.125rem;
     font-style: normal;
     font-weight: 400;
-    line-height: 1.5rem; /* 133.333% */
+    line-height: 1.5rem;
   }
 `;
 
@@ -313,10 +311,8 @@ export const SaveButton = styled.button`
   align-self: flex-end;
   margin-right: 2rem;
 
-  /* MAVVE/Caption/Title/Small */
-  font-family: SUIT;
   font-size: 1rem;
   font-style: normal;
   font-weight: 500;
-  line-height: 1.5rem; /* 150% */
+  line-height: 1.5rem;
 `;

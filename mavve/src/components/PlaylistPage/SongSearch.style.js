@@ -88,7 +88,7 @@ export const AddSongButton = styled.button`
     border-radius: 30px;
     background: var(--pri);
     color: var(--w);
-    font-family: SUIT;
+
     font-size: 1rem;
     font-style: normal;
     font-weight: 500;

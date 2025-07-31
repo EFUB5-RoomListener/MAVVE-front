@@ -35,7 +35,6 @@ export const Header = styled.div`
 
 export const Title = styled.div`
     color: var(--b);
-    font-family: SUIT;
     font-size: 1.5rem;
     font-style: normal;
     font-weight: 600;

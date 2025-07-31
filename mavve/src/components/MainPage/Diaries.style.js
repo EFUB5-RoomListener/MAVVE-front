@@ -10,8 +10,6 @@ export const Title = styled.div`
     justify-content: flex-start;
     color: #525252;
 
-    /* MAVVE/Caption/Headline/Large */
-    font-family: SUIT;
     font-size: 1.5rem;
     font-weight: 600;
 `;
