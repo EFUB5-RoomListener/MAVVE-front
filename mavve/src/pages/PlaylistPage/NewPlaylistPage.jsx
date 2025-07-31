@@ -5,6 +5,13 @@ import SideBar from '../../components/Common/SideBar'
 import PlaylistHeader from '../../components/PlaylistPage/PlaylistHeader'
 import SongSearch from '../../components/PlaylistPage/SongSearch'
 
+const defaultPlaylist = {
+    playlistId: 'n',
+    name: '새 플레이리스트',
+    playImageUrl: '',
+    userId: '저요', // 로그인 정보 받아서 수정하기
+};
+
 
 export default function NewPlaylistPage() {
     return (
@@ -14,7 +21,7 @@ export default function NewPlaylistPage() {
                 <SideBar />
                 <S.MainContents>
                     <S.Header>
-                        <PlaylistHeader />
+                        <PlaylistHeader playlist={defaultPlaylist}/>
                     </S.Header>
                     <SongSearch />
                 </S.MainContents>

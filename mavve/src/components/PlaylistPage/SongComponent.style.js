@@ -94,7 +94,6 @@ export const SubContainer = styled.div`
 export const SubText = styled.div`
     display: flex;
     justify-content: flex-end;
-    width: 3.3125rem; 
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 1.5rem;
