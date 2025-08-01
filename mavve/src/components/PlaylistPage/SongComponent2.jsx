@@ -45,7 +45,10 @@ export default function SongComponent2({
                     <S.Number>{index}</S.Number>
                 )}
             </S.CheckboxContainer>
-                <S.Thumbnail src={coverUrl} alt='thumbnail'/>
+                <S.ThumbnailWrapper>
+                    <S.Thumbnail src={coverUrl} alt='thumbnail'/>
+                    <S.Circle />
+                </S.ThumbnailWrapper>
                 <S.SongInfo>
                     <S.SongTitle>{title}</S.SongTitle>
                     <S.Artist>{artist}</S.Artist>

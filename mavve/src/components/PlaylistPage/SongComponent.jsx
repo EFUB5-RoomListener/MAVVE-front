@@ -19,7 +19,10 @@ export default function SongComponent({ title, artist, album, coverUrl, duration
                 <S.Checkbox src={Unchecked} />
                 {isSelected && <S.Check src={Checked} />}
             </S.CheckboxContainer>
+            <S.ThumbnailWrapper>
                 <S.Thumbnail src={coverUrl} alt='thumbnail'/>
+                <S.Circle />
+            </S.ThumbnailWrapper>
                 <S.SongInfo>
                     <S.SongTitle>{title}</S.SongTitle>
                     <S.Artist>{artist}</S.Artist>

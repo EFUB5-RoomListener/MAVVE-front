@@ -57,13 +57,31 @@ export const SongContainer = styled.div`
     align-items: center;
 `;
 
+export const ThumbnailWrapper = styled.div`
+    position: relative;
+    width: 3rem;
+    height: 3rem;
+    margin-left: 3.13rem;
+`;
+
 export const Thumbnail = styled.img`
     width: 3rem;
     height: 3rem;
     border-radius: 48px;
     aspect-ratio: 1/1;
     object-fit: cover;
-    margin-left: 3.13rem;
+`;
+
+export const Circle = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1.1rem;
+    height: 1.1rem;
+    background-color: var(--trd);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
 `;
 
 export const SongInfo = styled.div`
