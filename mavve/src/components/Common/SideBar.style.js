@@ -65,6 +65,7 @@ export const ComponentWrapper = styled.div`
     width: 10.625rem;
     padding: 0.38rem 0.5rem;
     justify-content: space-between;
+    cursor: pointer;
 `;
 
 export const Thumbnail = styled.div`
@@ -84,7 +85,11 @@ export const InfoTitle = styled.div`
     font-size: 1rem;
     font-weight: 600;
     line-height: 1.5rem;
-    color: var(--b)
+    color: var(--b);
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 export const InfoSubTitle = styled.div`
