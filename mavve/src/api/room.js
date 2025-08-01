@@ -88,3 +88,11 @@ export const toggleRoomLike = async (roomCode) => {
     throw error;
   }
 };
+
+export const searchRooms = async (keyword) => {
+  const response = await axiosInstance.get(
+    `/rooms/search?keyword=${encodeURIComponent(keyword)}`
+  );
+  console.log("검색API", response);
+  return response.data.roomList;
+};

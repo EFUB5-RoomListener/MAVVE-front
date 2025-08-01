@@ -18,7 +18,7 @@ export default function ProfileEditModal({
   const fileInputRef = useRef(null);
   const [isFocused, setIsFocused] = useState(false);
 
-  const isOverLimit = nameInput.length > 10;
+  const isOverLimit = (nameInput || "").length > 10;
   const colorState =
     !isOverLimit && !isFocused ? "g4" : isOverLimit ? "red" : "b";
 
@@ -98,7 +98,7 @@ export default function ProfileEditModal({
               />
               <S.CharacterCount>
                 <S.CurrentCount $colorState={colorState}>
-                  {nameInput.length}
+                  {(nameInput || "").length}
                 </S.CurrentCount>
                 <S.TotalCount $isFocused={isFocused}>/10</S.TotalCount>
               </S.CharacterCount>

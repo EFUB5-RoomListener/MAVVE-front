@@ -2,103 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "./RoomSearch.style";
 import search from "../../assets/Common/icn_search.svg";
-
-const dummyRoomResponse = {
-  totalCount: 5,
-  rooms: [
-    {
-      roomId: 1,
-      userId: 101,
-      roomName: "방 제목이길면이렇게된다",
-      viewCount: 120,
-      likeCount: 24,
-      liked: true,
-      tag: [
-        "indie",
-        "lofi공부하자!!ㅎㅎㅎ",
-        "공부방",
-        "같이공부할사람",
-        "ㅎㅎ",
-      ],
-      imageURL: "https://via.placeholder.com/40",
-      isPublic: true,
-      createdAt: "2025-07-01T12:00:00",
-    },
-    {
-      roomId: 2,
-      userId: 102,
-      roomName: "방 제목 노래방",
-      viewCount: 250,
-      likeCount: 31,
-      liked: false,
-      tag: ["drive", "pop"],
-      imageURL: "https://via.placeholder.com/40",
-      isPublic: true,
-      createdAt: "2025-07-02T09:00:00",
-    },
-    {
-      roomId: 5,
-      userId: 102,
-      roomName: "방 제목 노래방",
-      viewCount: 250,
-      likeCount: 31,
-      liked: false,
-      tag: ["drive", "pop"],
-      imageURL: "https://via.placeholder.com/40",
-      isPublic: true,
-      createdAt: "2025-07-02T09:00:00",
-    },
-    {
-      roomId: 3,
-      userId: 102,
-      roomName: "방 제목 노래방",
-      viewCount: 250,
-      likeCount: 31,
-      liked: false,
-      tag: ["drive", "pop"],
-      imageURL: "https://via.placeholder.com/40",
-      isPublic: true,
-      createdAt: "2025-07-02T09:00:00",
-    },
-    {
-      roomId: 4,
-      userId: 102,
-      roomName: "방 제목 노래방",
-      viewCount: 250,
-      likeCount: 31,
-      liked: false,
-      tag: ["drive", "pop"],
-      imageURL: "https://via.placeholder.com/40",
-      isPublic: true,
-      createdAt: "2025-07-02T09:00:00",
-    },
-    {
-      roomId: 6,
-      userId: 102,
-      roomName: "방 제목 노래방",
-      viewCount: 250,
-      likeCount: 31,
-      liked: false,
-      tag: ["drive하는기분", "pop"],
-      imageURL: "https://via.placeholder.com/40",
-      isPublic: true,
-      createdAt: "2025-07-02T09:00:00",
-    },
-    {
-      roomId: 7,
-      userId: 102,
-      roomName: "방 제목 노래방",
-      viewCount: 250,
-      likeCount: 31,
-      liked: false,
-      tag: ["drive", "pop"],
-      imageURL: "https://via.placeholder.com/40",
-      isPublic: true,
-      createdAt: "2025-07-02T09:00:00",
-    },
-    // ...더 추가 가능
-  ],
-};
+import { searchRooms } from "../../api/room";
 
 const normalizeText = (text) => text.toLowerCase().replace(/\s+/g, "");
 
@@ -111,16 +15,22 @@ export default function RoomSearch() {
 
   //방 검색
   useEffect(() => {
-    if (searchText.trim() === "") {
-      setSearchResults([]);
-      return;
-    }
+    const fetchSearchResults = async () => {
+      if (searchText.trim() === "") {
+        setSearchResults([]);
+        return;
+      }
 
-    const filtered = dummyRoomResponse.rooms.filter((room) =>
-      normalizeText(room.roomName).includes(normalizeText(searchText))
-    );
+      try {
+        const rooms = await searchRooms(normalizeText(searchText));
+        setSearchResults(rooms);
+      } catch (err) {
+        console.error("방 검색 실패:", err);
+        setSearchResults([]);
+      }
+    };
 
-    setSearchResults(filtered);
+    fetchSearchResults();
   }, [searchText]);
 
   useEffect(() => {
@@ -164,7 +74,7 @@ export default function RoomSearch() {
                 >
                   <S.RoomWrapper>
                     <S.RoomCover>
-                      <S.RoomThumbnail />
+                      <S.RoomThumbnail $image={room.imageURL} />
                     </S.RoomCover>
                     <S.RoomInfo>
                       <S.RoomText>{room.roomName}</S.RoomText>
@@ -176,7 +86,7 @@ export default function RoomSearch() {
                       <S.Hashtag key={index}>#{tag}</S.Hashtag>
                     ))}
                   </S.HashtagContainer>
-                  <S.Playtime>99:48:23</S.Playtime>
+                  <S.Playtime>02:48:23</S.Playtime>
                 </S.ResultItem>
               ))
             ) : (

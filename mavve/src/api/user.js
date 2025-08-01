@@ -1,4 +1,3 @@
-// src/api/user.js
 import axiosInstance from "./axiosInstance";
 
 export const fetchUserInfo = async () => {
@@ -13,5 +12,3 @@ export const updateUserInfo = async ({ nickname, profile }) => {
   });
   return response.data;
 };
-
-//
