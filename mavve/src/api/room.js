@@ -1,5 +1,6 @@
 import axiosInstance from "./axiosInstance";
 
+// 방 생성
 export const createRoom = async ({ roomName, isPublic, tag, imageURL }) => {
   const response = await axiosInstance.post(
     "/rooms",
@@ -19,6 +20,7 @@ export const createRoom = async ({ roomName, isPublic, tag, imageURL }) => {
   return response.data;
 };
 
+// 방 삭제 
 export const deleteRoom = async (roomCode) => {
   const response = await axiosInstance.delete(`/rooms/${roomCode}`, {
     headers: {
@@ -28,7 +30,7 @@ export const deleteRoom = async (roomCode) => {
 
   return response.data;
 };
-
+// 방 수정 
 export const updateRoom = async (
   roomCode,
   { roomName, isPublic, tag, imageURL }
@@ -48,6 +50,31 @@ export const updateRoom = async (
     }
   );
   return response.data;
+};
+
+// 방에 플레이리스트 추가 
+export const addPlayListRoom = async (roomCode, playlistId) => {
+  const response = await axiosInstance.post(
+    `/rooms/${roomCode}/playlists?playlistId=${playlistId}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  return response.data;
+};
+
+// 방의 플레이리스트 조회 
+export const getRoomPlaylists = async (roomCode) => {
+  try {
+    const response = await axiosInstance.get(`/rooms/${roomCode}/playlists`);
+    return response.data; 
+  } catch (err) {
+    console.error("방의 플레이리스트 조회 실패:", err);
+    throw err;
+  }
 };
 
 //내가 만든 방

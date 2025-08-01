@@ -1,6 +1,5 @@
 import client from "./client";
 import axiosInstance from "./axiosInstance";
-import axios from "axios";
 
 
 // 웹소켓 연결 (방 입장 시)
