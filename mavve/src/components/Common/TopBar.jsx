@@ -2,14 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "../Common/TopBar.style";
 import logo from "../../assets/Common/logo.svg";
-import search from "../../assets/Common/icn_search.svg";
 import alert from "../../assets/Common/icn_bell.svg";
+import alertHover from "../../assets/Common/icn_bell_hover.svg";
+import alertClick from "../../assets/Common/icn_bell_click.svg";
 import Defaultprofile from "../../assets/Common/defaultProfile.svg";
-import IconLogin from "../../assets/Common/gnb_icn_login.svg";
-import IconLogout from "../../assets/Common/gnb_icn_logout.svg";
-import IconMypage from "../../assets/Common/gnb_icn_mypage.svg";
-import IconPlaylist from "../../assets/Common/gnb_icn_playlist.svg";
-import IconRoom from "../../assets/Common/gnb_icn_room.svg";
+import Menu from "../Common/Menu";
+import Alarm from "./Alarm";
+import RoomSearch from "./RoomSearch";
 import { useUserStore } from "../../store/useUserStore";
 import { fetchUserInfo } from "../../api/user";
 
@@ -17,10 +16,16 @@ export default function TopBar() {
   const navigate = useNavigate();
   const { user, setUser } = useUserStore();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAlarmOpen, setIsAlarmOpen] = useState(false);
+  const alertRef = useRef(null);
   const menuRef = useRef(null);
   const profileRef = useRef(null);
+  const [alertIcon, setAlertIcon] = useState(alert);
 
-  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+  const handleMouseEnter = () => setAlertIcon(alertHover);
+  const handleMouseLeave = () => setAlertIcon(alert);
+  const handleMouseDown = () => setAlertIcon(alertClick);
+  const handleMouseUp = () => setAlertIcon(alertHover);
 
   useEffect(() => {
     const fetchAndSetUser = async () => {
@@ -35,27 +40,15 @@ export default function TopBar() {
     fetchAndSetUser();
   }, []);
 
-  //메뉴 바깥쪽 클릭 시 메뉴 창 닫힘
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (
-        menuRef.current &&
-        !menuRef.current.contains(e.target) &&
-        profileRef.current &&
-        !profileRef.current.contains(e.target)
-      ) {
-        setIsMenuOpen(false);
-      }
-    };
+  const handleAlertClick = () => {
+    setIsAlarmOpen((prev) => !prev);
+    setIsMenuOpen(false); // 메뉴와 알림창은 동시에 열리지 않게
+  };
 
-    if (isMenuOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isMenuOpen]);
+  const handleProfileClick = () => {
+    setIsMenuOpen((prev) => !prev);
+    setIsAlarmOpen(false);
+  };
 
   return (
     <S.TopBarContainer>
@@ -63,48 +56,34 @@ export default function TopBar() {
         <S.Logo onClick={() => navigate("/")}>
           <img src={logo} alt="logo" />
         </S.Logo>
-        <S.SearchBar>
-          <img src={search} alt="search" />
-          <input placeholder="함께 듣고 싶은 음악이 있나요? 원하는 방을 찾아보세요!" />
-        </S.SearchBar>
+        <RoomSearch />
+
         <S.Buttons>
-          <S.AlertButton>
-            <img src={alert} alt="alert" />
+          <S.AlertButton
+            ref={alertRef}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+            onClick={handleAlertClick}
+          >
+            <img src={alertIcon} alt="alert" />
           </S.AlertButton>
-          <S.ProfileButton onClick={toggleMenu} ref={profileRef}>
+          <Alarm
+            isAlarmOpen={isAlarmOpen}
+            setIsAlarmOpen={setIsAlarmOpen}
+            alertRef={alertRef}
+          />
+          <S.ProfileButton onClick={handleProfileClick} ref={profileRef}>
             <img src={user.profile || Defaultprofile} alt="profile" />
           </S.ProfileButton>
-          {isMenuOpen && (
-            <S.MenuContainer ref={menuRef}>
-              {user?.nickname ? (
-                <>
-                  <S.MenuItem onClick={() => navigate("/mypage")}>
-                    <S.MenuIcon src={IconMypage} alt="mypage" />
-                    마이페이지
-                  </S.MenuItem>
-                  <S.MenuItem onClick={() => navigate("/playlist")}>
-                    <S.MenuIcon src={IconPlaylist} alt="playlist" />내
-                    플레이리스트
-                  </S.MenuItem>
-                  <S.MenuItem onClick={() => navigate("/rooms")}>
-                    <S.MenuIcon src={IconRoom} alt="room" />방 만들기
-                  </S.MenuItem>
-                  <S.Divider />
-                  <S.MenuItem>
-                    <S.MenuIcon src={IconLogout} alt="logout" />
-                    로그아웃
-                  </S.MenuItem>
-                </>
-              ) : (
-                <>
-                  <S.MenuItem onClick={() => navigate("/login")}>
-                    <S.MenuIcon src={IconLogin} alt="login" />
-                    로그인
-                  </S.MenuItem>
-                </>
-              )}
-            </S.MenuContainer>
-          )}
+          <Menu
+            isMenuOpen={isMenuOpen}
+            setIsMenuOpen={setIsMenuOpen}
+            user={user}
+            menuRef={menuRef}
+            profileRef={profileRef}
+          />
         </S.Buttons>
       </S.Contents>
     </S.TopBarContainer>
