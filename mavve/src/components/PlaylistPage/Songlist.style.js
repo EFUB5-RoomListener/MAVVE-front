@@ -40,7 +40,7 @@ export const Time = styled.div`
 `;
 
 export const Line = styled.div`
-    width: 93.9375rem;
+    width: 100%;
     height: 0.03125rem;
     background: #3B3030;
     margin-bottom: 0.75rem;
@@ -51,12 +51,18 @@ export const ResultContainer = styled.div`
     position: relative;
     flex-direction: column;
     width: 93.75rem;
-    height: 22.5rem;
+    height: 29.5rem;
+`;
 
+export const ScrollArea = styled.div`
+    max-height: 27.75rem;
     overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+
     scrollbar-width: none;
     -ms-overflow-style: none;
-
     &::-webkit-scrollbar {
         display: none;
     }
@@ -80,4 +86,12 @@ export const DeleteSongButton = styled.button`
     position: fixed;
     bottom: 2.5rem;
     right: 4rem;
+
+    &:active {
+        background: linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.2) 0%,
+            rgba(0, 0, 0, 0.2) 100%
+        ), #009BFF;
+    }
 `;

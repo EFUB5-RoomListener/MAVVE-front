@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import * as S from '../Common/TopBar.style'
 import logo from '../../assets/Common/logo.svg'
 import search from '../../assets/Common/icn_search.svg'
@@ -10,7 +11,9 @@ export default function TopBar() {
         <S.TopBarContainer>
         <S.Contents>
             <S.Logo>
-                <img src={logo} alt="logo" />
+                <Link to="/">
+                    <img src={logo} alt="logo" />
+                </Link>
             </S.Logo>
             <S.SearchBar>
                 <img src={search} alt="search" />

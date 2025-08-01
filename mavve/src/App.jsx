@@ -19,7 +19,7 @@ function App() {
         <Route path='/room' element={<RoomPage />} />
         <Route path='/playlist' element={<PlaylistPage />} />
         <Route path='/playlist/new' element={<NewPlaylistPage />} />
-        <Route path='/playlist/:id' element={<PlaylistDetailPage />} />
+        <Route path='/playlist/:playlistId' element={<PlaylistDetailPage />} />
         <Route path="/rooms/" element={<RoomPage />} />
         <Route path="/rooms/:roomCode" element={<RoomInsidePage />} />
         <Route path="/login" element={<LoginPage />} />

@@ -2,31 +2,35 @@ import React, { useState } from 'react'
 import * as S from '../PlaylistPage/SongComponent.style'
 import Unchecked from '../../assets/RoomPage/checkbox.svg';
 import Checked from '../../assets/RoomPage/check-01.svg';
-import ex from '../../assets/PlaylistPage/ex.jpg'
 
-export default function SongComponent() {
-    const [isSelected, setIsSelected] = useState(false);
+export default function SongComponent({ title, artist, album, coverUrl, duration, isSelected, onSelect }) {
 
-    const toggleSelect = () => {
-        setIsSelected(prev => !prev);
+    const formatDuration = (ms) => {
+        const totalSec = Math.floor(ms / 1000);
+        const min = String(Math.floor(totalSec / 60)).padStart(2, '0');
+        const sec = String(totalSec % 60).padStart(2, '0');
+        return `${min}:${sec}`;
     };
 
     return (
-        <S.Container isSelected={isSelected} onClick={() => toggleSelect()}>
+        <S.Container isSelected={isSelected} onClick={onSelect}>
             <S.SongContainer>
             <S.CheckboxContainer>
                 <S.Checkbox src={Unchecked} />
                 {isSelected && <S.Check src={Checked} />}
             </S.CheckboxContainer>
-                <S.Thumbnail src={ex} alt='thumbnail'/>
+            <S.ThumbnailWrapper>
+                <S.Thumbnail src={coverUrl} alt='thumbnail'/>
+                <S.Circle />
+            </S.ThumbnailWrapper>
                 <S.SongInfo>
-                    <S.SongTitle>노래 제목</S.SongTitle>
-                    <S.Artist>가수</S.Artist>
+                    <S.SongTitle>{title}</S.SongTitle>
+                    <S.Artist>{artist}</S.Artist>
                 </S.SongInfo>
             </S.SongContainer>
             <S.SubContainer>
-                <S.SubText>앨범 이름</S.SubText>
-                <S.SubText>02:36</S.SubText>
+                <S.SubText>{album}</S.SubText>
+                <S.SubText>{formatDuration(duration)}</S.SubText>
             </S.SubContainer>
         </S.Container>
     )
