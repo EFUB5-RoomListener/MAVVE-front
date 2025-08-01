@@ -10,6 +10,7 @@ export const SideBarContainer = styled.div`
     background: var(--w);
     border-radius: 16px;
     box-sizing: border-box;
+    margin-right: 1.5rem;
 
     font-style: normal;
     line-height: normal;

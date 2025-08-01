@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import * as S from '../Common/SideBar.style'
 import music from '../../assets/Common/icn_music.svg'
 import { fetchUserInfo } from '../../api/user'
+import { getRooms } from '../../api/room'
 import { getMyPlaylists } from '../../api/playlist'
 
 export default function SideBar() {
     const nav = useNavigate();
+    const [newRooms, setNewRooms] = useState([]);
     const [myPlaylists, setMyPlaylists] = useState([]);
     const [nickname, setNickname] = useState('');
 
@@ -16,10 +18,12 @@ export default function SideBar() {
             if (!token) return;
 
             try {
-                const [playlists, userInfo] = await Promise.all([
+                const [rooms, playlists, userInfo] = await Promise.all([
+                    getRooms(token),
                     getMyPlaylists(token),
                     fetchUserInfo(token),
                 ]);
+                setNewRooms(rooms.slice(0, 5));
                 setMyPlaylists(playlists.slice(0, 4));
                 setNickname(userInfo.nickname);
             } catch (error) {
@@ -30,8 +34,8 @@ export default function SideBar() {
         fetchPlaylists();
     }, []);
 
-    const handleRoomClick = (roomCode) => {
-        nav(`/rooms/${roomCode}`);
+    const handleRoomClick = (roomId) => {
+        nav(`/rooms/${roomId}`);
     };
 
     const handlePlaylistClick = (playlistId) => {
@@ -46,14 +50,31 @@ export default function SideBar() {
                     만들기
                 </S.CreateButton>
             </S.CreateArea>
-            <S.Title>최근 방문 기록</S.Title>
+            <S.Title>새로 생긴 방</S.Title>
             <S.Section>
-                {[...Array(5)].map((_, index) => (
+                {newRooms.length > 0
+                ? newRooms.map((room) => (
+                    <S.ComponentWrapper
+                        key={room.roomId}
+                        onClick={() => handleRoomClick(room.roomId)}
+                    >
+                        {room.imageUrl ? (
+                        <S.Thumbnail src={room.imageUrl} />
+                        ) : (
+                        <S.Thumbnail />
+                        )}
+                        <S.Info>
+                        <S.InfoTitle>{room.roomName}</S.InfoTitle>
+                        <S.InfoSubTitle>#{room.tag?.[0] || '태그없음'}</S.InfoSubTitle>
+                        </S.Info>
+                    </S.ComponentWrapper>
+                    ))
+                : [...Array(5)].map((_, index) => (
                     <S.ComponentWrapper key={index}>
                         <S.Thumbnail />
                         <S.Info>
-                            <S.InfoTitle>방 제목</S.InfoTitle>
-                            <S.InfoSubTitle>#K-pop</S.InfoSubTitle>
+                        <S.InfoTitle>방 제목</S.InfoTitle>
+                        <S.InfoSubTitle>#해시태그</S.InfoSubTitle>
                         </S.Info>
                     </S.ComponentWrapper>
                 ))}
