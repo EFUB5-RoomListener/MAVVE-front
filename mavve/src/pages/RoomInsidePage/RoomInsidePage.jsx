@@ -79,11 +79,34 @@ function RoomInsidePage(){
      useEffect(() => {
        if (roomData?.currentSong?.song) {
          setCurrentSong(roomData.currentSong.song);
-         setStartTime(roomData.currentSong.startTime); 
        }
      }, [roomData]);
-    
      
+     // 곡 시점 계산하기 (seekPosition)
+     useEffect(() => {
+        const raw = roomData?.currentSong?.startTime;
+        if (!roomData?.currentSong?.song || !raw) return;
+      
+        const sanitized = raw.split('.')[0] + 'Z';
+        const parsed = new Date(sanitized);
+        const now = new Date();
+      
+        const elapsedMs = now - parsed;
+        const seekPosition = Math.floor(elapsedMs / 1000);
+      
+        const song = roomData.currentSong.song;
+        setCurrentSong({
+          ...song,
+          seekPosition
+        });
+      
+        console.log("seekPosition (초):", seekPosition);
+      }, [roomData]);
+      
+    
+    
+    
+    
     return(
         <S.RoomInsidePageContainer>
             <TopBar />
