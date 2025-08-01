@@ -87,6 +87,7 @@ export const Artist = styled.div`
 export const SubContainer = styled.div`
     display: flex;
     align-items: center;
+    align-items: center;
     justify-content: space-between;
     width: 45rem;
 `;
@@ -98,4 +99,10 @@ export const SubText = styled.div`
     font-weight: 400;
     line-height: 1.5rem;
     color: var(--b);
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;

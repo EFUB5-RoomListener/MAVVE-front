@@ -59,6 +59,13 @@ export const Photo = styled.div`
     background: var(--g1);
     cursor: pointer;
     margin-bottom: 1rem;
+
+    & > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: inherit;
+    } 
 `;
 
 export const TitleContainer = styled.div`
@@ -104,7 +111,7 @@ export const Input = styled.input`
     }
 `;
 
-export const SaveBtn = styled.div`
+export const SaveBtn = styled.button`
     height: 3.5rem;
     padding: 0.5rem 1.5rem;
     box-sizing: border-box;
@@ -113,9 +120,24 @@ export const SaveBtn = styled.div`
     border-radius: 30px;
     background: var(--pri);
     color: var(--w);
+    cursor: pointer;
 
     font-size: 1rem;
     font-style: normal;
     font-weight: 500;
     line-height: 1.5rem;
+
+    &:active {
+        background: linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.2) 0%,
+            rgba(0, 0, 0, 0.2) 100%
+        ), #009BFF;
+    }
+`;
+
+export const ImgIcon = styled.div`
+    width: 3rem;
+    height: 3rem;
+    aspect-ratio: 1/1;
 `;

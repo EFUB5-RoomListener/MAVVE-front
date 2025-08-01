@@ -20,7 +20,9 @@ export default function SongComponent2({
         const totalSec = Math.floor(ms / 1000);
         const min = String(Math.floor(totalSec / 60)).padStart(2, '0');
         const sec = String(totalSec % 60).padStart(2, '0');
-        return `${min}:${sec}`;
+        const ms100 = String(Math.floor((ms % 1000) / 10)).padStart(2, '0');
+
+        return `${min}:${sec}:${ms100}`;
     };
     
     return (

@@ -91,6 +91,7 @@ export const Artist = styled.div`
 
 export const SubContainer = styled.div`
     display: flex;
+    align-items: center;
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 1.5rem;
@@ -98,11 +99,17 @@ export const SubContainer = styled.div`
 `;
 
 export const AlbumName = styled.div`
-    margin-right: 21.25rem;
+    width: 8rem;
+    margin-right: 15.25rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 export const AddDate = styled.div`
-    margin-right: 16.25rem;
+    margin-right: 17.5rem;
 `;
 
 export const Time = styled.div`

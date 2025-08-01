@@ -3,8 +3,7 @@ import * as S from '../PlaylistPage/SongComponent.style'
 import Unchecked from '../../assets/RoomPage/checkbox.svg';
 import Checked from '../../assets/RoomPage/check-01.svg';
 
-export default function SongComponent({ title, artist, album, coverUrl, duration }) {
-    const [isSelected, setIsSelected] = useState(false);
+export default function SongComponent({ title, artist, album, coverUrl, duration, isSelected, onSelect }) {
 
     const formatDuration = (ms) => {
         const totalSec = Math.floor(ms / 1000);
@@ -13,12 +12,8 @@ export default function SongComponent({ title, artist, album, coverUrl, duration
         return `${min}:${sec}`;
     };
 
-    const toggleSelect = () => {
-        setIsSelected(prev => !prev);
-    };
-
     return (
-        <S.Container isSelected={isSelected} onClick={() => toggleSelect()}>
+        <S.Container isSelected={isSelected} onClick={onSelect}>
             <S.SongContainer>
             <S.CheckboxContainer>
                 <S.Checkbox src={Unchecked} />

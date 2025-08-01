@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import * as S from '../PlaylistPage/SongSearch.style'
 import MusicIcon from '../../assets/RoomPage/room_icn_music.svg'
 import search from '../../assets/Common/icn_search.svg'
 import SongComponent from './SongComponent'
 import { searchSongs } from '../../api/song'
+import { addSongToPlaylist } from '../../api/playlist'
 
-export default function SongSearch() {
+export default function SongSearch({ onComplete }) {
+    const { playlistId } = useParams();
     const [query, setQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [selectedSongIds, setSelectedSongIds] = useState([]);
 
     const handleInputChange = async (e) => {
         const newQuery = e.target.value;
@@ -28,6 +32,27 @@ export default function SongSearch() {
         setSearchResults([]);
         } finally {
         setIsLoading(false);
+        }
+    };
+
+    const toggleSelect = (songId) => {
+    setSelectedSongIds((prev) =>
+        prev.includes(songId) ? prev.filter((id) => id !== songId) : [...prev, songId]
+        );
+    };
+
+    const handleAddSongs = async () => {
+    const accessToken = localStorage.getItem('accessToken');
+    try {
+        for (const songId of selectedSongIds) {
+            await addSongToPlaylist(playlistId, songId, accessToken);
+        }
+            alert('노래 추가 완료!');
+            setSelectedSongIds([]);
+            if (onComplete) onComplete();
+            } catch (e) {
+            alert('노래 추가 실패');
+            console.error(e);
         }
     };
 
@@ -59,6 +84,8 @@ export default function SongSearch() {
                             album={song.album}
                             coverUrl={song.coverUrl}
                             duration={song.duration}
+                            isSelected={selectedSongIds.includes(song.spotifySongId)}
+                            onSelect={() => toggleSelect(song.spotifySongId)}
                         />
                     ))
                     ) : (
@@ -68,7 +95,7 @@ export default function SongSearch() {
                     )}
                 </S.ResultContainer>
 
-                <S.AddSongButton>선택한 노래 추가하기</S.AddSongButton>
+                <S.AddSongButton onClick={handleAddSongs}>선택한 노래 추가하기</S.AddSongButton>
                 </>
             )}
         </S.Container>

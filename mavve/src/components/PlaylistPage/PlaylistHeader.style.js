@@ -75,4 +75,39 @@ export const EditButton = styled.button`
         width: 3rem;
         height: 3rem;
     }
+
+    &:active {
+        background: linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.2) 0%,
+            rgba(0, 0, 0, 0.2) 100%
+        ), #009BFF;
+    }
+`;
+
+export const BottomContainer = styled.div`
+    display: flex;
+    width: 75.755rem;
+    align-items: flex-end;
+    justify-content: flex-start;
+`;
+
+export const DeleteButton = styled.button`
+    display: inline-flex;
+    height: 3.5rem;
+    padding: 0.5rem 1.5rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--fth);
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+
+    color: var(--b);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.5rem;
+    margin-left: 52rem;
 `;

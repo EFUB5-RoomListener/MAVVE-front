@@ -1,13 +1,30 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import Edit from "../../assets/RoomPage/createpencil.svg";
 import * as S from '../PlaylistPage/PlaylistHeader.style'
 import EditModal from './EditModal';
+import { deletePlaylist } from '../../api/playlist';
 
-export default function PlaylistHeader({ playlist }) {
+export default function PlaylistHeader({ playlist, showDeleteButton = false }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const nav = useNavigate();
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
+
+    const handleDelete = async () => {
+        const accessToken = localStorage.getItem('accessToken');
+
+        try {
+            await deletePlaylist(playlist.playlistId, accessToken);
+            alert('플레이리스트가 삭제되었습니다.');
+            nav('/playlist');
+        } catch (e) {
+            alert('삭제 실패');
+            console.error(e);
+        }
+    };
+
 
     return (
         <>
@@ -28,11 +45,17 @@ export default function PlaylistHeader({ playlist }) {
                             <img src={Edit} alt='편집 버튼'/>
                         </S.EditButton>
                     </S.Title>
-                    <S.User>작성자 이름으로 바꾸기: {playlist.userId}</S.User>
+                    <S.BottomContainer>
+                        <S.User>작성자 이름으로 바꾸기: {playlist.userId}</S.User>
+                        {showDeleteButton && (
+                            <S.DeleteButton onClick={handleDelete}>
+                                이 플레이리스트 삭제하기
+                            </S.DeleteButton>)}
+                    </S.BottomContainer>
                 </S.Info>
             </S.Container>
 
-            {isModalOpen && <EditModal onClose={closeModal} />}
+            {isModalOpen && <EditModal onClose={closeModal} playlist={playlist} />}
         </>
     );
 }

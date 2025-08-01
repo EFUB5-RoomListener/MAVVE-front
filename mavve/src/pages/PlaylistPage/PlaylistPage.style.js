@@ -57,6 +57,14 @@ export const CreateButton = styled.button`
     color: #FFFFFF;
     font-size: 0.875rem;
     font-weight: 400;
+
+    &:active {
+        background: linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.2) 0%,
+            rgba(0, 0, 0, 0.2) 100%
+        ), #009BFF;
+    }
 `;
 
 export const Playlists = styled.div`
