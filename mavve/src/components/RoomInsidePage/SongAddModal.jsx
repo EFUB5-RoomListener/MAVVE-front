@@ -1,30 +1,49 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import * as S from '../../pages/RoomInsidePage/RoomInsidePage.style';
 import CheckBox from '../../assets/RoomInsidePage/play_frame_music.svg';
 import Check from '../../assets/RoomInsidePage/check-01.svg';
 import SearchIcon from "../../assets/RoomPage/room_icn_search.svg";
 import CloseIcon from "../../assets/RoomInsidePage/mypage_music_icn_X.svg";
+import { searchSongs } from "../../api/song";
 
 function SongAddModal({ onClose, onAddSongs, currentPlayList }) {
     const [selectedSongs, setSelectedSongs] = useState([]);
     const [search, setSearch] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
   
-    const toggleSelect = (songId) => {
+    useEffect(() => {
+      const fetchSongs = async () => {
+        if (search.trim() === "") {
+          setSearchResults([]);
+          return;
+        }
+        try {
+          const songs = await searchSongs(search);
+          setSearchResults(songs);
+        } catch (error) {
+          console.error("노래 검색 실패:", error);
+        }
+      };
+  
+      fetchSongs();
+    }, [search]);
+
+    const toggleSelect = (spotifyId) => {
       setSelectedSongs((prev) =>
-        prev.includes(songId.toString())
-          ? prev.filter((id) => id !== songId.toString())
-          : [...prev, songId.toString()]
-      );      
+        prev.includes(spotifyId)
+          ? prev.filter((id) => id !== spotifyId)
+          : [...prev, spotifyId]
+      );
     };
-  
+
     const handleChange = (e) => {
       setSearch(e.target.value);
     };
     
     // selected song들을 추가하기 
     const handleAdd = () => {
-      const songsToAdd = currentPlayList.filter(song =>
-        selectedSongs.includes(song.songId.toString())
+      const songsToAdd = searchResults.filter(song =>
+        selectedSongs.includes(song.spotifySongId)
       );
   
       onAddSongs(songsToAdd); // 상위로 전달
@@ -35,7 +54,14 @@ function SongAddModal({ onClose, onAddSongs, currentPlayList }) {
     const filteredList = currentPlayList.filter((item) =>
       item.title.toLowerCase().includes(search.toLowerCase())
     );
-  
+    // duration 밀리초를 분:초로 변환 
+    const formatDuration = (ms) => {
+      const totalSeconds = Math.floor(ms / 1000);
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+
+      return `${minutes}:${seconds.toString().padStart(2, '0')}`; // 한자리 숫자를 두자리로 만들어줌 
+    };
     return (
       <S.ModalOverlay onClick={onClose}>
         <S.AddModalContainer onClick={(e) => e.stopPropagation()}>
@@ -54,11 +80,11 @@ function SongAddModal({ onClose, onAddSongs, currentPlayList }) {
 
           {/* 노래 리스트 */}
           <S.SongListWrapper>
-          {filteredList.map((song) => {
-            const isSelected = selectedSongs.includes(song.songId.toString());
+          {searchResults.map((song) => {
+            const isSelected = selectedSongs.includes(song.spotifySongId);
   
             return (
-              <S.ModalSongRow key={song.songId} $isSelected={isSelected}onClick={() => toggleSelect(song.songId)}>
+              <S.ModalSongRow key={song.songId} $isSelected={isSelected}  onClick={() => toggleSelect(song.spotifySongId)}>
                 <S.CheckboxWrapper
                   isSelected={isSelected}
                 >
@@ -71,7 +97,7 @@ function SongAddModal({ onClose, onAddSongs, currentPlayList }) {
                   <div>{song.artist}</div>
                 </S.ModalSongTextInfo>
                 <S.ModalSongAlbum>{song.album}</S.ModalSongAlbum>
-                <S.ModalSongDuration>{song.duration}</S.ModalSongDuration>
+                <S.ModalSongDuration>{formatDuration(song.duration)}</S.ModalSongDuration>
               </S.ModalSongRow>
             );
             
