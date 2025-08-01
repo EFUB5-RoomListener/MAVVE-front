@@ -88,3 +88,8 @@ export const toggleRoomLike = async (roomCode) => {
     throw error;
   }
 };
+
+export const getTopRooms = async () => {
+  const response = await axiosInstance.get("/rooms/like");
+  return response.data.roomList;
+};
