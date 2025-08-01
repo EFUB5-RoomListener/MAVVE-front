@@ -68,3 +68,13 @@ export const deletePlaylist = async (playlistId, accessToken) => {
     });
     return response.data;
 };
+
+// 플레이리스트 검색
+
+export const searchPlaylists = async (keyword) => {
+    const response = await axiosInstance.get(
+      `/playlists/search?keyword=${encodeURIComponent(keyword)}`
+    );
+    return response.data;
+  };
+  

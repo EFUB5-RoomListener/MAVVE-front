@@ -21,7 +21,8 @@ function App() {
         <Route path='/playlist/new' element={<NewPlaylistPage />} />
         <Route path='/playlist/:playlistId' element={<PlaylistDetailPage />} />
         <Route path="/rooms/" element={<RoomPage />} />
-        <Route path="/rooms/:roomCode" element={<RoomInsidePage />} />
+        <Route path="/rooms/:roomCode" element={<RoomPage />} />
+        <Route path="/rooms/:roomCode/inside" element={<RoomInsidePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/likedroom" element={<LikedRoomPage />} />
