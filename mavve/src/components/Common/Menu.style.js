@@ -6,7 +6,7 @@ export const MenuContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 12.75rem;
-  top: 4rem;
+  top: 3.5rem;
   right: 0rem;
   z-index: 10;
   border-radius: 1rem;

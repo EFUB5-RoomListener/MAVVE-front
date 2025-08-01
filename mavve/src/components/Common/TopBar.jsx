@@ -17,15 +17,10 @@ export default function TopBar() {
   const { user, setUser } = useUserStore();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAlarmOpen, setIsAlarmOpen] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
   const alertRef = useRef(null);
   const menuRef = useRef(null);
   const profileRef = useRef(null);
-  const [alertIcon, setAlertIcon] = useState(alert);
-
-  const handleMouseEnter = () => setAlertIcon(alertHover);
-  const handleMouseLeave = () => setAlertIcon(alert);
-  const handleMouseDown = () => setAlertIcon(alertClick);
-  const handleMouseUp = () => setAlertIcon(alertHover);
 
   useEffect(() => {
     const fetchAndSetUser = async () => {
@@ -50,6 +45,12 @@ export default function TopBar() {
     setIsAlarmOpen(false);
   };
 
+  const currentAlertIcon = isAlarmOpen
+    ? alertClick
+    : isHovering
+    ? alertHover
+    : alert;
+
   return (
     <S.TopBarContainer>
       <S.Contents>
@@ -61,13 +62,11 @@ export default function TopBar() {
         <S.Buttons>
           <S.AlertButton
             ref={alertRef}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
             onClick={handleAlertClick}
           >
-            <img src={alertIcon} alt="alert" />
+            <img src={currentAlertIcon} alt="alert" />
           </S.AlertButton>
           <Alarm
             isAlarmOpen={isAlarmOpen}
