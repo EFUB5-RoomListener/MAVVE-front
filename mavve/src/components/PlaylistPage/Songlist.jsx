@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import * as S from '../PlaylistPage/Songlist.style'
 import SongComponent2 from './SongComponent2'
 import time from '../../assets/PlaylistPage/time.svg'
+import { deleteSongFromPlaylist } from '../../api/playlist'
 
-export default function Songlist() {
-    const [selectedSongs, setSelectedSongs] = useState({ 0: false });
+export default function Songlist({ songs, playlistId }) {
+    const [selectedSongs, setSelectedSongs] = useState({});
 
     const toggleSelect = (id) => {
         setSelectedSongs(prev => ({
@@ -14,6 +15,23 @@ export default function Songlist() {
     };
 
     const hasSelected = Object.values(selectedSongs).some(v => v);
+
+    const handleDeleteSongs = async () => {
+        const accessToken = localStorage.getItem('accessToken');
+
+        try {
+            for (const spotifySongId of Object.keys(selectedSongs)) {
+                if (selectedSongs[spotifySongId]) {
+                    await deleteSongFromPlaylist(playlistId, spotifySongId, accessToken);
+                }
+            }
+            alert('삭제 완료!');
+            window.location.reload();
+        } catch (e) {
+            console.error(e);
+            alert('삭제 실패');
+        }
+    };
 
     return (
         <S.Container>
@@ -26,15 +44,26 @@ export default function Songlist() {
                     <S.Time><img src={time} alt='시간'/></S.Time>
                 </S.Header>
                 <S.Line />
-                <SongComponent2
-                    id={0}
-                    isSelected={selectedSongs[0]}
-                    onToggleSelect={toggleSelect}
-                />
+                <S.ScrollArea>
+                    {songs.map((song, index) => (
+                        <SongComponent2
+                            key={song.spotifySongId}
+                            id={song.spotifySongId}
+                            title={song.title}
+                            artist={song.artist}
+                            album={song.album}
+                            coverUrl={song.coverUrl}
+                            duration={song.duration}
+                            isSelected={selectedSongs[song.spotifySongId] || false}
+                            onToggleSelect={toggleSelect}
+                            index={index + 1}
+                        />
+                    ))}
+                </S.ScrollArea>
             </S.ResultContainer>
 
             {hasSelected && (
-                <S.DeleteSongButton>선택한 노래 삭제하기</S.DeleteSongButton>
+                <S.DeleteSongButton onClick={handleDeleteSongs}>선택한 노래 삭제하기</S.DeleteSongButton>
             )}
         </S.Container>
     )

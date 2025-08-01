@@ -57,13 +57,31 @@ export const SongContainer = styled.div`
     align-items: center;
 `;
 
+export const ThumbnailWrapper = styled.div`
+    position: relative;
+    width: 3rem;
+    height: 3rem;
+    margin-left: 3.13rem;
+`;
+
 export const Thumbnail = styled.img`
     width: 3rem;
     height: 3rem;
     border-radius: 48px;
     aspect-ratio: 1/1;
     object-fit: cover;
-    margin-left: 3.13rem;
+`;
+
+export const Circle = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1.1rem;
+    height: 1.1rem;
+    background-color: var(--trd);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
 `;
 
 export const SongInfo = styled.div`
@@ -91,6 +109,7 @@ export const Artist = styled.div`
 
 export const SubContainer = styled.div`
     display: flex;
+    align-items: center;
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 1.5rem;
@@ -98,11 +117,17 @@ export const SubContainer = styled.div`
 `;
 
 export const AlbumName = styled.div`
-    margin-right: 21.25rem;
+    width: 8rem;
+    margin-right: 15.25rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 export const AddDate = styled.div`
-    margin-right: 16.25rem;
+    margin-right: 17.5rem;
 `;
 
 export const Time = styled.div`
