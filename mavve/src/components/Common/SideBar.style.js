@@ -37,6 +37,10 @@ export const CreateButton = styled.button`
     color: #FFFFFF;
     font-size: 0.875rem;
     font-weight: 400;
+    
+    &:hover {
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.20) 100%), #65C3FF;
+    }
 `;
 
 export const Title = styled.div`
@@ -63,10 +67,19 @@ export const Section = styled.div`
 
 export const ComponentWrapper = styled.div`
     display: flex;
-    width: 10.625rem;
+    width: 14.0625rem;
+    height: 3.75rem;
     padding: 0.38rem 0.5rem;
-    justify-content: space-between;
+    box-sizing: border-box;
+    justify-content: flex-start;
+    background: var(--w);
+    gap: 0.5rem;
     cursor: pointer;
+    border-radius: 8px;
+
+    &:hover {
+        background: var(--g1);
+    }
 `;
 
 export const Thumbnail = styled.div`

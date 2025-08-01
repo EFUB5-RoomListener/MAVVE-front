@@ -67,7 +67,12 @@ export const PlaylistTitle = styled.h2`
 `;
 
 export const EditButton = styled.button`
-    background: none;
+    width: 3rem;
+    height: 3rem;
+    padding: 0.75rem;
+    box-sizing: border-box;
+    border-radius: 24px;
+    background: var(--pri);
     border: none;
     cursor: pointer;
 
@@ -76,7 +81,7 @@ export const EditButton = styled.button`
         height: 3rem;
     }
 
-    &:active {
+    &:hover {
         background: linear-gradient(
             0deg,
             rgba(0, 0, 0, 0.2) 0%,
