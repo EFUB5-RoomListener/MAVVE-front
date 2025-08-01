@@ -123,6 +123,7 @@ export const SongText = styled.div`
   font-size: 1rem;
   font-weight: 400;
   line-height: 140%;
+  white-space: nowrap;
 `;
 
 export const SongPlaceholder = styled.div`
@@ -186,7 +187,7 @@ export const RoomThumbnail = styled.div`
   height: 3.6875rem;
   border-radius: 16px;
   border: 0.5px solid #3c3e44;
-  background: lightgray;
+  background: var(--g1);
 `;
 
 export const RoomInfo = styled.div`
