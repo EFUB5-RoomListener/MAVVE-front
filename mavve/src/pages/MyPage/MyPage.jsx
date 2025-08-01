@@ -11,6 +11,7 @@ import MinusIcon from "../../assets/MyPage/MinusIcon.svg";
 import Profile from "../../components/MyPage/Profile";
 import ProfileEditModal from "../../components/MyPage/ProfileEditModal";
 import OneLineNoteModal from "../../components/MyPage/OneLineNoteModal";
+import { useUserStore } from "../../store/useUserStore";
 
 import { fetchUserInfo } from "../../api/user";
 import { uploadImage } from "../../api/image";
@@ -18,8 +19,9 @@ import { fetchMyRooms, fetchLikedRooms } from "../../api/room";
 import { fetchDiaryByUser, deleteDiary } from "../../api/diary";
 
 export default function MyPage() {
+  const { user, setUser, updateProfile } = useUserStore();
   const navigate = useNavigate();
-  const [user, setUser] = useState({ nickname: "", profile: "" });
+  //const [user, setUser] = useState({ nickname: "", profile: "" });
   const [myRooms, setMyRooms] = useState([]);
   const [likedRooms, setLikedRooms] = useState([]);
   const [noteData, setNoteData] = useState({});
@@ -126,7 +128,8 @@ export default function MyPage() {
 
     try {
       const imageUrl = await uploadImage(file, "profile");
-      setUser((prev) => ({ ...prev, profile: imageUrl }));
+      updateProfile(imageUrl);
+      //setUser((prev) => ({ ...prev, profile: imageUrl }));
     } catch (error) {
       console.error("이미지 업로드 중 오류:", error);
       alert("이미지 업로드에 실패했습니다.");
@@ -167,10 +170,8 @@ export default function MyPage() {
           />
           {isEditing && (
             <ProfileEditModal
-              user={user}
               nameInput={nameInput}
               setNameInput={setNameInput}
-              setUser={setUser}
               onClose={() => setIsEditing(false)}
               onImageUpload={handleImgUpload}
             />
