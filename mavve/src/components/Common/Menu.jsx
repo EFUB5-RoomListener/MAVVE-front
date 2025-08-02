@@ -51,7 +51,7 @@ export default function Menu({
       console.error("❌ 로그아웃 실패:", err);
     } finally {
       localStorage.removeItem("accessToken");
-      setUser(null);
+      setUser({ nickname: "", profile: "" });
       alert("로그아웃이 완료되었습니다!");
       navigate("/");
     }

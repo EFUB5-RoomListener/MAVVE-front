@@ -10,7 +10,6 @@ export default function LoginLoad() {
 
   useEffect(() => {
     const code = new URLSearchParams(window.location.search).get("code");
-    console.log("✅ 받은 code:", code);
 
     if (!code) {
       setMessage("❌ URL에 인증 코드가 없습니다.");
