@@ -9,6 +9,7 @@ import { connectWebSocket, disconnectWebSocket } from "../../api/chat";
 import { subscribeSong } from "../../api/websocket-song";
 import client from "../../api/client";
 import { enterRoom } from "../../api/room";
+import { getSpotifyAccessToken } from "../../api/websocket-song";
 
 function RoomInsidePage(){
     const [isChatOpen, setIsChatOpen] = useState(false);
