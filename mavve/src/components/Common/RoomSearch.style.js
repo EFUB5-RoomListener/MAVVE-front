@@ -80,8 +80,6 @@ export const ResultContainer = styled.div`
   }
 `;
 
-export const ItemWrapper = styled.div``;
-
 export const ResultItem = styled.div`
   display: flex;
   width: 45rem;
@@ -114,16 +112,20 @@ export const EmptyMessage = styled.div`
   line-height: normal;
 `;
 
+export const RoomWrapper = styled.div`
+  gap: 1rem;
+  display: flex;
+  flex-direction: row;
+`;
+
 export const RoomCover = styled.div`
   display: flex;
-  width: 3.0625rem;
-  height: 3.0625rem;
+  width: 2.69rem;
+  height: 2.63rem;
   padding: 0.1875rem 0.1875rem 0.25rem 0.1875rem;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  box-sizing: border-box;
-  gap: 0.5rem;
   flex-shrink: 0;
   aspect-ratio: 1/1;
   border-radius: 0.625rem;
@@ -131,18 +133,22 @@ export const RoomCover = styled.div`
   background: var(--w);
 `;
 
-export const RoomWrapper = styled.div`
-  gap: 1rem;
-  display: flex;
-  flex-direction: row;
-`;
-
 export const RoomThumbnail = styled.div`
-  width: 2.6875rem;
-  height: 2.25rem;
+  display: flex;
+  position: relative;
+  height: 2.25em;
+  justify-content: flex-end;
+  align-items: center;
+  flex-shrink: 0;
+  align-self: stretch;
   border-radius: 0.625rem;
   border: 0.5px solid #3c3e44;
   background: var(--g2);
+
+  background-image: ${({ $image }) => `url(${$image})`};
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 `;
 
 export const RoomInfo = styled.div`
@@ -205,5 +211,12 @@ export const Playtime = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 1.5rem; /* 171.429% */
-  margin-left: 2rem;
+  margin-left: 1rem;
+`;
+
+export const HeartIcon = styled.div`
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+  margin-left: 1.5rem;
 `;

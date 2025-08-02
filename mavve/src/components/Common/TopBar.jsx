@@ -74,7 +74,7 @@ export default function TopBar() {
             alertRef={alertRef}
           />
           <S.ProfileButton onClick={handleProfileClick} ref={profileRef}>
-            <img src={user.profile || Defaultprofile} alt="profile" />
+            <img src={user?.profile || Defaultprofile} alt="profile" />
           </S.ProfileButton>
           <Menu
             isMenuOpen={isMenuOpen}
