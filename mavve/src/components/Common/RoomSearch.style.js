@@ -80,8 +80,6 @@ export const ResultContainer = styled.div`
   }
 `;
 
-export const ItemWrapper = styled.div``;
-
 export const ResultItem = styled.div`
   display: flex;
   width: 45rem;
@@ -213,5 +211,12 @@ export const Playtime = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 1.5rem; /* 171.429% */
-  margin-left: 2rem;
+  margin-left: 1rem;
+`;
+
+export const HeartIcon = styled.div`
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+  margin-left: 1.5rem;
 `;

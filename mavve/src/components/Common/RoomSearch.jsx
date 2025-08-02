@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import * as S from "./RoomSearch.style";
 import search from "../../assets/Common/icn_search.svg";
 import { searchRooms } from "../../api/room";
+import filled from "../../assets/Common/filled_heart.svg";
+import unfilled from "../../assets/Common/unfilled_heart.svg";
+import { toggleRoomLike } from "../../api/room";
 
 const normalizeText = (text) => text.toLowerCase().replace(/\s+/g, "");
 
@@ -49,6 +52,24 @@ export default function RoomSearch() {
     };
   }, []);
 
+  const handleToggleLike = async (e, room) => {
+    e.preventDefault();
+    e.stopPropagation();
+    try {
+      const response = await toggleRoomLike(room.roomId);
+      setSearchResults((prevResults) =>
+        prevResults.map((r) =>
+          r.roomId === room.roomId
+            ? { ...r, liked: response.liked, likeCount: response.likeCount }
+            : r
+        )
+      );
+    } catch (error) {
+      console.error("좋아요 API 호출 실패: ", error);
+      alert("좋아요 처리 중 오류가 발생했습니다.");
+    }
+  };
+
   return (
     <S.SearchWrapper ref={searchWrapperRef}>
       <S.SearchBar $isFocused={isFocused} onFocus={() => setIsFocused(true)}>
@@ -65,36 +86,37 @@ export default function RoomSearch() {
       </S.SearchBar>
       {searchText && isFocused && (
         <S.ResultContainer>
-          <S.ItemWrapper>
-            {searchResults.length > 0 ? (
-              searchResults.map((room) => (
-                <S.ResultItem
-                  key={room.roomId}
-                  onMouseDown={() => navigate(`/rooms/${room.roomId}`)}
-                >
-                  <S.RoomWrapper>
-                    <S.RoomCover>
-                      <S.RoomThumbnail $image={room.imageURL} />
-                    </S.RoomCover>
-                    <S.RoomInfo>
-                      <S.RoomText>{room.roomName}</S.RoomText>
-                      <S.RoomText>닉네임최대닉네임최대</S.RoomText>
-                    </S.RoomInfo>
-                  </S.RoomWrapper>
-                  <S.HashtagContainer>
-                    {room.tag.slice(0, 4).map((tag, index) => (
-                      <S.Hashtag key={index}>#{tag}</S.Hashtag>
-                    ))}
-                  </S.HashtagContainer>
-                  <S.Playtime>02:48:23</S.Playtime>
-                </S.ResultItem>
-              ))
-            ) : (
-              <S.EmptyMessage>
-                ‘{searchText}’과(와) 일치하는 결과가 없습니다.
-              </S.EmptyMessage>
-            )}
-          </S.ItemWrapper>
+          {searchResults.length > 0 ? (
+            searchResults.map((room) => (
+              <S.ResultItem
+                key={room.roomId}
+                onClick={() => navigate(`/rooms/${room.roomId}`)}
+              >
+                <S.RoomWrapper>
+                  <S.RoomCover>
+                    <S.RoomThumbnail $image={room.imageURL} />
+                  </S.RoomCover>
+                  <S.RoomInfo>
+                    <S.RoomText>{room.roomName}</S.RoomText>
+                    <S.RoomText>{room.userName}</S.RoomText>
+                  </S.RoomInfo>
+                </S.RoomWrapper>
+                <S.HashtagContainer>
+                  {room.tag.slice(0, 4).map((tag, index) => (
+                    <S.Hashtag key={index}>#{tag}</S.Hashtag>
+                  ))}
+                </S.HashtagContainer>
+                <S.Playtime>{room.duration}</S.Playtime>
+                <S.HeartIcon onClick={(e) => handleToggleLike(e, room)}>
+                  <img src={room.liked ? filled : unfilled} alt="heart" />
+                </S.HeartIcon>
+              </S.ResultItem>
+            ))
+          ) : (
+            <S.EmptyMessage>
+              ‘{searchText}’과(와) 일치하는 결과가 없습니다.
+            </S.EmptyMessage>
+          )}
         </S.ResultContainer>
       )}
     </S.SearchWrapper>
