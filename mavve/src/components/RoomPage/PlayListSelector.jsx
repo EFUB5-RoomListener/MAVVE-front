@@ -129,8 +129,8 @@ function PlayListSelector({
               </S.CheckboxWrapper>
               <S.Thumbnail src={item.playImageUrl} alt="썸네일" />
               <S.PlaylistTitle>{item.name}</S.PlaylistTitle>
-              <S.SongCount>총곡수~</S.SongCount>
-              <S.TotalDuration>총시간~</S.TotalDuration>
+              <S.SongCount>{item.songCount}</S.SongCount>
+              <S.TotalDuration>{item.totalDuration}</S.TotalDuration>
             </S.PlayListRow>
           );
         })}
