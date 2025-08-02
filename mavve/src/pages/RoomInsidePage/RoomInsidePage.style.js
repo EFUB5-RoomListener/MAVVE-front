@@ -197,7 +197,14 @@ export const PlayListTitle = styled.div`
   margin-left: 1.56rem;
   
 `
-
+export const HeartImg = styled.img`
+  width: 24px;
+  height: 24px;
+  position: fixed;
+  margin-top: 3rem;
+  right: 14rem;
+  
+`;
 export const EditButton = styled.button`
   display: inline-flex;
   padding: 0.375rem 0.5rem;
@@ -535,7 +542,7 @@ export const Avatar = styled.img`
 
 export const Name  = styled.div`
   color: #000;
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-style: normal;
   font-weight: 400;
   line-height: 140%; 

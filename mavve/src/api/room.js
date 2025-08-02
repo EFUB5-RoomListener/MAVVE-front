@@ -77,6 +77,17 @@ export const getRoomPlaylists = async (roomCode) => {
   }
 };
 
+// 방 내부 사용자 조회 
+export const getRoomUsers = async (roomCode) => {
+  try {
+    const response = await axiosInstance.get(`/rooms/${roomCode}/users`);
+    return response.data.users; 
+  } catch (err) {
+    console.error("방 내부 사용자 조회 실패:", err);
+    throw err;
+  }
+};
+
 //내가 만든 방
 export const fetchMyRooms = async () => {
   const response = await axiosInstance.get("/rooms/me");
@@ -86,6 +97,7 @@ export const fetchMyRooms = async () => {
   return response.data.roomList;
 };
 
+// 방 입장 
 export const enterRoom = async (roomCode) => {
   const response = await axiosInstance.get(`/rooms/${roomCode}/enter`, {
     headers: {
@@ -99,7 +111,7 @@ export const enterRoom = async (roomCode) => {
 // 내가 좋아요한 방
 export const fetchLikedRooms = async () => {
   const response = await axiosInstance.get("/rooms/like/me");
-
+ 
   console.log("💖 [API 응답] /rooms/like/me:", response.data);
 
   return response.data.roomList;
