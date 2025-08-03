@@ -8,10 +8,10 @@ import Chat from '../../assets/RoomInsidePage/roomin_icn_chat.svg';
 import { sendAddSongMessage, sendDeleteSongMessage } from "../../api/websocket-song";
 import EmptyHeart from '../../assets/RoomInsidePage/heart.svg';
 import FullHeart from '../../assets/RoomInsidePage/heart-2.svg';
-import { toggleRoomLike } from "../../api/room";
+import { toggleRoomLike } from "../../api/room"; 
 import { fetchLikedRooms } from "../../api/room"; 
 
-function RoomPlayList({ isChatOpen, setIsChatOpen, songEvent, roomCode, currentSong, setCurrentSong, playList, setPlayList, roomData }) {
+function RoomPlayList({ isChatOpen, setIsChatOpen, songEvent, roomCode, currentSong, setCurrentSong, playList, setPlayList, roomData, setRoomData }) {
 
   // 브로드캐스트 받은 동작 전달 
   useEffect(() => {
@@ -224,7 +224,16 @@ function RoomPlayList({ isChatOpen, setIsChatOpen, songEvent, roomCode, currentS
     return `${minutes}:${seconds.toString().padStart(2, '0')}`; // 한자리 숫자를 두자리로 만들어줌 
   };
   
+  // 노래 추가 후 곡수, 재생시간 업데이트
+  const [songCount, setSongCount] = useState(0);
+  const [totalDuration, setTotalDuration] = useState("0:00:00");
 
+  useEffect(() => {
+    const totalMs = playList.reduce((sum, song) => sum + song.duration, 0);
+    setSongCount(playList.length);
+    setTotalDuration(formatDuration(totalMs));
+  }, [playList]);
+  
   return (
     <>
     <S.PlayListAllContainer>
@@ -244,7 +253,7 @@ function RoomPlayList({ isChatOpen, setIsChatOpen, songEvent, roomCode, currentS
       </S.PlayListHeader>
 
       <S.PlayListInfo>
-        <span>{roomData?.songCount}곡, {roomData?.totalDuration} </span>
+        <span>{songCount}곡, {totalDuration} </span>
         <S.FriendsBtn $isActive={isActive} onClick={toggleStyle}>
           참여중인 친구들
         </S.FriendsBtn>
