@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "./LoginPage.style";
 import Loading from "../../assets/LoginPage/loading.png";
-import { login } from "../../api/auth";
+import axios from "axios";
 
 export default function LoginLoad() {
   const navigate = useNavigate();
@@ -18,7 +18,19 @@ export default function LoginLoad() {
 
     setMessage("✅ 인증 코드 수신 → 백엔드에 전송 중...");
 
-    login(code)
+    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+
+    axios({
+      method: "post",
+      url: `${apiBaseUrl}/auth/login`,
+      data: JSON.stringify({ code }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+      validateStatus: () => true,
+      responseType: "text",
+    })
       .then((res) => {
         console.log("✅ 응답 상태 코드:", res.status);
         console.log("✅ 응답 헤더:", res.headers);
