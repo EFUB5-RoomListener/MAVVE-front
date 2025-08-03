@@ -203,6 +203,7 @@ function RoomInsidePage() {
           playList={playList}
           setPlayList={setPlayList}
           roomData={roomData}
+          setRoomData={setRoomData}
         />
         {isChatOpen && <RoomChat />}
       </S.MainContainer>
