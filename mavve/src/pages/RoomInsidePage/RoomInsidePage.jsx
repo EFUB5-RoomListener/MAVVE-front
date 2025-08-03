@@ -112,64 +112,29 @@ function RoomInsidePage() {
   const [isPlayerReady, setIsPlayerReady] = useState(false);
 
   const setupPlayer = async () => {
-    console.log("🛠 setupPlayer 시작됨");
-
-    
     const token = await getSpotifyAccessToken();
-    console.log("🎟 Spotify Access Token:", token);
-  
-    if (!token) {
-      console.error("❌ 토큰이 비어있음!");
-      return;
-    }
-  
+
     const player = new Spotify.Player({
-      name: "MAAVE Web Player " + Math.random().toString(36).slice(2, 6),
-      getOAuthToken: cb => {
-        console.log("📥 getOAuthToken 호출됨");
-        cb(token);
-      },
+      name: 'MAAVE Web Player ' + Math.random().toString(36).slice(2, 6),
+      getOAuthToken: cb => cb(token),
       volume: 0.5
     });
-  
-    console.log("🧱 플레이어 인스턴스 생성 완료");
-  
+
     player.addListener('ready', ({ device_id }) => {
-      console.log('✅ Spotify Player Ready! Device ID:', device_id);
+      console.log('✅ Spotify Player Ready with Device ID:', device_id);
       deviceIdRef.current = device_id;
       setIsPlayerReady(true);
     });
-  
-    player.addListener('player_state_changed', (state) => {
+    player.addListener('player_state_changed', state => {
       if (!state) return;
-      console.log('🎵 player_state_changed 이벤트 발생');
-      console.log('🎶 현재 트랙:', state.track_window.current_track?.name);
+      console.log('▶️ 트랙:', state.track_window.current_track.name);
       console.log('⏸ 재생 중인가?:', !state.paused);
     });
-  
-    player.addListener('initialization_error', ({ message }) => {
-      console.error('💥 Initialization Error:', message);
-    });
-    player.addListener('authentication_error', ({ message }) => {
-      console.error('💥 Auth Error:', message);
-    });
-    player.addListener('account_error', ({ message }) => {
-      console.error('💥 Account Error:', message);
-    });
-    player.addListener('playback_error', ({ message }) => {
-      console.error('💥 Playback Error:', message);
-    });
-  
-    const success = await player.connect();
-    console.log("🔌 player.connect() 결과:", success);
-  
-    if (!success) {
-      console.warn("⚠️ player.connect() 실패 → 디바이스 등록 안 됨");
-    }
-  
+    
+    player.connect();
     window.spotifyPlayer = player;
   };
-  
+
 
   // 페이지 나갈 때 player disconnect 
   useEffect(() => {
