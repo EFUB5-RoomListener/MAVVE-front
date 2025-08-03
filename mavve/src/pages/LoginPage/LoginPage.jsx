@@ -8,8 +8,20 @@ export default function LoginPage() {
     const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
     const redirectUri = import.meta.env.VITE_SPOTIFY_REDIRECT_URI;
 
+    const scopes = [
+      "streaming",
+      "user-read-email",
+      "user-read-private",
+      "user-modify-playback-state",
+      "user-read-playback-state",
+      "user-read-currently-playing"
+    ];
+    
+    const scopeParam = scopes.join(" ");
+    
     console.log("로그인 버튼 클릭됨");
-    window.location.href = `https://accounts.spotify.com/ko/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}`;
+    window.location.href = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${encodeURIComponent(scopeParam)}&show_dialog=true`;
+    
   };
 
   return (
