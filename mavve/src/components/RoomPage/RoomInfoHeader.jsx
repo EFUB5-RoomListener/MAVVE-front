@@ -20,7 +20,10 @@ function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists, step, setThumbna
   const { roomCode } = useParams();
   const navigate = useNavigate();
   const handleEnter = (roomCode) => {
-    navigate(`/rooms/${roomCode}/inside`);
+    localStorage.setItem("fromEnterBtn", "true");
+    navigate(`/rooms/${roomCode}/inside`, {
+      state: { fromEnterBtn: true }
+    });  
   }
 
   return (

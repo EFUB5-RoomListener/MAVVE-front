@@ -6,9 +6,12 @@ import FriendsModal from './FriendsModal';
 import SongAddModal from "./SongAddModal";
 import Chat from '../../assets/RoomInsidePage/roomin_icn_chat.svg';
 import { sendAddSongMessage, sendDeleteSongMessage } from "../../api/websocket-song";
+import EmptyHeart from '../../assets/RoomInsidePage/heart.svg';
+import FullHeart from '../../assets/RoomInsidePage/heart-2.svg';
+import { toggleRoomLike } from "../../api/room";
+import { fetchLikedRooms } from "../../api/room"; 
 
-
-function RoomPlayList({ isChatOpen, setIsChatOpen, songEvent, roomCode, currentSong, setCurrentSong, playList, setPlayList, roomData, startTime, setStartTime  }) {
+function RoomPlayList({ isChatOpen, setIsChatOpen, songEvent, roomCode, currentSong, setCurrentSong, playList, setPlayList, roomData }) {
 
   // 브로드캐스트 받은 동작 전달 
   useEffect(() => {
@@ -18,14 +21,14 @@ function RoomPlayList({ isChatOpen, setIsChatOpen, songEvent, roomCode, currentS
     switch (songEvent.type) {
       case "ADD_SONG":
         if (songEvent.song) {
-          setPlayList(prev => [...prev, songEvent.songId]);
+          setPlayList(prev => [...prev, songEvent.song]);
         }
         break;
       
       case "DELETE_SONG":
         if (songEvent.songIds) {
           setPlayList(prev =>
-            prev.filter(song => !songEvent.songIds.includes(song.songId.toString()))
+            prev.filter(song => !songEvent.songIds.includes(song.songId))
           );
         }
         break;
@@ -220,16 +223,20 @@ function RoomPlayList({ isChatOpen, setIsChatOpen, songEvent, roomCode, currentS
 
     return `${minutes}:${seconds.toString().padStart(2, '0')}`; // 한자리 숫자를 두자리로 만들어줌 
   };
-
   
+
   return (
     <>
     <S.PlayListAllContainer>
       <S.PlayListHeader>
         <S.PlayListTitle>{roomData?.roomName}</S.PlayListTitle>
+        
         <S.EditButton onClick={toggleEditMode}>
           {isEditMode ? '수정 완료' : '플레이리스트 수정'}
         </S.EditButton>
+        <S.HeartImg 
+          src={FullHeart}
+        />
 
         <S.ChatToggleBtn $isChatOpen={isChatOpen} onClick={() => setIsChatOpen((prev) => !prev)}>
            <img src={Chat}/> 채팅
@@ -243,7 +250,7 @@ function RoomPlayList({ isChatOpen, setIsChatOpen, songEvent, roomCode, currentS
         </S.FriendsBtn>
       </S.PlayListInfo>
       
-        {isActive && <FriendsModal  $isChatOpen={isChatOpen} />}
+        {isActive && <FriendsModal roomCode={roomCode} $isChatOpen={isChatOpen} />}
 
         {!isEditMode && <S.CurrentPlayingBar $isShrinked={isChatOpen}/>}
       
@@ -258,10 +265,11 @@ function RoomPlayList({ isChatOpen, setIsChatOpen, songEvent, roomCode, currentS
        {!isEditMode && <S.Spacer />}
       {playList === undefined ? (
         <S.EmptyMessage>플레이리스트가 비어 있습니다.</S.EmptyMessage>
-      ) : (
+      ) :(
          playList.map((song) => {
-          const key = song.songId || song.spotifySongId;
+          const key = song.songId || song.spotifyId;
           const isSelected = selectedSongs.includes(key);
+          
 
           // ref 연결
           if (!songRefs.current[song.songId]) {
@@ -318,6 +326,7 @@ function RoomPlayList({ isChatOpen, setIsChatOpen, songEvent, roomCode, currentS
      
      {isModalOpen && 
      <SongAddModal 
+     roomCode={roomCode}
      onClose={() => setIsModalOpen(false)}
      onAddSongs={handleAddSongs}
      currentPlayList={playList}  />}

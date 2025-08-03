@@ -165,22 +165,42 @@ function RoomCreateForm({roomInfo, setRoomInfo, onClose, setThumbnailFile, step}
                     ))}
 
                     {tags.length < 4 && (
-                        <S.HashInput
-                        type="text"
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                        onKeyDown={handleKeyDown}
-                        onCompositionStart={() => setIsComposingTag(true)}
-                        onCompositionEnd={() => setIsComposingTag(false)}
-                        onBlur={() => {
-                            setIsFocused(false);
-                            setIsComposingTag(false);
-                        }}
-                        onFocus={() => {
-                            setIsFocused(true);
-                            setIsComposingTag(true);
-                        }}
-                        />
+                      <S.HashInput
+                      type="text"
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault(); // 줄바꿈 방지
+                          // 영어 태그 입력일 때만 여기서 처리
+                          const newTag = input.trim();
+                          if (!isComposingTag && newTag !== "" && !tags.includes(newTag) && tags.length < 4) {
+                            setTags([...tags, newTag]);
+                            setInput("");
+                          }
+                        }
+                      }}
+                      onCompositionStart={() => setIsComposingTag(true)}
+                      onCompositionEnd={(e) => {
+                        setIsComposingTag(false);
+                        // 한글 입력 마무리되었을 때, 자동으로 태그 추가
+                        const newTag = input.trim();
+                        if (newTag !== "" && !tags.includes(newTag) && tags.length < 4) {
+                          setTags([...tags, newTag]);
+                          setInput("");
+                        }
+                      }}
+                      onBlur={() => {
+                        setIsFocused(false);
+                        setIsComposingTag(false);
+                      }}
+                      onFocus={() => {
+                        setIsFocused(true);
+                        setIsComposingTag(true);
+                      }}
+                    />
+                    
+                     
                     )}
                     </S.HashContainer>
 

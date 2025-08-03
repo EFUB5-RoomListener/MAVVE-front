@@ -5,8 +5,10 @@ import Check from '../../assets/RoomInsidePage/check-01.svg';
 import SearchIcon from "../../assets/RoomPage/room_icn_search.svg";
 import CloseIcon from "../../assets/RoomInsidePage/mypage_music_icn_X.svg";
 import { searchSongs } from "../../api/song";
+import axios from "axios";
+import { sendAddSongMessage } from "../../api/websocket-song";
 
-function SongAddModal({ onClose, onAddSongs, currentPlayList }) {
+function SongAddModal({ roomCode, onClose, onAddSongs, currentPlayList }) {
     const [selectedSongs, setSelectedSongs] = useState([]);
     const [search, setSearch] = useState("");
     const [searchResults, setSearchResults] = useState([]);
@@ -19,6 +21,7 @@ function SongAddModal({ onClose, onAddSongs, currentPlayList }) {
         }
         try {
           const songs = await searchSongs(search);
+          console.log("🎯 검색 결과", songs); 
           setSearchResults(songs);
         } catch (error) {
           console.error("노래 검색 실패:", error);
@@ -28,11 +31,11 @@ function SongAddModal({ onClose, onAddSongs, currentPlayList }) {
       fetchSongs();
     }, [search]);
 
-    const toggleSelect = (spotifyId) => {
+    const toggleSelect = (spotifySongId) => {
       setSelectedSongs((prev) =>
-        prev.includes(spotifyId)
-          ? prev.filter((id) => id !== spotifyId)
-          : [...prev, spotifyId]
+        prev.includes(spotifySongId)
+          ? prev.filter((id) => id !== spotifySongId)
+          : [...prev, spotifySongId]
       );
     };
 
@@ -42,18 +45,24 @@ function SongAddModal({ onClose, onAddSongs, currentPlayList }) {
     
     // selected song들을 추가하기 
     const handleAdd = () => {
-      const songsToAdd = searchResults.filter(song =>
-        selectedSongs.includes(song.spotifySongId)
-      );
-  
-      onAddSongs(songsToAdd); // 상위로 전달
-      onClose(); // 모달 닫기
+      const songsToAdd = searchResults
+        .filter(song => selectedSongs.includes(song.spotifySongId))
+        .map(song => ({
+          ...song,
+          spotifyId: song.spotifySongId, // 서버 요구 필드명
+        }));
+    
+      // WebSocket으로 서버에 전송
+      songsToAdd.forEach(song => {
+        sendAddSongMessage(roomCode, song); // 서버에서 ADD_SONG broadcast 해줌
+      });
+    
+      // 로컬에 임시로 추가하지 않고 서버 응답 기다림
+      onClose(); 
     };
+    
   
-    // 검색 필터링
-    const filteredList = currentPlayList.filter((item) =>
-      item.title.toLowerCase().includes(search.toLowerCase())
-    );
+
     // duration 밀리초를 분:초로 변환 
     const formatDuration = (ms) => {
       const totalSeconds = Math.floor(ms / 1000);
@@ -84,7 +93,7 @@ function SongAddModal({ onClose, onAddSongs, currentPlayList }) {
             const isSelected = selectedSongs.includes(song.spotifySongId);
   
             return (
-              <S.ModalSongRow key={song.songId} $isSelected={isSelected}  onClick={() => toggleSelect(song.spotifySongId)}>
+              <S.ModalSongRow key={song.spotifySongId} $isSelected={isSelected}  onClick={() => toggleSelect(song.spotifySongId)}>
                 <S.CheckboxWrapper
                   isSelected={isSelected}
                 >
