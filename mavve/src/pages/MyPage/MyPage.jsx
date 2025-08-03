@@ -21,7 +21,6 @@ import { fetchDiaryByUser, deleteDiary } from "../../api/diary";
 export default function MyPage() {
   const { user, setUser, updateProfile } = useUserStore();
   const navigate = useNavigate();
-  //const [user, setUser] = useState({ nickname: "", profile: "" });
   const [myRooms, setMyRooms] = useState([]);
   const [likedRooms, setLikedRooms] = useState([]);
   const [noteData, setNoteData] = useState({});
@@ -60,6 +59,10 @@ export default function MyPage() {
     const fetchDiary = async () => {
       try {
         const data = await fetchDiaryByUser();
+        if (!data) {
+          setNoteData({});
+          return;
+        }
 
         console.log("📒 불러온 일기 데이터:", data);
 
@@ -81,7 +84,6 @@ export default function MyPage() {
         console.error("한 줄 일기 조회 실패:", error);
       }
     };
-
     fetchDiary();
   }, []);
 
