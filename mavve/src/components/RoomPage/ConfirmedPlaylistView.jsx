@@ -1,25 +1,22 @@
 import React, { useState, useEffect } from "react";
 import * as S from '../../pages/RoomPage/RoomPage.style';
 import ClockIcon from '../../assets/RoomPage/clock.svg';
-import MoreIcon from '../../assets//RoomPage/mypage_after_btn_more.svg';
-import DeleteIcon from '../../assets/RoomPage/trash-02.svg';
 import { useNavigate } from "react-router-dom";
 import { createRoom, addPlayListRoom, getRoomPlaylists } from "../../api/room";
 import { uploadThumbnailImage } from '../../api/image';
 import { getPlaylistDetail } from "../../api/playlist";
 
 function ConfirmedPlaylistView({
-  selectedLists = [],
-  setSelectedLists,
+  selectedLists = [], 
   thumbnailFile,
   roomInfo,
   roomCode,
   updateTrigger,
   mode = "edit",
+  playlists,
+  setPlaylists
 }) {
   const navigate = useNavigate();
-  const [playlists, setPlaylists] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [targetId, setTargetId] = useState(null);
 
   useEffect(() => {
@@ -49,12 +46,7 @@ function ConfirmedPlaylistView({
     fetchPlaylists();
   }, [roomCode, updateTrigger, mode, selectedLists]);
 
-  const handleDelete = (id) => {
-    setSelectedLists(prev => prev.filter(pid => pid !== id));
-    setIsModalOpen(false);
-    setTargetId(null);
-  };
-
+  
   const handleCreateRoom = async () => {
     try {
       const imageURL = await uploadThumbnailImage(thumbnailFile, 'room');
@@ -81,11 +73,15 @@ function ConfirmedPlaylistView({
 
   const formatDuration = (playlist) => {
     const totalMillis = playlist.songs.reduce((sum, song) => sum + song.duration, 0);
-    const minutes = Math.floor(totalMillis / 1000 / 60);
-    const seconds = Math.floor(totalMillis / 1000) % 60;
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  
+    const totalSeconds = Math.floor(totalMillis / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+  
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
-
+  
   return (
     <>
       <S.TableWrapper>
@@ -94,7 +90,6 @@ function ConfirmedPlaylistView({
           <S.TitleColumn>플레이리스트 제목</S.TitleColumn>
           <S.CountColumn>곡 수</S.CountColumn>
           <S.TimeColumn><img src={ClockIcon} /></S.TimeColumn>
-          {mode === "done" && <S.DeleteColumn />}
         </S.TableHeader>
         <S.TableBorder />
 
@@ -102,30 +97,16 @@ function ConfirmedPlaylistView({
           <S.TableRow key={item.playlistId} selected={targetId === item.playlistId}>
             <S.IndexColumn>{idx + 1}</S.IndexColumn>
             <S.TitleColumn>
-              <S.ThumbnailCell src={item.playImageUrl} alt="썸네일" />
+            <S.ThumbnailCell src={item.playImageUrl} alt="썸네일" />
               <S.TitleTextCell>{item.name}</S.TitleTextCell>
             </S.TitleColumn>
-            <S.CountColumn>총 {item.songs.length}곡</S.CountColumn>
+            <S.CountColumn>{item.songs.length}</S.CountColumn>
             <S.TimeColumn>{formatDuration(item)}</S.TimeColumn>
-            {mode === "done" && (
-              <S.DeleteColumn onClick={() => { setTargetId(item.playlistId); setIsModalOpen(true); }}>
-                <img src={MoreIcon} />
-              </S.DeleteColumn>
-            )}
           </S.TableRow>
         ))}
       </S.TableWrapper>
 
-      {isModalOpen && (
-        <S.DeleteWrapper onClick={() => setIsModalOpen(false)}>
-          <S.DeleteContent onClick={e => e.stopPropagation()}>
-            <img src={DeleteIcon} />
-            <S.DeleteText onClick={() => handleDelete(targetId)}>
-              선택된 플레이리스트 삭제하기
-            </S.DeleteText>
-          </S.DeleteContent>
-        </S.DeleteWrapper>
-      )}
+      
 
       {!roomCode && (
         <S.CreateRoomButton type="button" onClick={handleCreateRoom}>

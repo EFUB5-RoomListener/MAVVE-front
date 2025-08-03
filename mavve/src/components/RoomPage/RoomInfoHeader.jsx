@@ -5,13 +5,9 @@ import CreateBtn from "../../assets/RoomPage/createpencil.svg";
 import * as S from "../../pages/RoomPage/RoomPage.style.js";
 import RoomDeleteModal from './RoomDeleteModal.jsx';
 import { useNavigate, useParams } from "react-router-dom";
-import { enterRoom } from "../../api/room.js";
 
-function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists, step, setThumbnailFile }) {
+function RoomInfoHeader({ roomInfo, setRoomInfo, step, setThumbnailFile, playlists, setPlaylists }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-   // selectedLists는 id 배열이므로, 해당 id로 다시 플레이리스트 정보 찾기
-   
 
   // 방 삭제 모달
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -25,6 +21,11 @@ function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists, step, setThumbna
       state: { fromEnterBtn: true }
     });  
   }
+
+  // 총 곡수 계산
+  const totalSongsNum = playlists.reduce((acc, playlist) => {
+    return acc + (playlist.songs ? playlist.songs.length : 0);
+  }, 0);
 
   return (
     <S.HeaderContainer>
@@ -46,8 +47,8 @@ function RoomInfoHeader({ roomInfo, setRoomInfo, selectedLists, step, setThumbna
                           : "방 제목"}</S.RoomTitle>
           {step === "done" &&
               <S.SubInfo>
-               <div>플레이리스트 개</div>
-               <div>곡 곡</div>
+               <div>플레이리스트 {playlists.length}개</div>
+               <div>곡 {totalSongsNum}곡</div>
               </S.SubInfo>
             }
           <S.EditButton onClick={() => setIsModalOpen(true)}>
