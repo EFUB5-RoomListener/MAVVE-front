@@ -127,7 +127,8 @@ export const AlbumName = styled.div`
 `;
 
 export const AddDate = styled.div`
-    margin-right: 17.5rem;
+    width: 10rem;
+    margin-right: 9.5rem;
 `;
 
 export const Time = styled.div`

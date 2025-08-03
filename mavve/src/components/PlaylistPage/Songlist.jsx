@@ -54,6 +54,7 @@ export default function Songlist({ songs, playlistId }) {
                             album={song.album}
                             coverUrl={song.coverUrl}
                             duration={song.duration}
+                            createdAt={song.createdAt}
                             isSelected={selectedSongs[song.spotifySongId] || false}
                             onToggleSelect={toggleSelect}
                             index={index + 1}
