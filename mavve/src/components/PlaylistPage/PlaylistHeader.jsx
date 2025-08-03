@@ -46,7 +46,7 @@ export default function PlaylistHeader({ playlist, showDeleteButton = false }) {
                         </S.EditButton>
                     </S.Title>
                     <S.BottomContainer>
-                        <S.User>작성자 이름으로 바꾸기: {playlist.userId}</S.User>
+                        <S.User>{playlist.username}</S.User>
                         {showDeleteButton && (
                             <S.DeleteButton onClick={handleDelete}>
                                 이 플레이리스트 삭제하기
