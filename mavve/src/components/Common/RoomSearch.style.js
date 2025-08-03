@@ -88,6 +88,7 @@ export const ResultItem = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  cursor: pointer;
 
   &:hover {
     border-radius: 0.5rem;
