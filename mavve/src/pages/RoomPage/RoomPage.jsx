@@ -17,7 +17,6 @@ export default function RoomPage() {
   });
 
   const [selectedLists, setSelectedLists] = useState([]);
-  const [step, setStep] = useState("search");
   const [thumbnailFile, setThumbnailFile] = useState(null);
   const [updateTrigger, setUpdateTrigger] = useState(0);
 
@@ -25,6 +24,7 @@ export default function RoomPage() {
   const location = useLocation();
   const roomData = location.state?.roomData;
   const roomCode = roomIdFromUrl ?? roomData?.roomId;
+  const [step, setStep] = useState(roomIdFromUrl ? "done" : "search");
 
   useEffect(() => {
     if (!roomData) return;

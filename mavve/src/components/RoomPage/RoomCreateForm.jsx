@@ -30,21 +30,12 @@ function RoomCreateForm({roomInfo, setRoomInfo, onClose, setThumbnailFile, step}
     const [isFocused, setIsFocused] = useState(false); // 클릭시 상태 변경용 
     const [isComposingTag, setIsComposingTag] = useState(false);
 
-    const handleKeyDown = (e) => {
-        if (e.isComposing || isComposingTag) return;
-        
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            const newTag = input.trim();
-        
-            if (!tags.includes(newTag) && tags.length < 4) {
-              setTags([...tags, newTag]);
-            }
-        
-            setInput("");
-            setIsComposingTag(false);
-            setIsFocused(false);
-        }
+    const addTag = () => {
+      const newTag = input.trim();
+      if (newTag !== "" && !tags.includes(newTag) && tags.length < 4) {
+        setTags([...tags, newTag]);
+        setInput("");
+      }
     };
 
     const handleDeleteTag = (tagToDelete) => {
@@ -95,7 +86,7 @@ function RoomCreateForm({roomInfo, setRoomInfo, onClose, setThumbnailFile, step}
         tags.length > 0 &&
         selected !== "" && selected !== null;
 
-
+      
 
     return(
         <S.FormContainer>
@@ -171,34 +162,23 @@ function RoomCreateForm({roomInfo, setRoomInfo, onClose, setThumbnailFile, step}
                       onChange={(e) => setInput(e.target.value)}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
-                          e.preventDefault(); // 줄바꿈 방지
-                          // 영어 태그 입력일 때만 여기서 처리
-                          const newTag = input.trim();
-                          if (!isComposingTag && newTag !== "" && !tags.includes(newTag) && tags.length < 4) {
-                            setTags([...tags, newTag]);
-                            setInput("");
+                          e.preventDefault();
+                    
+                          // composition 끝났을 때만 처리 
+                          if (!isComposingTag) {
+                            addTag(); // 무조건 이 함수 한 번만 실행
                           }
                         }
                       }}
                       onCompositionStart={() => setIsComposingTag(true)}
-                      onCompositionEnd={(e) => {
+                      onCompositionEnd={() => {
                         setIsComposingTag(false);
-                        // 한글 입력 마무리되었을 때, 자동으로 태그 추가
-                        const newTag = input.trim();
-                        if (newTag !== "" && !tags.includes(newTag) && tags.length < 4) {
-                          setTags([...tags, newTag]);
-                          setInput("");
-                        }
                       }}
                       onBlur={() => {
-                        setIsFocused(false);
                         setIsComposingTag(false);
                       }}
-                      onFocus={() => {
-                        setIsFocused(true);
-                        setIsComposingTag(true);
-                      }}
                     />
+                    
                     
                      
                     )}
