@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import * as S from "./RoomPage.style";
-
 import TopBar from "../../components/Common/TopBar";
 import SideBar from "../../components/Common/SideBar";
 import RoomInfoHeader from '../../components/RoomPage/RoomInfoHeader';
@@ -19,6 +18,7 @@ export default function RoomPage() {
   const [selectedLists, setSelectedLists] = useState([]);
   const [thumbnailFile, setThumbnailFile] = useState(null);
   const [updateTrigger, setUpdateTrigger] = useState(0);
+  const [playlists, setPlaylists] = useState([]);
 
   const { roomCode: roomIdFromUrl } = useParams();
   const location = useLocation();
@@ -55,6 +55,7 @@ export default function RoomPage() {
             selectedLists={selectedLists}
             step={step}
             setThumbnailFile={setThumbnailFile}
+            playlists={playlists}
           />
 
           <S.PlayListContainer>
@@ -67,6 +68,7 @@ export default function RoomPage() {
                 roomInfo={roomInfo}
                 mode="create"
                 roomCode={roomCode}
+                
               />
             )}
 
@@ -79,6 +81,8 @@ export default function RoomPage() {
                 mode="confirm"
                 roomInfo={roomInfo}
                 thumbnailFile={thumbnailFile}
+                playlists={playlists}
+                setPlaylists={setPlaylists}
               />
             )}
 
@@ -94,6 +98,8 @@ export default function RoomPage() {
                   roomCode={roomCode}
                   updateTrigger={updateTrigger}
                   setUpdateTrigger={setUpdateTrigger}
+                  playlists={playlists}
+                  setPlaylists={setPlaylists}
                 />
                 <S.TableBorder />
                 <PlayListSelector
@@ -104,6 +110,8 @@ export default function RoomPage() {
                   mode="edit"
                   roomCode={roomCode}
                   onPlaylistsAdded={handlePlaylistsAdded}
+                  playlists={playlists}
+                   setPlaylists={setPlaylists}
                 />
               </>
             )}
@@ -119,6 +127,8 @@ export default function RoomPage() {
                 roomCode={roomCode}
                 updateTrigger={updateTrigger}
                 setUpdateTrigger={setUpdateTrigger}
+                playlists={playlists}
+                setPlaylists={setPlaylists}
               />
             )}
           </S.PlayListContainer>

@@ -668,7 +668,7 @@ export const PlaylistTitle = styled.div`
 
 export const SongCount = styled.div`
   color: var(--b, #3C3E44);
-  margin-left: 14.5rem;
+  margin-left: 17.75rem;
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 400;
@@ -681,7 +681,7 @@ export const TotalDuration = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 1.5rem;
-  margin-left: 22.5rem;
+  margin-left: 24.75rem;
 `;
 
 export const PlayListAddBtn = styled.button`
@@ -770,7 +770,7 @@ export const TableHeader = styled.div`
 `;
 
 export const TableBorder = styled.div`
-  width: 90rem;
+  width: 87rem;
   height: 0.03125rem;
 
   background: #3B3030;
@@ -811,13 +811,12 @@ export const IndexColumn = styled.div`
   align-items: center;
 `;
 
+
 export const TitleColumn = styled.div`
-  width: 40em;
+  width: 38rem;
   display: flex;
   align-items: center;
-  gap: 0.8rem;
 `;
-
 
 
 export const CountColumn = styled.div`
@@ -832,13 +831,7 @@ export const TimeColumn = styled.div`
   align-items: center;
 `;
 
-export const DeleteColumn = styled.div`
-  position: relative;
-  margin-left: 3rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+
 
 export const ThumbnailCell = styled.img`
   width: 3rem;
@@ -888,42 +881,6 @@ export const CreateRoomButton = styled.button`
   }
 `;
 
-
-// DeleteWrapper는 전체화면 투명 클릭 레이어 그대로 유지
-export const DeleteWrapper = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1000;
-  background: transparent;
-`;
-
-// DeleteContent만 위치 조정 (예: 화면 오른쪽 하단 근처)
-export const DeleteContent = styled.div`
-  position: absolute; /* DeleteWrapper 기준 */
-  top: 55%;
-  left: 85%;
-  transform: translate(-50%, -50%); // 정중앙 기준 보정
-
-  padding: 14px 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--w, #FCFEFF);
-  border-radius: 8px;
-  z-index: 1001;
-`;
-
-
-export const DeleteText = styled.div`
-  cursor: pointer;
-  color: var(--b, #3C3E44);
-  font-size: 0.875rem;
-  font-style: normal;
-  font-weight: 400;
-`;
 
  
 // RoomDeleteModal.jsx
