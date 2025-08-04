@@ -755,6 +755,8 @@ export const TableWrapper = styled.div`
   margin-top: 1rem;
 `;
 
+
+
 export const TableHeader = styled.div`
   display: flex;
   align-items: center;
@@ -852,34 +854,40 @@ export const TitleTextCell = styled.span`
 
 
 export const CreateRoomButton = styled.button`
-  margin-top: 5rem;
+  position: sticky;
   margin-left: 86rem;
+  margin-top: 11rem;
   height: 3.5rem;
   width: 7.625rem;
   padding: 0.5rem 1.5rem;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
 
   border-radius: 1.875rem;
   background: var(--pri, #009BFF);
-
   font-size: 1rem;
-  font-style: normal;
   font-weight: 500;
-  line-height: 1.5rem;
   color: var(--w, #FCFEFF);
 
-  cursor: pointer;
-  &:hover{
-    background: #0079D3
+  &:hover {
+    background: #0079D3;
   }
 
   &:active {
-    transform: scale(0.925); /* 크기 살짝 줄임 */
+    transform: scale(0.925);
   }
 `;
+
+
+
+
+
+export const BottomStickyArea = styled.div`
+  padding: 2rem 5rem;
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid #ddd;
+  background-color: #fff;
+`;
+
 
 
  
