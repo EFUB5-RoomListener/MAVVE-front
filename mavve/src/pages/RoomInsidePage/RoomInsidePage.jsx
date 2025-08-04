@@ -82,8 +82,7 @@ function RoomInsidePage() {
   // spotify sdk 연결
 
   // 자동 재생 정책 우회
-  // state 초기화 방지용 fallback
-  const fromEnterBtn = location.state?.fromEnterBtn || localStorage.getItem("fromEnterBtn") === "true";
+  const fromEnterBtn = localStorage.getItem("fromEnterBtn") === "true";
 
   // SDK 스크립트 로딩 
   useEffect(() => {
