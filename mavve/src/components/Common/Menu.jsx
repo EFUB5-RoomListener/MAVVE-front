@@ -53,7 +53,7 @@ export default function Menu({
       localStorage.removeItem("accessToken");
       setUser({ nickname: "", profile: "" });
       alert("로그아웃이 완료되었습니다!");
-      navigate("/");
+      navigate("/login");
     }
   };
 
