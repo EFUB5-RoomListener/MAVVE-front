@@ -22,7 +22,6 @@
 
 ## 💡 주요 기능
 
-## 🔨 기술 스택
 
 
 ## 👩‍💻 팀원
@@ -49,6 +48,26 @@
     <td align="center">로그인 및 마이페이지<br/>사용자 인증, 정보 관리 기능</td>
   </tr>
 </table>
+
+## 🔧 기술 스택
+
+### Environment  
+![Git](https://img.shields.io/badge/GIT-F05032?style=for-the-badge&logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
+
+### Language  
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+
+### Development  
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=white)
+![Spotify Web SDK](https://img.shields.io/badge/Spotify%20Web%20SDK-1ED760?style=for-the-badge&logo=spotify&logoColor=white)
+![Styled Components](https://img.shields.io/badge/Styled--Components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
+![Yarn](https://img.shields.io/badge/Yarn-2C8EBB?style=for-the-badge&logo=yarn&logoColor=white)
+![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white)
+![Zustand](https://img.shields.io/badge/Zustand-000000?style=for-the-badge&logo=Zustand&logoColor=white)
+
+### Deploy  
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
 
 
 ## 📁 프로젝트 구조
