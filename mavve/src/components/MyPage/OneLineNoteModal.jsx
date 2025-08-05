@@ -4,7 +4,7 @@ import XIcon from "../../assets/MyPage/xIcon.svg";
 import MusicSelectModal from "./MusicSelectModal";
 import EmojiSelectModal from "./EmojiSelectModal";
 import EmojiIcon from "../../assets/MyPage/EmojiIcon.svg";
-import MusicIcon from "../../assets/MyPage/MusicIcon.svg";
+import MusicIcon from "../../assets/MyPage/musicIcon.svg";
 
 import { createDiary, updateDiary } from "../../api/diary";
 
