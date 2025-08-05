@@ -5,26 +5,16 @@ import TopBar from "../../components/Common/TopBar";
 import SideBar from "../../components/Common/SideBar";
 import RoomComponent from "../../components/Common/RoomComponent";
 import PlusIcon from "../../assets/MyPage/plusIcon.svg";
-
-import { fetchMyRooms } from "../../api/room";
+import { useRoomStore } from "../../store/useRoomStore";
 
 export default function MyRoomPage() {
   const navigate = useNavigate();
-  const [myRooms, setMyRooms] = useState([]);
   const location = useLocation();
 
-  useEffect(() => {
-    const getMyRooms = async () => {
-      try {
-        const roomList = await fetchMyRooms();
+  const { myRooms, fetchAndSetMyRooms, setMyRooms } = useRoomStore();
 
-        setMyRooms(Array.isArray(roomList) ? roomList : []);
-      } catch (error) {
-        console.error("내가 만든 방 목록을 불러오는 데 실패했습니다:", error);
-        setMyRooms([]);
-      }
-    };
-    getMyRooms();
+  useEffect(() => {
+    fetchAndSetMyRooms();
   }, [location]);
 
   return (
