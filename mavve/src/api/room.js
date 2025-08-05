@@ -128,6 +128,16 @@ export const toggleRoomLike = async (roomCode) => {
   }
 };
 
+export const getTopRooms = async () => {
+  const response = await axiosInstance.get("/rooms/like");
+  return response.data.roomList;
+};
+
+export const getRooms = async () => {
+  const response = await axiosInstance.get("/rooms");
+  return response.data.roomList;
+};
+
 export const searchRooms = async (keyword) => {
   const response = await axiosInstance.get(
     `/rooms/search?keyword=${encodeURIComponent(keyword)}`

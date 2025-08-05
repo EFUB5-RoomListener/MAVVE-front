@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-
+import styled, { keyframes, createGlobalStyle } from 'styled-components';
 export const Container = styled.div`
     width: 100%;
 `;
@@ -20,6 +19,23 @@ export const Contents = styled.div`
     position: relative;
 `;
 
+const fadeSlide = keyframes`
+    0% {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+`;
+
+export const GlobalAnimationStyle = createGlobalStyle`
+    .fade-room {
+        animation: ${fadeSlide} 1s ease-in-out;
+    }
+`;
+
 export const Rooms = styled.div`
     position: absolute;
     z-index: 3;
@@ -34,9 +50,17 @@ export const RoomTitle = styled.div`
     line-height: normal;
 `;
 
-export const Tags = styled.div`
+export const Tags1 = styled.div`
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
+    align-items: center;
+    width: 21rem;
+    gap: 0.75rem;
+`;
+
+export const Tags2 = styled.div`
+    display: flex;
+    justify-content: flex-start;
     align-items: center;
     width: 21rem;
     gap: 0.75rem;
@@ -166,8 +190,14 @@ export const CD = styled.div`
     border-radius: 50%;
     border: 3px solid var(--w);
     background: var(--w);
+    background-image: ${({ $bg }) =>
+    $bg ? `url(${$bg})` : 'url(/default-image.png)'};
+    background-size: cover;
+    background-position: center;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
     position: relative;
+
+    animation: ${fadeSlide} 1s ease-in-out;
 `;
 
 export const Hole = styled.div`

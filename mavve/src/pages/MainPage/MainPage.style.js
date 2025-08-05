@@ -28,7 +28,7 @@ export const Wave = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    margin-top: 37rem;
+    margin-top: 34.5rem;
     width: 120.5rem;
     height: 77.875rem;
     z-index: 0;

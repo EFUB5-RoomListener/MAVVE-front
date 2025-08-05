@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import Edit from "../../assets/RoomPage/createpencil.svg";
+import edit from "../../assets//PlaylistPage/edit.svg";
 import * as S from '../PlaylistPage/PlaylistHeader.style'
 import EditModal from './EditModal';
 import { deletePlaylist } from '../../api/playlist';
@@ -42,11 +42,11 @@ export default function PlaylistHeader({ playlist, showDeleteButton = false }) {
                     <S.Title>
                         <S.PlaylistTitle>{playlist.name}</S.PlaylistTitle>
                         <S.EditButton onClick={openModal}>
-                            <img src={Edit} alt='편집 버튼'/>
+                            <img src={edit} alt='편집 버튼'/>
                         </S.EditButton>
                     </S.Title>
                     <S.BottomContainer>
-                        <S.User>작성자 이름으로 바꾸기: {playlist.userId}</S.User>
+                        <S.User>{playlist.username}</S.User>
                         {showDeleteButton && (
                             <S.DeleteButton onClick={handleDelete}>
                                 이 플레이리스트 삭제하기

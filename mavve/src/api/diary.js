@@ -56,4 +56,9 @@ export const deleteDiary = async (diaryId) => {
     throw error;
   }
 };
-//
+
+//한 줄 일기 6개 조회하기 (메인페이지)
+export const getDiaries = async () => {
+  const response = await axiosInstance.get("/diaries");
+  return response.data;
+};

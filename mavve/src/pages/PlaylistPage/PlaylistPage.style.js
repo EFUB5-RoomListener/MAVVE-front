@@ -58,7 +58,7 @@ export const CreateButton = styled.button`
     font-size: 0.875rem;
     font-weight: 400;
 
-    &:active {
+    &:hover {
         background: linear-gradient(
             0deg,
             rgba(0, 0, 0, 0.2) 0%,

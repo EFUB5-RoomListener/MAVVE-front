@@ -10,6 +10,7 @@ export default function SongComponent2({
     album,
     coverUrl,
     duration,
+    createdAt,
     isSelected,
     onToggleSelect,
     index,
@@ -25,6 +26,26 @@ export default function SongComponent2({
         return `${min}:${sec}:${ms100}`;
     };
     
+    const formatDate = (isoString) => {
+        const now = new Date();
+        const past = new Date(isoString);
+        const diffMs = now - past;
+
+        const seconds = Math.floor(diffMs / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+
+        if (seconds < 60) return '방금 전';
+        if (minutes < 60) return `${minutes}분 전`;
+        if (hours < 24) return `${hours}시간 전`;
+        if (days < 7) return `${days}일 전`;
+
+        // 일주일 이상
+        return `${past.getFullYear()}.${String(past.getMonth() + 1).padStart(2, '0')}.${String(past.getDate()).padStart(2, '0')}`;
+    };
+
+
     return (
         <S.Container
             isSelected={isSelected}
@@ -56,7 +77,7 @@ export default function SongComponent2({
             </S.SongContainer>
             <S.SubContainer>
                 <S.AlbumName>{album}</S.AlbumName>
-                <S.AddDate>4일전</S.AddDate>
+                <S.AddDate>{formatDate(createdAt)}</S.AddDate>
                 <S.Time>{formatDuration(duration)}</S.Time>
             </S.SubContainer>
         </S.Container>

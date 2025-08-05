@@ -87,7 +87,7 @@ export const DeleteSongButton = styled.button`
     bottom: 2.5rem;
     right: 4rem;
 
-    &:active {
+    &:hover {
         background: linear-gradient(
             0deg,
             rgba(0, 0, 0, 0.2) 0%,

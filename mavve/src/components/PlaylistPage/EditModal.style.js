@@ -127,7 +127,7 @@ export const SaveBtn = styled.button`
     font-weight: 500;
     line-height: 1.5rem;
 
-    &:active {
+    &:hover {
         background: linear-gradient(
             0deg,
             rgba(0, 0, 0, 0.2) 0%,
