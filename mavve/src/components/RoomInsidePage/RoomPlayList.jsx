@@ -234,6 +234,32 @@ function RoomPlayList({ isChatOpen, setIsChatOpen, songEvent, roomCode, currentS
     setTotalDuration(formatDuration(totalMs));
   }, [playList]);
   
+  // 좋아요 토글 
+  const [isLiked, setIsLiked] = useState(false);
+
+  useEffect(() => {
+    const checkLiked = async () => {
+      try {
+        const likedRooms = await fetchLikedRooms(); // 좋아요한 방 리스트 받아오기
+        const liked = likedRooms.some(room => room.roomId === roomCode); // 포함 여부
+        setIsLiked(liked);
+      } catch (e) {
+        console.error("좋아요 상태 확인 실패", e);
+      }
+    };
+
+  checkLiked();
+}, [roomCode]);
+
+const handleHeartClick = async () => {
+  try {
+    const res = await toggleRoomLike(roomCode);
+    setIsLiked(res.liked); 
+  } catch (error) {
+    console.error("좋아요 토글 실패:", error);
+  }
+};
+
   return (
     <>
     <S.PlayListAllContainer>
@@ -244,8 +270,10 @@ function RoomPlayList({ isChatOpen, setIsChatOpen, songEvent, roomCode, currentS
           {isEditMode ? '수정 완료' : '플레이리스트 수정'}
         </S.EditButton>
         <S.HeartImg 
-          src={FullHeart}
+          src={isLiked ? FullHeart : EmptyHeart}
+          onClick={handleHeartClick} 
         />
+
 
         <S.ChatToggleBtn $isChatOpen={isChatOpen} onClick={() => setIsChatOpen((prev) => !prev)}>
            <img src={Chat}/> 채팅
