@@ -28,10 +28,7 @@ export default function TopBar() {
         const data = await fetchUserInfo();
         setUser(data);
       } catch (err) {
-        console.error(
-          "TopBar에서 사용자 정보 가져오기 실패(로그인 되지 않은 사용자 혹은 오류):",
-          err
-        );
+        console.error("TopBar에서 사용자 정보 가져오기 실패:", err);
       }
     };
 

@@ -6,6 +6,7 @@ import { searchRooms } from "../../api/room";
 import filled from "../../assets/Common/filled_heart.svg";
 import unfilled from "../../assets/Common/unfilled_heart.svg";
 import { toggleRoomLike } from "../../api/room";
+import { useRoomStore } from "../../store/useRoomStore";
 
 const normalizeText = (text) => text.toLowerCase().replace(/\s+/g, "");
 
@@ -15,6 +16,8 @@ export default function RoomSearch() {
   const [searchResults, setSearchResults] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
   const searchWrapperRef = useRef(null);
+
+  const { fetchAndSetLikedRooms, setMyRooms } = useRoomStore();
 
   //방 검색
   useEffect(() => {
@@ -59,6 +62,15 @@ export default function RoomSearch() {
       const response = await toggleRoomLike(room.roomId);
       setSearchResults((prevResults) =>
         prevResults.map((r) =>
+          r.roomId === room.roomId
+            ? { ...r, liked: response.liked, likeCount: response.likeCount }
+            : r
+        )
+      );
+      await fetchAndSetLikedRooms();
+
+      setMyRooms((prevRooms) =>
+        prevRooms.map((r) =>
           r.roomId === room.roomId
             ? { ...r, liked: response.liked, likeCount: response.likeCount }
             : r
