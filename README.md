@@ -1,15 +1,15 @@
 <div align="center">
   <h1>🎧 MAVVE - Frontend</h1>
-  <p>EFUB 5기 SWS 3팀 "Mavve" 프로젝트 프론트엔드 레포지토리입니다.</p>
+  <p>EFUB 5기 SWS 3팀 "MAAVE" 프로젝트 프론트엔드 레포지토리입니다.</p>
   <img width="600" alt="mavve-preview" src="https://github.com/user-attachments/assets/65266682-ae49-447b-af9d-8c872395382a" />
 </div>
 
 
 ## 🎸Mavve는 어떤 프로젝트일까요?
 
-> 음악을 통한 공유 경험, Mavve!
+> 음악을 통한 공유 경험, MAAVE!
 
-`Mavve`는 음악을 통해 감정을 실시간으로 공유하고,  
+`MAAVE`는 음악을 통해 감정을 실시간으로 공유하고,  
 몰입감을 높이는 협업 환경을 제공하는 서비스입니다.  
 음악 플레이리스트, 한줄 일기를 기반으로 다른 유저와 교감할 수 있어요.
 
