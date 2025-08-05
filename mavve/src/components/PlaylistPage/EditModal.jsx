@@ -5,6 +5,7 @@ import close from '../../assets/PlaylistPage/close.svg'
 import photo from '../../assets/PlaylistPage/photo.svg'
 import { patchPlaylistSetting } from '../../api/playlist'
 import { postPlaylist } from '../../api/playlist'
+import { uploadImage } from '../../api/image'
 
 export default function EditModal({ onClose, playlist }) {
     const [name, setName] = useState(playlist.name || '');
@@ -13,13 +14,21 @@ export default function EditModal({ onClose, playlist }) {
 
     const nav = useNavigate();
 
-    const handleImageChange = (e) => {
+    const handleImageChange = async (e) => {
     const selectedFile = e.target.files[0];
     if (!selectedFile) return;
 
         setFile(selectedFile);
         const previewUrl = URL.createObjectURL(selectedFile);
         setImageUrl(previewUrl);
+
+        try {
+        const uploadedUrl = await uploadImage(selectedFile, "playlist");
+        setImageUrl(uploadedUrl);
+        } catch (err) {
+            alert("이미지 업로드에 실패했습니다.");
+            console.error(err);
+        }
     };
 
     const handleSave = async () => {
