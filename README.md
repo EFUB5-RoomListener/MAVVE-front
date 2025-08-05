@@ -3,7 +3,7 @@
   <h1>🎧 MAVVE - Frontend</h1>
   <p>EFUB 5기 SWS 3팀 "Mavve" 프로젝트 프론트엔드 레포지토리입니다.</p>
   <img width="600" alt="mavve-preview" src="https://github.com/user-attachments/assets/65266682-ae49-447b-af9d-8c872395382a" />
-  <a href="https://api.mavve.p-e.kr"><img src="https://img.shields.io/badge/Mavve%20BE%20Server-1C9AD6?style=flat-square&logoColor=white&link=https://api.mavve.p-e.kr"/></a>
+  <a href="https://api.mavve.p-e.kr"><img src="https://img.shields.io/badge/Mavve%20FE%-1C9AD6?style=flat-square&logoColor=white&link=https://api.mavve.p-e.kr"/></a>
 
 
 
