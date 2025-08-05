@@ -4,6 +4,13 @@ import popularRoom from '../../assets/MainPage/PopularRoom.svg'
 import pause from '../../assets/MainPage/Pause.svg'
 import { getTopRooms } from '../../api/room'
 
+const formatDuration = (ms) => {
+        const totalSec = Math.floor(ms / 1000);
+        const min = String(Math.floor(totalSec / 60)).padStart(2, '0');
+        const sec = String(totalSec % 60).padStart(2, '0');
+        return `${min}:${sec}`;
+    };
+
 export default function TopFiveRoom() {
     const [rooms, setRooms] = useState([]);
     const [rotationIndex, setRotationIndex] = useState(0);
@@ -65,9 +72,9 @@ export default function TopFiveRoom() {
                                                 <img src={pause} alt='pause_button' />
                                             </S.PauseButton>
                                             <S.SongInfo>
-                                                <S.SongText>Foo Fighters</S.SongText>
-                                                <S.SongText>Everlong</S.SongText>
-                                                <S.SongText>04:10</S.SongText>
+                                                <S.SongText>{room.song.artist}</S.SongText>
+                                                <S.SongText>{room.song.title}</S.SongText>
+                                                <S.Time>{formatDuration(room.song.duration)}</S.Time>
                                             </S.SongInfo>
                                         </S.PlayBar>
                                     </>
