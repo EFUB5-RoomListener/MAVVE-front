@@ -90,7 +90,9 @@ export default function RoomSearch() {
             searchResults.map((room) => (
               <S.ResultItem
                 key={room.roomId}
-                onClick={() => navigate(`/rooms/${room.roomId}`)}
+                onClick={() => {navigate(`/rooms/${room.roomId}/inside`);
+                localStorage.setItem("fromEnterBtn", "true");
+              }}
               >
                 <S.RoomWrapper>
                   <S.RoomCover>

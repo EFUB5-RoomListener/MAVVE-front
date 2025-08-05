@@ -8,7 +8,7 @@ import EditIcon from "../../assets/Common/icn_edit.svg";
 import DeleteIcon from "../../assets/Common/icn_delete.svg";
 
 export default function RoomComponent({
-  data,
+  data,  
   isMyRoom,
   contextMenuTargetId,
   setContextMenuTargetId,
@@ -37,7 +37,8 @@ export default function RoomComponent({
   const handleRoomClick = () => {
     // roomId가 존재하는 경우에만 이동
     if (data.roomId) {
-      navigate(`/rooms/${data.roomId}`);
+      navigate(`/rooms/${data.roomId}/inside`);
+      localStorage.setItem("fromEnterBtn", "true");
     } else {
       alert("방 코드가 존재하지 않습니다.");
     }
