@@ -15,6 +15,17 @@ export const RoomContainer = styled.div`
 
   font-style: normal;
   cursor: pointer;
+  transition: transform 0.1s ease;
+
+  &:hover {
+    border-radius: 2.5rem;
+    border: 1px solid var(--b, #3c3e44);
+    background: rgba(0, 0, 0, 0.35);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
 `;
 
 export const Thumbnail = styled.div`
@@ -48,7 +59,7 @@ export const Hashtag = styled.div`
   display: flex;
   position: absolute;
   padding: 0.25rem 0.375rem;
-  right: 1.31rem;
+  right: 1rem;
   bottom: 0.81rem;
   justify-content: center;
   align-items: flex-end;
