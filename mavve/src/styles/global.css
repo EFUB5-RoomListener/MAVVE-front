@@ -1,0 +1,43 @@
+@import url("https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.css");
+
+* {
+  margin: 0;
+  padding: 0;
+
+  font-family: "SUIT Variable";
+}
+
+html,
+body {
+  width: 100%;
+  min-width: 100%;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  min-width: 100%;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+}
+
+:root {
+  /* color */
+  --bg: #caedff;
+  --pri: #009bff;
+  --sec: #65c3ff;
+  --trd: #e4f6ff;
+  --g1: #f3f4f6;
+  --g2: #d7d9dd;
+  --g3: #bfc4ca;
+  --g4: #93959b;
+  --b: #3c3e44;
+  --w: #fcfeff;
+  --fth: #cfefff;
+  --6th: #46a1db;
+  --7th: #005993;
+  --red: #fa7878;
+}
