@@ -130,7 +130,7 @@ export const toggleRoomLike = async (roomCode) => {
 
 export const getTopRooms = async () => {
   const response = await axiosInstance.get("/rooms/like");
-  return response.data.roomList;
+  return response.data.rooms;
 };
 
 export const getRooms = async () => {

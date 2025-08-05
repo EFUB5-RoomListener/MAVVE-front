@@ -154,6 +154,19 @@ export const SongText = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`;
+
+export const Time = styled.div`
+    color: var(--b);
+
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
 `;
 
 export const Room4 = styled.div`
