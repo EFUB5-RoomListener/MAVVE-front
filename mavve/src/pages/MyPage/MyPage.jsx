@@ -11,22 +11,47 @@ import MinusIcon from "../../assets/MyPage/MinusIcon.svg";
 import Profile from "../../components/MyPage/Profile";
 import ProfileEditModal from "../../components/MyPage/ProfileEditModal";
 import OneLineNoteModal from "../../components/MyPage/OneLineNoteModal";
+import RoomUpdateForm from "../../components/MyPage/RoomUpdateForm";
+import RoomDeleteModal from "../../components/RoomPage/RoomDeleteModal";
+import { useUserStore } from "../../store/useUserStore";
+import { useRoomStore } from "../../store/useRoomStore";
 
 import { fetchUserInfo } from "../../api/user";
 import { uploadImage } from "../../api/image";
-import { fetchMyRooms, fetchLikedRooms } from "../../api/room";
+import { fetchMyRooms /*fetchLikedRooms*/ } from "../../api/room";
 import { fetchDiaryByUser, deleteDiary } from "../../api/diary";
 
 export default function MyPage() {
+  const { user, setUser, updateProfile } = useUserStore();
   const navigate = useNavigate();
-  const [user, setUser] = useState({ nickname: "", profile: "" });
-  const [myRooms, setMyRooms] = useState([]);
-  const [likedRooms, setLikedRooms] = useState([]);
+  //const [myRooms, setMyRooms] = useState([]);
+  //const [likedRooms, setLikedRooms] = useState([]);
   const [noteData, setNoteData] = useState({});
-
   const [nameInput, setNameInput] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
+  const [contextMenuTargetId, setContextMenuTargetId] = useState(null);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [roomData, setRoomData] = useState(null);
+  const {
+    myRooms,
+    likedRooms,
+    fetchAndSetMyRooms,
+    fetchAndSetLikedRooms,
+    setMyRooms,
+  } = useRoomStore();
+
+  const handleEditClick = (roomData) => {
+    setRoomData(roomData);
+    setEditModalOpen(true);
+  };
+
+  const handleDeleteClick = (roomData) => {
+    setRoomData(roomData);
+    setIsDeleteModalOpen(true);
+  };
+
   const prevNicknameRef = useRef("");
   const myRoomRef = useRef(null);
   const likedRoomRef = useRef(null);
@@ -58,6 +83,10 @@ export default function MyPage() {
     const fetchDiary = async () => {
       try {
         const data = await fetchDiaryByUser();
+        if (!data) {
+          setNoteData({});
+          return;
+        }
 
         console.log("📒 불러온 일기 데이터:", data);
 
@@ -79,39 +108,13 @@ export default function MyPage() {
         console.error("한 줄 일기 조회 실패:", error);
       }
     };
-
     fetchDiary();
   }, []);
 
-  //내가 만든 방 가져오기
+  //내가 만든 방, 좋아요한 방 목록 가져오기
   useEffect(() => {
-    const getMyRooms = async () => {
-      try {
-        const roomList = await fetchMyRooms();
-
-        setMyRooms(Array.isArray(roomList) ? roomList : []);
-      } catch (error) {
-        console.error("내가 만든 방 목록을 불러오는 데 실패했습니다:", error);
-        setMyRooms([]);
-      }
-    };
-    getMyRooms();
-  }, [location]);
-
-  //좋아요한 방 목록 가져오기
-  useEffect(() => {
-    const getLikedRooms = async () => {
-      try {
-        const data = await fetchLikedRooms();
-        console.log("💖 좋아요한 방 목록 불러오기 완료:", data);
-        setLikedRooms(Array.isArray(data) ? data : []);
-      } catch (error) {
-        console.error("좋아요한 방 목록을 불러오는 데 실패했습니다:", error);
-        setLikedRooms([]);
-      }
-    };
-
-    getLikedRooms();
+    fetchAndSetMyRooms();
+    fetchAndSetLikedRooms();
   }, [location]);
 
   const handleHorizontalScroll = (ref) => (e) => {
@@ -126,7 +129,7 @@ export default function MyPage() {
 
     try {
       const imageUrl = await uploadImage(file, "profile");
-      setUser((prev) => ({ ...prev, profile: imageUrl }));
+      updateProfile(imageUrl);
     } catch (error) {
       console.error("이미지 업로드 중 오류:", error);
       alert("이미지 업로드에 실패했습니다.");
@@ -167,10 +170,8 @@ export default function MyPage() {
           />
           {isEditing && (
             <ProfileEditModal
-              user={user}
               nameInput={nameInput}
               setNameInput={setNameInput}
-              setUser={setUser}
               onClose={() => setIsEditing(false)}
               onImageUpload={handleImgUpload}
             />
@@ -230,6 +231,11 @@ export default function MyPage() {
                   <RoomComponent
                     key={room.roomId}
                     data={room}
+                    isMyRoom={true}
+                    contextMenuTargetId={contextMenuTargetId}
+                    setContextMenuTargetId={setContextMenuTargetId}
+                    onEditClick={handleEditClick}
+                    onDeleteClick={handleDeleteClick}
                     onLikeToggle={async (updated) => {
                       setMyRooms((prev) =>
                         prev.map((r) =>
@@ -238,10 +244,7 @@ export default function MyPage() {
                       );
 
                       try {
-                        const refreshed = await fetchLikedRooms();
-                        setLikedRooms(
-                          Array.isArray(refreshed) ? refreshed : []
-                        );
+                        await fetchAndSetLikedRooms();
                       } catch (error) {
                         console.error("좋아요 목록 새로고침 실패:", error);
                       }
@@ -285,12 +288,11 @@ export default function MyPage() {
                   <RoomComponent
                     key={room.roomId}
                     data={room}
+                    isMyRoom={false}
                     onLikeToggle={async () => {
                       try {
-                        const refreshed = await fetchLikedRooms(); // roomList 배열이 반환됨
-                        setLikedRooms(
-                          Array.isArray(refreshed) ? refreshed : []
-                        );
+                        await fetchAndSetLikedRooms();
+                        await fetchAndSetMyRooms();
                       } catch (error) {
                         console.error("좋아요 목록 새로고침 실패:", error);
                       }
@@ -311,9 +313,37 @@ export default function MyPage() {
             </S.LikedRoomContainer>
           </S.LikedRoomArea>
         </S.Main>
+        {editModalOpen && roomData && (
+          <RoomUpdateForm
+            roomInfo={{
+              title: roomData.roomName,
+              thumbnailPreview: roomData.imageURL,
+              hashtags: roomData.tag || [],
+              visibility: roomData.public,
+            }}
+            roomCode={roomData.roomId}
+            onClose={() => setEditModalOpen(false)}
+            onSuccess={async () => {
+              await fetchAndSetMyRooms();
+              await fetchAndSetLikedRooms();
+            }}
+            step="done"
+            setRoomInfo={() => {}}
+            setThumbnailFile={() => {}}
+          />
+        )}
+
+        {isDeleteModalOpen && roomData && (
+          <RoomDeleteModal
+            roomTitle={roomData.roomName}
+            onClose={() => setIsDeleteModalOpen(false)}
+            onSuccess={async () => {
+              await fetchAndSetMyRooms();
+              await fetchAndSetLikedRooms();
+            }}
+          />
+        )}
       </S.MainContainer>
     </S.Container>
   );
 }
-
-//

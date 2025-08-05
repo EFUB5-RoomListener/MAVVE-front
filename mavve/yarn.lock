@@ -600,6 +600,11 @@
   dependencies:
     csstype "^3.0.2"
 
+"@types/spotify-web-playback-sdk@^0.1.19":
+  version "0.1.19"
+  resolved "https://registry.yarnpkg.com/@types/spotify-web-playback-sdk/-/spotify-web-playback-sdk-0.1.19.tgz#0fe4a7bdab95321309e4bc8a3f2124c17dfd3578"
+  integrity sha512-Is7x9gMIMoERxE0uvb2SPFQoy5OR7nO1B24CJiaDAUIdq195OLTQedN95XJQtxB2mfm+zi2j3LvEtpPdHKnB3w==
+
 "@types/stylis@4.2.5":
   version "4.2.5"
   resolved "https://registry.yarnpkg.com/@types/stylis/-/stylis-4.2.5.tgz#1daa6456f40959d06157698a653a9ab0a70281df"
@@ -1576,3 +1581,8 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+zustand@^5.0.7:
+  version "5.0.7"
+  resolved "https://registry.yarnpkg.com/zustand/-/zustand-5.0.7.tgz#e325364e82c992a84bf386d8445aa7f180c450dc"
+  integrity sha512-Ot6uqHDW/O2VdYsKLLU8GQu8sCOM1LcoE8RwvLv9uuRT9s6SOHCKs0ZEOhxg+I1Ld+A1Q5lwx+UlKXXUoCZITg==

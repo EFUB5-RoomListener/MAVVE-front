@@ -3,22 +3,22 @@ import * as S from "./ProfileEditModal.style";
 import ImgUploadIcon from "../../assets/MyPage/imgUploadIcon.svg";
 import XIcon from "../../assets/MyPage/xIcon.svg";
 import DefaultProfile from "../../assets/Common/defaultProfile.svg";
+import { useUserStore } from "../../store/useUserStore";
 
 import { updateUserInfo } from "../../api/user";
 import { deleteImage } from "../../api/image";
 
 export default function ProfileEditModal({
-  user,
   nameInput,
   setNameInput,
-  setUser,
   onClose,
   onImageUpload,
 }) {
+  const { user, setUser, updateProfile } = useUserStore();
   const fileInputRef = useRef(null);
   const [isFocused, setIsFocused] = useState(false);
 
-  const isOverLimit = nameInput.length > 10;
+  const isOverLimit = (nameInput || "").length > 10;
   const colorState =
     !isOverLimit && !isFocused ? "g4" : isOverLimit ? "red" : "b";
 
@@ -43,7 +43,8 @@ export default function ProfileEditModal({
   const handleImageDelete = async () => {
     try {
       await deleteImage(user.profile);
-      setUser((prev) => ({ ...prev, profile: "" })); // 기본 이미지로 변경
+      updateProfile("");
+      //setUser((prev) => ({ ...prev, profile: "" })); // 기본 이미지로 변경
     } catch (error) {
       alert("이미지 삭제에 실패했습니다.");
     }
@@ -97,7 +98,7 @@ export default function ProfileEditModal({
               />
               <S.CharacterCount>
                 <S.CurrentCount $colorState={colorState}>
-                  {nameInput.length}
+                  {(nameInput || "").length}
                 </S.CurrentCount>
                 <S.TotalCount $isFocused={isFocused}>/10</S.TotalCount>
               </S.CharacterCount>

@@ -110,3 +110,66 @@ export const HeartIcon = styled.div`
 export const LikedNum = styled.div`
   color: #000000;
 `;
+
+export const ContextMenu = styled.div`
+  position: fixed;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: flex;
+  width: 10.5625rem;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 0.5rem;
+`;
+
+export const EditMenu = styled.button`
+  display: flex;
+  width: 10.5625rem;
+  padding: 1rem 1.5rem 0.5rem 1rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem 0.5rem 0 0;
+  background: var(--g1, #f3f4f6);
+  cursor: pointer;
+
+  color: var(--b, #3c3e44);
+  text-align: right;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5rem; /* 171.429% */
+
+  &:hover {
+    background: var(--g2, #d7d9dd);
+  }
+
+  &:active {
+    background: var(--g3, #f3f4f6);
+  }
+`;
+
+export const DeleteMenu = styled.button`
+  display: flex;
+  width: 10.5625rem;
+  padding: 0.5rem 1.5rem 1rem 1rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0 0 0.5rem 0.5rem;
+  background: var(--g1, #f3f4f6);
+  cursor: pointer;
+
+  color: var(--b, #3c3e44);
+  text-align: right;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5rem; /* 171.429% */
+
+  &:hover {
+    background: var(--g2, #d7d9dd);
+  }
+
+  &:active {
+    background: var(--g3, #f3f4f6);
+  }
+`;

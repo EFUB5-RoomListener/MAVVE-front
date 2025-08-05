@@ -17,8 +17,15 @@ export const createDiary = async ({ emojiId, spotifySongId, comment }) => {
 
 //한 줄 일기 개별 조회하기 (마이페이지)
 export const fetchDiaryByUser = async () => {
-  const response = await axiosInstance.get("/diaries/user");
-  return response.data;
+  try {
+    const response = await axiosInstance.get("/diaries/user");
+    return response.data;
+  } catch (error) {
+    if (error.response?.status === 404) {
+      return null;
+    }
+    throw error;
+  }
 };
 
 //한 줄 일기 수정하기(마이페이지)

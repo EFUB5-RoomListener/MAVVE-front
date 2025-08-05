@@ -32,6 +32,9 @@ export const Title = styled.div`
   font-size: 2.25rem;
   font-weight: 700;
   margin-bottom: 4.31rem;
+  font-size: 2.25rem;
+  font-style: normal;
+  line-height: normal;
   color: var(--w);
 `;
 

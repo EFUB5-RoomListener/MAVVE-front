@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import * as S from "./LoginPage.style";
 import Loading from "../../assets/LoginPage/loading.png";
+import axios from "axios";
 
 export default function LoginLoad() {
   const navigate = useNavigate();
@@ -10,7 +10,6 @@ export default function LoginLoad() {
 
   useEffect(() => {
     const code = new URLSearchParams(window.location.search).get("code");
-    console.log("✅ 받은 code:", code);
 
     if (!code) {
       setMessage("❌ URL에 인증 코드가 없습니다.");

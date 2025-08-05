@@ -30,21 +30,12 @@ function RoomCreateForm({roomInfo, setRoomInfo, onClose, setThumbnailFile, step}
     const [isFocused, setIsFocused] = useState(false); // 클릭시 상태 변경용 
     const [isComposingTag, setIsComposingTag] = useState(false);
 
-    const handleKeyDown = (e) => {
-        if (e.isComposing || isComposingTag) return;
-        
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            const newTag = input.trim();
-        
-            if (!tags.includes(newTag) && tags.length < 4) {
-              setTags([...tags, newTag]);
-            }
-        
-            setInput("");
-            setIsComposingTag(false);
-            setIsFocused(false);
-        }
+    const addTag = () => {
+      const newTag = input.trim();
+      if (newTag !== "" && !tags.includes(newTag) && tags.length < 4) {
+        setTags([...tags, newTag]);
+        setInput("");
+      }
     };
 
     const handleDeleteTag = (tagToDelete) => {
@@ -95,7 +86,7 @@ function RoomCreateForm({roomInfo, setRoomInfo, onClose, setThumbnailFile, step}
         tags.length > 0 &&
         selected !== "" && selected !== null;
 
-
+      
 
     return(
         <S.FormContainer>
@@ -165,22 +156,31 @@ function RoomCreateForm({roomInfo, setRoomInfo, onClose, setThumbnailFile, step}
                     ))}
 
                     {tags.length < 4 && (
-                        <S.HashInput
-                        type="text"
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                        onKeyDown={handleKeyDown}
-                        onCompositionStart={() => setIsComposingTag(true)}
-                        onCompositionEnd={() => setIsComposingTag(false)}
-                        onBlur={() => {
-                            setIsFocused(false);
-                            setIsComposingTag(false);
-                        }}
-                        onFocus={() => {
-                            setIsFocused(true);
-                            setIsComposingTag(true);
-                        }}
-                        />
+                      <S.HashInput
+                      type="text"
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                    
+                          // composition 끝났을 때만 처리 
+                          if (!isComposingTag) {
+                            addTag(); // 무조건 이 함수 한 번만 실행
+                          }
+                        }
+                      }}
+                      onCompositionStart={() => setIsComposingTag(true)}
+                      onCompositionEnd={() => {
+                        setIsComposingTag(false);
+                      }}
+                      onBlur={() => {
+                        setIsComposingTag(false);
+                      }}
+                    />
+                    
+                    
+                     
                     )}
                     </S.HashContainer>
 

@@ -1,4 +1,3 @@
-// src/api/user.js
 import axiosInstance from "./axiosInstance";
 
 export const fetchUserInfo = async () => {

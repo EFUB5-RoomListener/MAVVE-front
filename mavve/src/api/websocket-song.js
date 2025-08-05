@@ -1,5 +1,5 @@
 import client from "./client";
-
+import axiosInstance from "./axiosInstance";
 // 웹소켓 노래 주제 구독 
 export const subscribeSong = (roomId, onMessageCallback) => {
     if (!client.connected) {
@@ -51,3 +51,13 @@ export const sendDeleteSongMessage = (roomId, songIds) => {
   });
 };
 
+// 스포티파이 액세스 토큰 받아오기
+export const getSpotifyAccessToken = async () => {
+  try {
+    const response = await axiosInstance.get("/auth/spotify-token");
+    return response.data.spotifyAccessToken; 
+  } catch (err) {
+    console.error("스포티파이 토큰 가져오기 실패:", err);
+    throw err;
+  }
+};
