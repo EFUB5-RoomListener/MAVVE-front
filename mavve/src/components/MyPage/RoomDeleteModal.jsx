@@ -4,8 +4,7 @@ import * as S from "../../pages/RoomPage/RoomPage.style";
 import { deleteRoom } from "../../api/room";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 
-function RoomDeleteModal({ onClose, roomTitle }) {
-  const { roomCode } = useParams();
+function RoomDeleteModal({ onClose, roomTitle, onSuccess, roomCode }) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -16,7 +15,7 @@ function RoomDeleteModal({ onClose, roomTitle }) {
 
       onClose(); // 모달 닫기
 
-      navigate("/");
+      onSuccess?.();
     } catch (error) {
       console.error("방 삭제 실패:", error);
     }

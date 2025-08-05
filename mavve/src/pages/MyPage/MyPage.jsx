@@ -12,20 +12,16 @@ import Profile from "../../components/MyPage/Profile";
 import ProfileEditModal from "../../components/MyPage/ProfileEditModal";
 import OneLineNoteModal from "../../components/MyPage/OneLineNoteModal";
 import RoomUpdateForm from "../../components/MyPage/RoomUpdateForm";
-import RoomDeleteModal from "../../components/RoomPage/RoomDeleteModal";
+import RoomDeleteModal from "../../components/MyPage/RoomDeleteModal";
 import { useUserStore } from "../../store/useUserStore";
 import { useRoomStore } from "../../store/useRoomStore";
-
 import { fetchUserInfo } from "../../api/user";
 import { uploadImage } from "../../api/image";
-import { fetchMyRooms /*fetchLikedRooms*/ } from "../../api/room";
 import { fetchDiaryByUser, deleteDiary } from "../../api/diary";
 
 export default function MyPage() {
   const { user, setUser, updateProfile } = useUserStore();
   const navigate = useNavigate();
-  //const [myRooms, setMyRooms] = useState([]);
-  //const [likedRooms, setLikedRooms] = useState([]);
   const [noteData, setNoteData] = useState({});
   const [nameInput, setNameInput] = useState("");
   const [isEditing, setIsEditing] = useState(false);
@@ -336,6 +332,7 @@ export default function MyPage() {
         {isDeleteModalOpen && roomData && (
           <RoomDeleteModal
             roomTitle={roomData.roomName}
+            roomCode={roomData.roomId}
             onClose={() => setIsDeleteModalOpen(false)}
             onSuccess={async () => {
               await fetchAndSetMyRooms();

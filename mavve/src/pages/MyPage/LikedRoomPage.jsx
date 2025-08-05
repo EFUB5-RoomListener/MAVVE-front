@@ -4,6 +4,7 @@ import * as S from "./MyPage.style";
 import TopBar from "../../components/Common/TopBar";
 import SideBar from "../../components/Common/SideBar";
 import RoomComponent from "../../components/Common/RoomComponent";
+import { useRoomStore } from "../../store/useRoomStore";
 
 export default function LikedRoomPage() {
   const location = useLocation();

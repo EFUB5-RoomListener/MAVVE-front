@@ -19,11 +19,14 @@ export default function LoginLoad() {
     setMessage("✅ 인증 코드 수신 → 백엔드에 전송 중...");
 
     const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+    const hostname = window.location.hostname;
+    const isDev = hostname === "localhost" || hostname === "127.0.0.1";
+    const environment = isDev ? "dev" : "release";
 
     axios({
       method: "post",
       url: `${apiBaseUrl}/auth/login`,
-      data: JSON.stringify({ code }),
+      data: JSON.stringify({ code, environment }),
       headers: {
         "Content-Type": "application/json",
       },
