@@ -22,6 +22,14 @@
 
 ## 💡 주요 기능
 
+ **협업형 음악 감상 플랫폼 'MAVVE'에서는 함께 있는 듯한 몰입 경험을 느낄 수 있습니다.** 
+- 나의 플레이리스트 생성하고 공유하기
+- 나만의 가상 공간, '방' 생성하기
+- 음악 및 이모티콘, 한 줄 일기를 통해 감정 공유하기
+- 방 내부의 실시간 채팅으로 소통하기
+- 마이페이지를 통해 내가 만든 방과 좋아한 방을 한 눈에 보기
+- 검색을 통해 새로운 방을 찾아보기
+  
 
 
 ## 👩‍💻 팀원
@@ -111,6 +119,9 @@ MAVVE-FRONT/
 │ ├── RoomInsidePage/
 │ └── RoomPage/
 │
+├── hoc/
+│ └── Auth.jsx
+│
 ├── pages/
 │ ├── LoginPage/
 │ ├── MainPage/
@@ -120,6 +131,9 @@ MAVVE-FRONT/
 │ └── RoomPage/
 │
 ├── store/
+│ ├── useUserStore.js
+│ └── useRoomStore.js
+│
 ├── styles/
 ├── App.jsx
 └── main.jsx       
