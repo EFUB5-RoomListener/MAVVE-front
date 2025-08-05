@@ -7,11 +7,11 @@ MAVVE-FRONT/
 │
 ├── .github/
 │   └── ISSUE_TEMPLATE/
-│       └── 기능_추가_이슈_템플릿.md        # GitHub 이슈 템플릿
+│       └── 기능_추가_이슈_템플릿.md        
 │
-├── mavve/                                  # 실제 프로젝트 루트
+├── mavve/                                 
 │   ├── node_modules/                       # 의존성 모듈
-│   ├── public/                             # 정적 파일 (index.html 등)
+│   ├── public/                             # 정적 파일
 │   ├── src/                                # 프로젝트 소스 코드
 │   │   ├── api/                            # API 요청 함수 모음
 │   │   │   ├── auth.js
@@ -51,7 +51,7 @@ MAVVE-FRONT/
 │   │   │   ├── RoomInsidePage/
 │   │   │   └── RoomPage/
 │   │   │
-│   │   ├── store/                          # 전역 상태 관리 (Zustand 등)
+│   │   ├── store/                          # 전역 상태 관리 (Zustand)
 │   │   ├── styles/                         # 전역 스타일 파일
 │   │   ├── App.jsx                         # 루트 컴포넌트
 │   │   └── main.jsx                        # 엔트리 포인트
@@ -77,7 +77,7 @@ MAVVE-FRONT/
 | `src/assets/` | 페이지별 정적 리소스 (이미지 등) |
 | `src/components/` | 공통 및 페이지별 UI 컴포넌트 |
 | `src/pages/` | 라우터에 등록되는 페이지 컴포넌트 |
-| `src/store/` | 상태 관리 파일 (Zustand 등) |
+| `src/store/` | 상태 관리 파일 (Zustand) |
 | `src/styles/` | 전역 스타일 파일 |
 | `App.jsx` / `main.jsx` | 앱 루트 및 진입점 |
 | `.env` | 환경 변수 설정 파일 |
