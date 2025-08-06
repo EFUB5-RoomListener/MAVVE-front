@@ -44,11 +44,11 @@ export default function RoomPage() {
   };
 
   return (
-    <S.AllContainer>
-      <TopBar />
-      <S.RoomPageContainer>
-        <SideBar />
-        <S.RoomMainContainer>
+    <S.Container>
+    <TopBar />
+    <S.Contents>
+      <SideBar />
+      <S.MainContents>
           <RoomInfoHeader
             roomInfo={roomInfo}
             setRoomInfo={setRoomInfo}
@@ -61,7 +61,7 @@ export default function RoomPage() {
           <S.PlayListContainer>
             {/* 방 생성 전: 검색 단계 */}
             {step === "search" && !roomData && (
-              <PlayListSelector
+              <PlayListSelector 
                 selectedLists={selectedLists}
                 setSelectedLists={setSelectedLists}
                 setStep={setStep}
@@ -132,8 +132,8 @@ export default function RoomPage() {
               />
             )}
           </S.PlayListContainer>
-        </S.RoomMainContainer>
-      </S.RoomPageContainer>
-    </S.AllContainer>
+          </S.MainContents>
+      </S.Contents>
+    </S.Container>
   );
 }

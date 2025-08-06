@@ -523,41 +523,34 @@ export const RoomEnterBtn = styled.button`
 
 
 // RoomPage.jsx
-export const AllContainer = styled.div`
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
   width: 100vw;
-  height: 100vh;
-  margin: 0 auto;
-  background-color: var(--bg);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow-x: hidden;
-  padding-left: 1.5rem;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
 `;
 
-
-export const RoomPageContainer = styled.div`
+export const Contents = styled.div`
   display: flex;
-  width: 100%;
-  gap: 2rem;
+  padding: 0.5rem 0rem 0rem 1rem;
+  z-index: 2;
 `;
 
-
-
-export const RoomMainContainer = styled.div`
-  width: 97.9375rem;
-  height: 52.3rem;
-
+export const MainContents = styled.div`
   display: flex;
   flex-direction: column;
-
-  background-color: #FCFEFF;
-  border: 3px solid #FCFEFF;
   border-radius: 1rem;
-
-  min-height: fit-content;   /* ✅ 내용에 따라 늘어남 */
-  box-sizing: border-box;
+  border: 3px solid #FFF;
+  background: rgba(255, 255, 255, 0.40);
+  background-color: white;
+  width: calc(100vw - 350px);
 `;
+
 
 export const PlayListContainer = styled.div`
   flex: 1;

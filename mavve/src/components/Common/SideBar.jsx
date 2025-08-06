@@ -36,7 +36,7 @@ export default function SideBar() {
 
     const handleRoomClick = (roomId) => {
         localStorage.setItem("fromEnterBtn", "true");
-        nav(`/rooms/${roomId}/enter`);
+        nav(`/rooms/${roomId}/inside`);
     };
 
     const handlePlaylistClick = (playlistId) => {
