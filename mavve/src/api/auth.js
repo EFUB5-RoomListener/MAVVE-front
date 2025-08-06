@@ -12,16 +12,9 @@ export const reissueToken = async () => {
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
   try {
-    const response = await axios.post(
-      `${apiBaseUrl}/auth/reissue`,
-      {},
-      {
-        withCredentials: true, // 쿠키 기반 리프레시 토큰 전달
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axios.post(`${apiBaseUrl}/auth/reissue`, null, {
+      withCredentials: true, // 쿠키 기반 리프레시 토큰 전달
+    });
 
     // 응답 헤더에서 새로운 accessToken 추출
     const rawAuth = response.headers["authorization"];
