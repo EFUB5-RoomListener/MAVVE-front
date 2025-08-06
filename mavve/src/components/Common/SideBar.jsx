@@ -35,7 +35,8 @@ export default function SideBar() {
     }, []);
 
     const handleRoomClick = (roomId) => {
-        nav(`/rooms/${roomId}`);
+        localStorage.setItem("fromEnterBtn", "true");
+        nav(`/rooms/${roomId}/enter`);
     };
 
     const handlePlaylistClick = (playlistId) => {
