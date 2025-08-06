@@ -17,26 +17,40 @@ axiosInstance.interceptors.request.use((config) => {
   return config;
 });
 
+let isRefreshing = false;
+let refreshPromise = null;
+
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // accessToken 만료로 인한 401 Unauthorized → 재발급 시도
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      !originalRequest.url.includes("/auth/reissue")
+    ) {
       originalRequest._retry = true;
 
-      try {
-        const newAccessToken = await reissueToken();
+      if (!isRefreshing) {
+        isRefreshing = true;
+        refreshPromise = reissueToken()
+          .then((newToken) => {
+            isRefreshing = false;
+            return newToken;
+          })
+          .catch((err) => {
+            isRefreshing = false;
+            throw err;
+          });
+      }
 
-        // 새로운 토큰으로 원래 요청 재시도
+      try {
+        const newAccessToken = await refreshPromise;
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return axiosInstance(originalRequest);
       } catch (reissueError) {
-        // 재발급 실패 시 로그아웃
         localStorage.removeItem("accessToken");
-        //alert("❗ 액세스 토큰 만료. 다시 로그인해 주세요.");
-        //window.location.href = "/login"; // 로그인 페이지로 이동
         return Promise.reject(reissueError);
       }
     }
