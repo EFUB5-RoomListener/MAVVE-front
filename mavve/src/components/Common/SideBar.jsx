@@ -26,6 +26,7 @@ export default function SideBar() {
                 setNewRooms(rooms.slice(0, 5));
                 setMyPlaylists(playlists.slice(0, 4));
                 setNickname(userInfo.nickname);
+                console.log("🎯 rooms:", rooms)
             } catch (error) {
                 console.error('내 플레이리스트 불러오기 실패:', error);
             }
@@ -59,8 +60,8 @@ export default function SideBar() {
                         key={room.roomId}
                         onClick={() => handleRoomClick(room.roomId)}
                     >
-                        {room.imageUrl ? (
-                        <S.Thumbnail src={room.imageUrl} />
+                        {room.imageURL ? (
+                        <S.Thumbnail src={room.imageURL} />
                         ) : (
                         <S.Thumbnail />
                         )}
