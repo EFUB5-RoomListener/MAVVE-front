@@ -136,7 +136,9 @@ MAVVE-FRONT/
 │
 ├── styles/
 ├── App.jsx
-└── main.jsx       
+├── main.jsx
+├── .env
+└── .env.production      
 
 ```
 
