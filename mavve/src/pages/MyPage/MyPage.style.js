@@ -49,13 +49,6 @@ export const Main = styled.div`
   -ms-overflow-style: none; /* IE and Edge */
 `;
 
-// export const Playbar = styled.div`
-//   width: 1920px;
-//   height: 88px;
-//   background-color: rgb(87, 87, 87); //영역 구별용, 추후 삭제
-//   margin-top: 16px;
-// `;
-
 export const ProfileContainer = styled.div`
   width: 97.875rem;
   height: 20rem;
@@ -405,6 +398,7 @@ export const PageRoomContainer = styled.div`
   grid-template-columns: repeat(5, 1fr);
   gap: 2.5rem;
   padding: 0 4rem 1.25rem 4rem;
+  position: relative;
 `;
 
 //
