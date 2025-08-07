@@ -47,7 +47,7 @@ export default function SideBar() {
     return (
         <S.SideBarContainer>
             <S.CreateArea>
-                <S.CreateButton>
+                <S.CreateButton onClick={() => nav(`/playlist/new`)}>
                     <img src={music} alt="music" />
                     만들기
                 </S.CreateButton>

@@ -539,6 +539,7 @@ export const Contents = styled.div`
   display: flex;
   padding: 0.5rem 0rem 0rem 1rem;
   z-index: 2;
+  gap: 1rem;
 `;
 
 export const MainContents = styled.div`
@@ -548,7 +549,7 @@ export const MainContents = styled.div`
   border: 3px solid #FFF;
   background: rgba(255, 255, 255, 0.40);
   background-color: white;
-  width: calc(100vw - 350px);
+  width: calc(100vw - 357px);
 `;
 
 

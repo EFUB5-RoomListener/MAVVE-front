@@ -1,41 +1,51 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #caedff;
+  background: var(--bg); // 기존 색상 그대로
+  width: 100vw;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  
 `;
 
-export const TopBarContainer = styled.div`
-  width: 120rem;
-  height: 86.125rem;
+export const Contents = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-export const MainContainer = styled.div`
-  width: 120rem;
-  height: 72.75rem;
-  margin-bottom: 5.5rem;
-  display: flex;
-  flex-direction: row;
+  padding: 0.5rem 0rem 0rem 1rem;
+  z-index: 2;
+  
 `;
 
-export const SidebarContainer = styled.div`
-  width: 16.5625rem;
-  height: 52.625rem;
-  margin: 0.5rem 2rem 0 1.5rem;
+export const MainContents = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0rem 1rem;
+  gap: 12rem;
+  box-sizing: border-box;
 `;
+
+export const Wave = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 34.5rem;
+  width: 100%;
+  height: 77.875rem;
+  z-index: 0;
+
+  background: url('../../assets/MainPage/wave.svg') no-repeat center center;
+  background-size: cover;
+`;
+
 
 export const Main = styled.div`
-  width: 97.9375rem;
+
   height: 52.625rem;
 
-  margin: 0.5rem 2rem 0 0;
+  margin: 0rem 2rem 0 0;
 
   background: rgba(255, 255, 255, 0.4);
   border-radius: 16px;
@@ -57,12 +67,12 @@ export const Main = styled.div`
 // `;
 
 export const ProfileContainer = styled.div`
-  width: 97.875rem;
+  width: 100%;
   height: 20rem;
 `;
 
 export const WaveImg = styled.img`
-  width: 97.875rem;
+  width: 100%;
   height: 20rem;
   position: sticky;
 `;
@@ -169,6 +179,7 @@ export const OneLineNoteContainer = styled.div`
 `;
 
 export const MyRoomArea = styled.div`
+  max-width: 93rem;
   width: 93rem;
   height: 18.875rem;
   display: flex;
@@ -304,6 +315,7 @@ export const MyRoomContainer = styled.div`
 `;
 
 export const LikedRoomArea = styled.div`
+  max-width: 93rem;
   width: 93rem;
   height: 18.875rem;
   display: flex;
@@ -353,6 +365,7 @@ export const Title = styled.div`
   margin-left: 0.5rem;
 `;
 export const NoticeContainer = styled.div`
+max-width: 92.875rem;
   display: flex;
   flex-direction: column;
   align-items: center;
