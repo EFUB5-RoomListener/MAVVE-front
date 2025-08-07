@@ -8,6 +8,7 @@ import EditIcon from "../../assets/Common/icn_edit.svg";
 
 export default function OneLineNote({ profileImg, noteData, onEditClick }) {
   const isEditMode = !!noteData?.emojiUrl;
+  
 
   return (
     <S.DiaryContainer>

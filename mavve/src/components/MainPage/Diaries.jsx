@@ -20,6 +20,9 @@ export default function Diaries() {
     fetchDiaries();
   }, []);
 
+  console.log("✅ diary:", diaries);
+
+
   return (
     <S.Container>
       <S.Title>MAVVER 한줄 일기</S.Title>
@@ -41,7 +44,7 @@ export default function Diaries() {
                 comment: diary.comment,
                 songTitle: diary.songTitle,
                 songArtist: diary.songArtist.join(', '),
-                songImageUrl: diary.songImage,
+                songImageUrl: diary.songImageUrl,
                 duration: diary.songDuration,
                 roomTitle: diary.album,
                 hashtag: diary.nickname,
