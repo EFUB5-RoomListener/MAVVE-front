@@ -8,7 +8,7 @@ import EditIcon from "../../assets/Common/icn_edit.svg";
 import DeleteIcon from "../../assets/Common/icn_delete.svg";
 
 export default function RoomComponent({
-  data,  
+  data,
   isMyRoom,
   contextMenuTargetId,
   setContextMenuTargetId,
@@ -114,7 +114,7 @@ export default function RoomComponent({
           }}
         >
           <S.EditMenu
-            onClick={(e) => {
+            onMouseDown={(e) => {
               e.stopPropagation();
               handleEdit();
             }}
@@ -127,7 +127,7 @@ export default function RoomComponent({
             세부 정보 수정하기
           </S.EditMenu>
           <S.DeleteMenu
-            onClick={(e) => {
+            onMouseDown={(e) => {
               e.stopPropagation();
               handleDelete();
             }}

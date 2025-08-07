@@ -239,17 +239,21 @@ function RoomPlayList({ isChatOpen, setIsChatOpen, songEvent, roomCode, currentS
 
   useEffect(() => {
     const checkLiked = async () => {
+      if (!roomCode) return;
+  
       try {
-        const likedRooms = await fetchLikedRooms(); // 좋아요한 방 리스트 받아오기
-        const liked = likedRooms.some(room => room.roomId === roomCode); // 포함 여부
+        const likedRooms = await fetchLikedRooms();
+        const liked = likedRooms.some(room => String(room.roomId) === String(roomCode));
         setIsLiked(liked);
       } catch (e) {
         console.error("좋아요 상태 확인 실패", e);
       }
     };
+  
+    checkLiked();
+  }, [roomCode]);
+  
 
-  checkLiked();
-}, [roomCode]);
 
 const handleHeartClick = async () => {
   try {

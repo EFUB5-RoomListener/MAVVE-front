@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react'
+import React, { useEffect, useState, useMemo} from 'react'
 import * as S from '../MainPage/TopFiveRoom.style'
 import popularRoom from '../../assets/MainPage/PopularRoom.svg'
 import pause from '../../assets/MainPage/Pause.svg'
@@ -37,10 +37,12 @@ export default function TopFiveRoom() {
         return () => clearInterval(interval);
     }, []);
 
-    const rotatedRooms = rooms.length === 5
-        ? [...rooms.slice(rotationIndex), ...rooms.slice(0, rotationIndex)]
-        : [];
-
+    const rotatedRooms = useMemo(() => {
+        if (rooms.length === 0) return [];
+      
+        const safeIndex = rotationIndex % rooms.length;
+        return [...rooms.slice(safeIndex), ...rooms.slice(0, safeIndex)];
+      }, [rooms, rotationIndex]);
 
     return (
         <S.Container>
@@ -92,7 +94,7 @@ export default function TopFiveRoom() {
                         );
                     })}
                 </S.Rooms>
-                <S.CD $bg={rotatedRooms[2]?.imageURL} key={rotationIndex}>
+                <S.CD $bg={rotatedRooms[2]?.song.coverUrl} key={rotationIndex}>
                     <S.Hole />
                 </S.CD>
             </S.Contents>
