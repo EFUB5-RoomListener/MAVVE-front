@@ -13,7 +13,7 @@ export const Container = styled.div`
 export const Contents = styled.div`
     display: flex;
     padding: 0.5rem 0rem 0rem 1rem;
-    gap: 2rem;
+    gap: 1rem;
 `;
 
 export const MainContents = styled.div`

@@ -151,13 +151,11 @@ export default function MyPage() {
 
   return (
     <S.Container>
-      <S.TopBarContainer>
+       <S.Wave />
         <TopBar />
-      </S.TopBarContainer>
-      <S.MainContainer>
-        <S.SidebarContainer>
+        <S.Contents>
           <SideBar />
-        </S.SidebarContainer>
+          <S.MainContents>
         <S.Main>
           <Profile
             user={user}
@@ -340,7 +338,8 @@ export default function MyPage() {
             }}
           />
         )}
-      </S.MainContainer>
-    </S.Container>
+      </S.MainContents>
+  </S.Contents>
+</S.Container>
   );
 }
