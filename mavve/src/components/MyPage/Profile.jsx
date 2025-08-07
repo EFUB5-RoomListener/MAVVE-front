@@ -5,7 +5,12 @@ import WaveImg from "../../assets/MyPage/wave.svg";
 import DefaultProfile from "../../assets/Common/defaultProfile.svg";
 import EditIcon from "../../assets/MyPage/editIcon.svg";
 
-export default function Profile({ user, onEditClick, myRoomCount }) {
+export default function Profile({
+  user,
+  onEditClick,
+  myRoomCount,
+  playlistCount,
+}) {
   return (
     <S.ProfileContainer>
       <S.WaveImg src={WaveImg} alt="wave" />
@@ -18,7 +23,7 @@ export default function Profile({ user, onEditClick, myRoomCount }) {
           <S.Nickname>{user.nickname}</S.Nickname>
           <S.InfoContainer>
             <S.UserCount>
-              <S.UserText>내 플레이리스트 0개</S.UserText>
+              <S.UserText>내 플레이리스트 {playlistCount}개</S.UserText>
               <S.UserText>내 방 {myRoomCount}개</S.UserText>
             </S.UserCount>
             <S.EditIconBtn onClick={onEditClick}>
