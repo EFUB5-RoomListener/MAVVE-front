@@ -18,6 +18,7 @@ import { useRoomStore } from "../../store/useRoomStore";
 import { fetchUserInfo } from "../../api/user";
 import { uploadImage } from "../../api/image";
 import { fetchDiaryByUser, deleteDiary } from "../../api/diary";
+import { getMyPlaylists } from "../../api/playlist";
 
 export default function MyPage() {
   const { user, setUser, updateProfile } = useUserStore();
@@ -30,6 +31,8 @@ export default function MyPage() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [roomData, setRoomData] = useState(null);
+  const [playlistCount, setPlaylistCount] = useState(0);
+
   const {
     myRooms,
     likedRooms,
@@ -149,6 +152,24 @@ export default function MyPage() {
     }
   };
 
+  //플레이리스트 개수 조회
+  useEffect(() => {
+    const fetchPlaylistCount = async () => {
+      try {
+        const accessToken = localStorage.getItem("accessToken");
+        if (!accessToken) return;
+
+        const playlists = await getMyPlaylists(accessToken);
+        console.log("플리", playlists);
+        setPlaylistCount(playlists.length);
+      } catch (error) {
+        console.error("플레이리스트 개수 조회 실패:", error);
+      }
+    };
+
+    fetchPlaylistCount();
+  }, []);
+
   return (
     <S.Container>
       <S.TopBarContainer>
@@ -163,6 +184,7 @@ export default function MyPage() {
             user={user}
             onEditClick={() => setIsEditing(true)}
             myRoomCount={myRooms.length}
+            playlistCount={playlistCount}
           />
           {isEditing && (
             <ProfileEditModal
