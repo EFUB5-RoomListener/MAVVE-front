@@ -87,6 +87,7 @@ export const Thumbnail = styled.img`
     height: 3rem;
     border-radius: 8px;
     background: lightgray;
+    object-fit: cover;
 `;
 
 export const Info = styled.div`
