@@ -57,27 +57,36 @@ function RoomInsidePage() {
   // 웹소켓 연결 및 구독
   useEffect(() => {
     if (!accessToken) return;
-
-    connectWebSocket(accessToken, () => {
-      console.log("WebSocket 연결 완료");
-
-      const subscription = subscribeSong(roomCode, (data) => {
-        console.log("메시지 수신됨:", data);
-        setSongEvent(data);
-        if (data.type === "SUBSCRIBE_COMPLETE") {
-          console.log("구독 성공");
-        }
+  
+    const setupWebSocket = async () => {
+      await disconnectWebSocket(); // 이게 비동기 함수여야 함!
+      console.log("✅ 이전 WebSocket 연결 해제됨");
+  
+      connectWebSocket(accessToken, () => {
+        console.log("WebSocket 연결 완료");
+  
+        const subscription = subscribeSong(roomCode, (data) => {
+          console.log("메시지 수신됨:", data);
+          setSongEvent(data);
+          if (data.type === "SUBSCRIBE_COMPLETE") {
+            console.log("구독 성공");
+          }
+        });
+  
+        client.__roomSongSubscription = subscription;
       });
-
-      client.__roomSongSubscription = subscription;
-    });
-
+    };
+  
+    setupWebSocket();
+  
     return () => {
       client.__roomSongSubscription?.unsubscribe();
       console.log("노래 구독 해제");
+      // 여기선 await 안 됨. 그냥 호출만.
       disconnectWebSocket();
     };
   }, [roomCode]);
+  
 
   // spotify sdk 연결
 

@@ -69,8 +69,10 @@ export const sendChatMessage = (roomId, messageData, accessToken) => {
 };
   
 // 웹소켓 연결 해제
-export const disconnectWebSocket = () => {
-    if (client.connected) {
-      client.deactivate();
-    }
-  };
+export const disconnectWebSocket = async () => {
+  if (client && client.connected) {
+    return new Promise((resolve) => {
+      client.deactivate({ onDisconnect: resolve }); // or onClose, depending on STOMP lib
+    });
+  }
+};
