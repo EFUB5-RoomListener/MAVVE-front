@@ -28,6 +28,8 @@ export const Thumbnail = styled.div`
     border: 1px solid var(--b);
     border-radius: 40px;
     background: var(--g1);
+    background-size: cover; 
+    background-position: center;
 `;
 
 export const Info = styled.div`
