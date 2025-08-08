@@ -38,21 +38,26 @@ function RoomInsidePage() {
   }, [roomCode]);
 
 
-  // 현재곡 seekPosition 계산
-  useEffect(() => {
-    const raw = roomData?.currentSong?.startTime;
-    if (!roomData?.currentSong?.song || !raw) return;
+    // 현재곡 seekPosition 계산
+    useEffect(() => {
+      const song = roomData?.currentSong?.song;
+      const raw = roomData?.currentSong?.startTime;
+      if (!song || !raw) return;
 
-    const parsed = new Date(raw.split(".")[0] + "Z");
-    const elapsedMs = new Date() - parsed;
-    const seekPosition = Math.floor(elapsedMs / 1000);
+      // 마이크로초(밀리초 초과) 제거
+      const cleaned = raw.includes('.') ? raw.split('.')[0] : raw;
 
-    setCurrentSong({
-      ...roomData.currentSong.song,
-      seekPosition,
-    });
-    console.log("seekPosition (초):", seekPosition);
-  }, [roomData]);
+      // 그대로 파싱
+      const ts = Date.parse(cleaned);
+
+      // 경과 시간(ms) 계산 + 음수 방어
+      let elapsedMs = Math.max(0, Date.now() - ts);
+      const seekPosition = Math.floor(elapsedMs / 1000);
+
+      setCurrentSong({ ...song, seekPosition });
+      console.log("seekPosition(s):", seekPosition, "| raw:", raw, "| cleaned:", cleaned);
+    }, [roomData]);
+
 
   // 웹소켓 연결 및 구독
   useEffect(() => {
