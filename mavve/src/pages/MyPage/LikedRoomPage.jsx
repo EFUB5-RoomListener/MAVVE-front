@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import * as S from "./MyPage.style";
 import TopBar from "../../components/Common/TopBar";
@@ -12,32 +12,39 @@ export default function LikedRoomPage() {
 
   useEffect(() => {
     fetchAndSetLikedRooms();
-  }, [location]);
+  }, [location.pathname]);
 
   return (
     <S.Container>
-      <S.TopBarContainer>
-        <TopBar />
-      </S.TopBarContainer>
-      <S.MainContainer>
-        <S.SidebarContainer>
-          <SideBar />
-        </S.SidebarContainer>
-        <S.Main>
-          <S.PageHeader>
-            <S.Title>내가 좋아하는 방</S.Title>
-          </S.PageHeader>
-          <S.PageRoomContainer>
-            {likedRooms.map((room) => (
-              <RoomComponent
-                key={room.roomId}
-                data={room}
-                onLikeToggle={fetchAndSetLikedRooms}
-              />
-            ))}
-          </S.PageRoomContainer>
-        </S.Main>
-      </S.MainContainer>
+      <S.Wave />
+      <TopBar />
+      <S.Contents>
+        <SideBar />
+        <S.MainContents>
+          <S.Main>
+            <S.PageHeader>
+              <S.Title>내가 좋아하는 방</S.Title>
+            </S.PageHeader>
+
+            <S.PageRoomContainer>
+              {likedRooms.map((room) => (
+                <RoomComponent
+                  key={room.roomId}
+                  data={room}
+                  isMyRoom={false}
+                  onLikeToggle={async () => {
+                    try {
+                      await fetchAndSetLikedRooms();
+                    } catch (e) {
+                      console.error("좋아요 목록 새로고침 실패:", e);
+                    }
+                  }}
+                />
+              ))}
+            </S.PageRoomContainer>
+          </S.Main>
+        </S.MainContents>
+      </S.Contents>
     </S.Container>
   );
 }

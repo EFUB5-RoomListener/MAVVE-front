@@ -229,6 +229,7 @@ export const DeleteDiaryBtn = styled.button`
 `;
 
 export const CreateRoomBtn = styled.button`
+  margin-right: 1.5rem;
   display: flex;
   width: 7.0625rem;
   height: 2.0625rem;
@@ -399,7 +400,7 @@ export const NoticeSmall = styled.div`
 
 export const PageHeader = styled.div`
   display: flex;
-  width: 91.94rem;
+  width: 93.5rem;
   height: 2.06rem;
   flex-direction: row;
   justify-content: space-between;
