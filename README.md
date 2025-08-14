@@ -16,19 +16,28 @@
 
 
 ## 🗓️ 개발 기간
-- 2025.07.07 ~
+- 2025.07.07 ~ 08.08
 
 
 
 ## 💡 주요 기능
 
- **협업형 음악 감상 플랫폼 'MAVVE'에서는 함께 있는 듯한 몰입 경험을 느낄 수 있습니다.** 
-- 나의 플레이리스트 생성하고 공유하기
-- 나만의 가상 공간, '방' 생성하기
-- 음악 및 이모티콘, 한 줄 일기를 통해 감정 공유하기
-- 방 내부의 실시간 채팅으로 소통하기
-- 마이페이지를 통해 내가 만든 방과 좋아한 방을 한 눈에 보기
-- 검색을 통해 새로운 방을 찾아보기
+ <div align="center">
+
+<!-- 1행 -->
+<img src="https://github.com/user-attachments/assets/bd30faa2-c905-4f42-a125-6ebc59ac4919" width="45%">
+<img src="https://github.com/user-attachments/assets/ecd4c399-79b3-4f58-841e-4b00dab9ba28" width="45%">
+
+<!-- 줄바꿈 -->
+<br>
+
+<!-- 2행 -->
+<img src="https://github.com/user-attachments/assets/054ac552-1ec9-4028-a08e-f23be5e666b3" width="45%">
+<img src="https://github.com/user-attachments/assets/3f8fa636-bc72-4228-bf8a-1d9be584923d" width="45%">
+<br>
+<img src="https://github.com/user-attachments/assets/bae639dc-a4f1-459f-a70f-998ec30b9897" width="90%">
+
+</div>
   
 
 
